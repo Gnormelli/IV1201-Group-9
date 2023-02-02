@@ -8,7 +8,7 @@ public class RecAppApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(RecAppApplication.class, args);
-		System.out.println("Hello GT");
+		System.out.println("Hello BD");
 	}
 
 }
