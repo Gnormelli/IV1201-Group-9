@@ -6,6 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+/**
+ * A user entity for the database named person
+ */
 @Entity
 @Table(name = "person")
 public class User implements UserDetails {
@@ -20,15 +23,54 @@ public class User implements UserDetails {
             generator = "user_sequence"
     )
     @Column(
-
+            name = "id",
+            updatable = false
     )
     long id;
+    @Column(
+            name = "username",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     String username;
+    @Column(
+            name = "firstname",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     String firstname;
+    @Column(
+            name = "surname",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     String surname;
+
+    @Column(
+            name = "password",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     String password;
+
+    @Column(
+            name = "pnr",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     String pnr;
+
+    @Column(
+            name = "email",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     String email;
+    @Column(
+            name = "role_id",
+            nullable = false,
+            columnDefinition = "int"
+    )
     int roleId;
 
     public User(long id, String username, String firstname, String surname, String password, String pnr, String email, int roleId) {
