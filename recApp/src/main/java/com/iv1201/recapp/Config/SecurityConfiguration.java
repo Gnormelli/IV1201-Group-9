@@ -14,6 +14,9 @@ import java.util.Arrays;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+/**
+ * @Author Gustav Normelli
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
@@ -26,7 +29,7 @@ public class SecurityConfiguration {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+                .formLogin(withDefaults());
         return http.build();
     }
     @Bean
