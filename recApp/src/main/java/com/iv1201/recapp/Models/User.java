@@ -29,19 +29,19 @@ public class User implements UserDetails {
     long id;
     @Column(
             name = "username",
-            nullable = false,
+            nullable = true,
             columnDefinition = "TEXT"
     )
     String username;
     @Column(
             name = "firstname",
-            nullable = false,
+            nullable = true,
             columnDefinition = "TEXT"
     )
     String firstname;
     @Column(
             name = "surname",
-            nullable = false,
+            nullable = true,
             columnDefinition = "TEXT"
     )
     String surname;
@@ -55,7 +55,7 @@ public class User implements UserDetails {
 
     @Column(
             name = "pnr",
-            nullable = false,
+            nullable = true,
             columnDefinition = "TEXT"
     )
     String pnr;

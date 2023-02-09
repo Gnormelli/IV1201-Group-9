@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     @Autowired
     private AuthService authService;
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public ResponseEntity<AuthResponse> register(
             @RequestBody RegisterRequest registerRequest
     ){
         return ResponseEntity.ok(authService.register(registerRequest));
     }
-    @PostMapping("/authenticate")
+    @PostMapping("/login")
     public ResponseEntity<AuthResponse> authenticate(
             @RequestBody AuthRequest authRequest
     ){

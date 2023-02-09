@@ -33,7 +33,7 @@ public class SecConfig {
     @Autowired
     private JwtFilter jwtFilter;
     @Autowired
-    private UserDetailsService userService;
+    private UserService userService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -66,7 +66,8 @@ public class SecConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider daoAuthProvider = new DaoAuthenticationProvider();
+        final DaoAuthenticationProvider daoAuthProvider =
+                new DaoAuthenticationProvider();
 
         daoAuthProvider.setPasswordEncoder(bcryptPasswordEncoder());
         daoAuthProvider.setUserDetailsService(this.userService);
