@@ -3,6 +3,7 @@ import {Input, Button, Stack, Box, FormControl, FormHelperText, Avatar} from "@c
 import { Link } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
 import { Heading } from '@chakra-ui/react'
+
 function LoginComponent() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -16,6 +17,7 @@ function LoginComponent() {
             return
         }
         setError('')
+
 
         try {
             fetch('http://localhost:8081/login', {

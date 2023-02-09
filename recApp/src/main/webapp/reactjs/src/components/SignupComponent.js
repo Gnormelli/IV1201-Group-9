@@ -11,7 +11,7 @@ function SignupComponent() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        // Perform login here, you can use email and password
+
         if (!email || !password) {
             setError('Please enter email and password')
             return
