@@ -10,14 +10,42 @@ function LoginComponent() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        // Perform login here, you can use email and password
+
         if (!email || !password) {
             setError('Please enter email and password')
             return
         }
         setError('')
-    }
 
+        try {
+            fetch('http://localhost:8081/login', {
+                method: 'POST',
+                crossDomain: true,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin":  "http://127.0.0.1:3000/login",
+                    "Access-Control-Allow-Methods": "POST",
+                    "Access-Control-Allow-Headers":
+                        "Origin, X-Requested-With, " +
+                        "Content-Type, Accept",
+                },
+                body: JSON.stringify({ email, password }),
+            }).then(response => {
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
+                    return response.json();
+                }).then(data => {
+                    console.log(data);
+                }).catch(error => {
+                    setError(error.message || 'An error occurred, please try again later');
+                });
+
+        } catch (error) {
+            setError(error.message || 'An error occurred, please try again later');
+        }
+
+    }
 
     return (
         <Box
@@ -54,10 +82,11 @@ function LoginComponent() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    {error && (
+                        <FormHelperText color="red.500">{error}</FormHelperText>
+                    )}
                 </FormControl>
-                {error && (
-                    <FormHelperText color="red.500">{error}</FormHelperText>
-                )}
+
                 <Button type="submit" bg={"lightblue"}>Login</Button>
             </Stack>
             <center >
@@ -71,12 +100,7 @@ function LoginComponent() {
 
         </Box>
 
-
     )
 }
-
-
-
-
 
 export default LoginComponent;
