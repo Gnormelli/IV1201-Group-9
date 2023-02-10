@@ -70,7 +70,7 @@ function SignupComponent() {
             <center >
                 <Text marginTop={5}>
                     Already have an account?{' '}
-                    <Link color='teal.500' href='#'>
+                    <Link color='teal.500' href='/'>
                         Sign in
                     </Link>
                 </Text>

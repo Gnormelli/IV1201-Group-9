@@ -3,6 +3,7 @@ import {Input, Button, Stack, Box, FormControl, FormHelperText, Avatar} from "@c
 import { Link } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
 import { Heading } from '@chakra-ui/react'
+import {useNavigation} from "react-router-dom";
 
 function LoginComponent() {
     const [email, setEmail] = useState("");
@@ -94,7 +95,7 @@ function LoginComponent() {
             <center >
             <Text marginTop={5}>
                 Are you new?{' '}
-                <Link color='teal.500' href='#'>
+                <Link color='teal.500' href="/signup">
                     create account
                 </Link>
             </Text>
