@@ -1,16 +1,22 @@
 import React from 'react';
 import LoginComponent from './components/LoginComponent.js';
-import SignupComponent from './components/SignupComponent';
-import { ChakraProvider } from '@chakra-ui/react'
+import {ChakraProvider} from '@chakra-ui/react'
+import SignupComponent from "./components/SignupComponent";
+import { BrowserRouter,Route, Routes } from "react-router-dom";
+
 function App() {
   return (
+
       <ChakraProvider>
-    <div>
-        <SignupComponent />
+          <BrowserRouter>
+              <Routes>
+                  <Route exact path="/" element={<LoginComponent />} />
+                  <Route exact path="/signup" element={<SignupComponent />} />
+                  </Routes>
+              </BrowserRouter>
 
-
-    </div>
       </ChakraProvider>
+
   );
 }
 
