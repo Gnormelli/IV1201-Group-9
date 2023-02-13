@@ -5,16 +5,19 @@ function doThrow(e) {
 const url = "http://localhost:8081";
 const ApiPost = {
     apiCall(params, object) {
+        console.log(url+params)
+        console.log("body: ")
+        console.log(object)
         return fetch(url + params, {
         method: "POST", // HTTP method
         crossDomain: true,
         headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Headers":
-                "Origin, X-Requested-With, " +
+            "Access-Control-Request-Headers":
+                "Authorization , Origin, X-Requested-With, " +
                 "Content-Type, Accept",
             },
-            
+
         body: JSON.stringify(object),
         })
             .then((response) =>
@@ -30,9 +33,11 @@ const ApiPost = {
                     return response.json()
             });
         },
-        postData(object) {
-            const postQueueEndpoint = "/postQueue";
-            return ApiPost.apiCall(postQueueEndpoint, object).then((data) => data);
+        signUp(object) {
+            const signUpEndpoint = "/api/v1/auth/signup";
+            console.log("body: ")
+            console.log(object)
+            return ApiPost.apiCall(signUpEndpoint, object).then((data) => data);
         }
     };
 

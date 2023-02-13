@@ -3,6 +3,8 @@ import {Input, Button, Stack, Box, FormControl, FormHelperText, Avatar} from "@c
 import { Link } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
 import { Heading } from '@chakra-ui/react'
+import ApiPost from "../ApiInterface/ApiPost";
+
 function SignupComponent() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,6 +19,34 @@ function SignupComponent() {
             return
         }
         setError('')
+
+        if (password !== passwordConfirmation) {
+            setError('Password and confirm password should be same');
+            return
+        }
+        setError('')
+
+        if (!password) {
+            setError('Password should not be empty');
+            return
+        }
+        setError('')
+
+
+        const signUpData = {
+            email,
+            password
+        };
+
+        ApiPost.signUp(signUpData)
+            .then(response => {
+                console.log(response);
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
     }
     return (
         <Box
@@ -65,12 +95,12 @@ function SignupComponent() {
                 {error && (
                     <FormHelperText color="red.500">{error}</FormHelperText>
                 )}
-                <Button type="submit" bg={"lightblue"}>Login</Button>
+                <Button type="submit" bg={"lightblue"}>Sign up</Button>
             </Stack>
             <center >
                 <Text marginTop={5}>
                     Already have an account?{' '}
-                    <Link color='teal.500' href='#'>
+                    <Link color='teal.500' href='/'>
                         Sign in
                     </Link>
                 </Text>

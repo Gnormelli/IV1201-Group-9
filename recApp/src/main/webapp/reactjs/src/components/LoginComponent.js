@@ -94,7 +94,7 @@ function LoginComponent() {
             <center >
             <Text marginTop={5}>
                 Are you new?{' '}
-                <Link color='teal.500' href='#'>
+                <Link color='teal.500' href='/signup'>
                     create account
                 </Link>
             </Text>
