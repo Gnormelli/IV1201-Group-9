@@ -8,11 +8,13 @@ const ApiPost = {
         return fetch(url + params, {
         method: "POST", // HTTP method
         crossDomain: true,
-        headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Headers":
-                "Origin, X-Requested-With, " +
-                "Content-Type, Accept",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin":  "http://127.0.0.1:3000",
+                "Access-Control-Allow-Methods": "POST",
+                "Access-Control-Allow-Headers":
+                    "Origin, X-Requested-With, " +
+                    "Content-Type, Accept",
             },
             
         body: JSON.stringify(object),

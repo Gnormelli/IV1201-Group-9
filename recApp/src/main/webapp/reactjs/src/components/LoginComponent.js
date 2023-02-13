@@ -4,6 +4,7 @@ import { Link } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
 import { Heading } from '@chakra-ui/react'
 import {useNavigation} from "react-router-dom";
+import cors from 'cors';
 
 function LoginComponent() {
     const [email, setEmail] = useState("");
@@ -19,14 +20,15 @@ function LoginComponent() {
         }
         setError('')
 
-
         try {
-            fetch('http://localhost:8081/login', {
+            cors({ origin: 'http://localhost:3000' });
+
+            fetch('http://localhost:8081/api/v1/auth/login', {
                 method: 'POST',
                 crossDomain: true,
                 headers: {
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin":  "http://127.0.0.1:3000/login",
+                    "Access-Control-Allow-Origin":  "http://localhost:3000",
                     "Access-Control-Allow-Methods": "POST",
                     "Access-Control-Allow-Headers":
                         "Origin, X-Requested-With, " +
