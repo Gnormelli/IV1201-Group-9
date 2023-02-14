@@ -164,7 +164,7 @@ ALTER TABLE public.role ALTER COLUMN role_id ADD GENERATED ALWAYS AS IDENTITY (
 -- Data for Name: availability; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.availability (availability_id, person_id, from_date, to_date) FROM stdin;
+COPY public.competence (competence_id, name) FROM stdin;
 18260	547	2019-09-07	2019-10-07
 18261	781	2018-05-18	2018-06-18
 18262	686	2019-09-06	2019-10-06
@@ -2496,7 +2496,7 @@ COPY public.availability (availability_id, person_id, from_date, to_date) FROM s
 -- Data for Name: competence; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.competence (competence_id, name) FROM stdin;
+COPY public.availability (availability_id, person_id, from_date, to_date) FROM stdin;
 1	ticket sales
 2	lotteries
 3	roller coaster operation
