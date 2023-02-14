@@ -3,6 +3,7 @@ import {Input, Button, Stack, Box, FormControl, FormHelperText, Avatar} from "@c
 import { Link } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
 import { Heading } from '@chakra-ui/react'
+import ApiPost from "../ApiInterface/ApiPost";
 
 function LoginComponent() {
     const [email, setEmail] = useState("");
@@ -18,34 +19,20 @@ function LoginComponent() {
         }
         setError('')
 
+        const logInData = {
+            email,
+            password
+        };
 
-        try {
-            fetch('http://localhost:8081/login', {
-                method: 'POST',
-                crossDomain: true,
-                headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin":  "http://127.0.0.1:3000/login",
-                    "Access-Control-Allow-Methods": "POST",
-                    "Access-Control-Allow-Headers":
-                        "Origin, X-Requested-With, " +
-                        "Content-Type, Accept",
-                },
-                body: JSON.stringify({ email, password }),
-            }).then(response => {
-                    if (!response.ok) {
-                        throw new Error(response.statusText);
-                    }
-                    return response.json();
-                }).then(data => {
-                    console.log(data);
-                }).catch(error => {
-                    setError(error.message || 'An error occurred, please try again later');
-                });
 
-        } catch (error) {
-            setError(error.message || 'An error occurred, please try again later');
-        }
+        ApiPost.logIn(logInData)
+            .then(response => {
+                console.log(response);
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
 
     }
 

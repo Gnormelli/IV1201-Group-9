@@ -35,9 +35,11 @@ const ApiPost = {
         },
         signUp(object) {
             const signUpEndpoint = "/api/v1/auth/signup";
-            console.log("body: ")
-            console.log(object)
             return ApiPost.apiCall(signUpEndpoint, object).then((data) => data);
+        },
+        logIn(object) {
+            const logInEndpoint = "/api/v1/auth/login";
+            return ApiPost.apiCall(logInEndpoint, object).then((data) => data);
         }
     };
 
