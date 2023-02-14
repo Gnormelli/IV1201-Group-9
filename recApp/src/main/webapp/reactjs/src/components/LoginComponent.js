@@ -30,7 +30,7 @@ function LoginComponent() {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin":  "http://localhost:3000",
                     "Access-Control-Allow-Methods": "POST",
-                    "Access-Control-Allow-Headers":
+                    "Access-Control-Request-Headers":
                         "Origin, X-Requested-With, " +
                         "Content-Type, Accept",
                 },
