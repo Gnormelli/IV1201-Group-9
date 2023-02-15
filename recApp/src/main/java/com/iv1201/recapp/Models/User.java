@@ -2,58 +2,96 @@ package com.iv1201.recapp.Models;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
+/**
+ * A user entity for the database named person
+ */
 @Entity
 @Table(name = "person")
 public class User implements UserDetails {
     @Id
     @SequenceGenerator(
-            name = "user_sequence",
-            sequenceName = "user_sequence",
+            name = "person_sequence",
+            sequenceName = "person_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "user_sequence"
+            generator = "person_sequence"
     )
     @Column(
-
+            name = "person_id",
+            updatable = false
     )
     long id;
+    @Column(
+            name = "username",
+            nullable = true,
+            columnDefinition = "TEXT"
+    )
     String username;
+    @Column(
+            name = "firstname",
+            nullable = true,
+            columnDefinition = "TEXT"
+    )
     String firstname;
+    @Column(
+            name = "surname",
+            nullable = true,
+            columnDefinition = "TEXT"
+    )
     String surname;
-    String password;
-    String pnr;
-    String email;
-    int roleId;
 
-    public User(long id, String username, String firstname, String surname, String password, String pnr, String email, int roleId) {
-        this.id = id;
+    @Column(
+            name = "password",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
+    String password;
+
+    @Column(
+            name = "pnr",
+            nullable = true,
+            columnDefinition = "TEXT"
+    )
+    String pnr;
+
+    @Column(
+            name = "email",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
+    String email;
+    @ManyToOne
+    @JoinColumn(name = "fk_id_role")
+    Role userRole;
+
+    public User() {
+    }
+
+    public User(String username,
+                String firstname,
+                String surname,
+                String password,
+                String pnr,
+                String email,
+                Role userRole) {
         this.username = username;
         this.firstname = firstname;
         this.surname = surname;
         this.password = password;
         this.pnr = pnr;
         this.email = email;
-        this.roleId = roleId;
+        this.userRole = userRole;
     }
 
-    public User() {
-
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
+    @Override
     public String getUsername() {
         return username;
     }
@@ -78,6 +116,7 @@ public class User implements UserDetails {
         this.surname = surname;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -102,12 +141,12 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public Role getUserRole() {
+        return userRole;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setUserRole(Role userRole) {
+        this.userRole = userRole;
     }
 
     @Override
@@ -120,33 +159,35 @@ public class User implements UserDetails {
                 ", password='" + password + '\'' +
                 ", pnr='" + pnr + '\'' +
                 ", email='" + email + '\'' +
-                ", roleId=" + roleId +
+                ", userRole=" + userRole +
                 '}';
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(
+                "ROLE_"+ userRole.getRoleName());
+        return Collections.singletonList(authority);
     }
 
 }
