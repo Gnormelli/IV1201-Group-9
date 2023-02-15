@@ -56,6 +56,7 @@ public class AuthService {
     // Todo: Create variables needed to make a signUp so a user can be saved correctly
     public AuthResponse register(RegisterRequest registerRequest) {
         User user = new User();
+        user.setUsername(registerRequest.getEmail());
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setUserRole(roleRepo.findRoleById(2L));
