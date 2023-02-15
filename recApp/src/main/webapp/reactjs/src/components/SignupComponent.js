@@ -20,38 +20,35 @@ function SignupComponent() {
         }
         setError('')
 
-        try {
-        fetch('http://localhost:8081/api/v1/auth/signup', {
-            method: 'POST',
-            crossDomain: true,
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin":  "http://127.0.0.1:3000/signup",
-                "Access-Control-Allow-Methods": "POST",
-                "Access-Control-Allow-Headers":
-                    "Origin, X-Requested-With, " +
-                    "Content-Type, Accept",
-            },
-            body: JSON.stringify({ email, password }),
-        }).then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText);
-            }
-            return response.json();
-        }).then(data => {
-            console.log(data);
-        }).catch(error => {
-            setError(error.message || 'An error occurred, please try again later');
-        });
+        if (password !== passwordConfirmation) {
+            setError('Password and confirm password should be same');
+            return
+        }
+        setError('')
 
-    } catch (error) {
-        setError(error.message || 'An error occurred, please try again later');
+        if (!password) {
+            setError('Password should not be empty');
+            return
+        }
+        setError('')
+
+        const signUpData = {
+            email,
+            password
+        };
+
+        ApiPost.signUp(signUpData)
+            .then(response => {
+                console.log(response);
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
 
-}
 
-
-    return (
+        return (
         <Box
             as="form"
             onSubmit={handleSubmit}
@@ -99,7 +96,7 @@ function SignupComponent() {
                     )}
                 </FormControl>
 
-                <Button type="submit" bg={"lightblue"}>Login</Button>
+                <Button type="submit" bg={"lightblue"}>Sign up</Button>
             </Stack>
             <center >
                 <Text marginTop={5}>

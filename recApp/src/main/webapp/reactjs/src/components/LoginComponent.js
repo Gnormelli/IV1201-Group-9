@@ -3,8 +3,8 @@ import {Input, Button, Stack, Box, FormControl, FormHelperText, Avatar} from "@c
 import { Link } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
 import { Heading } from '@chakra-ui/react'
-import {useNavigation} from "react-router-dom";
-import cors from 'cors';
+import ApiPost from "../ApiInterface/ApiPost";
+import ApiCall from "../ApiInterface/ApiCall";
 
 function LoginComponent() {
     const [email, setEmail] = useState("");
@@ -20,35 +20,30 @@ function LoginComponent() {
         }
         setError('')
 
-        try {
-            cors({ origin: 'http://localhost:3000' });
+        const logInData = {
+            email,
+            password
+        };
 
-            fetch('http://localhost:8081/api/v1/auth/login', {
-                method: 'POST',
-                crossDomain: true,
-                headers: {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin":  "http://localhost:3000",
-                    "Access-Control-Allow-Methods": "POST",
-                    "Access-Control-Request-Headers":
-                        "Origin, X-Requested-With, " +
-                        "Content-Type, Accept",
-                },
-                body: JSON.stringify({ email, password }),
-            }).then(response => {
-                    if (!response.ok) {
-                        throw new Error(response.statusText);
-                    }
-                    return response.json();
-                }).then(data => {
-                    console.log(data);
-                }).catch(error => {
-                    setError(error.message || 'An error occurred, please try again later');
-                });
 
-        } catch (error) {
-            setError(error.message || 'An error occurred, please try again later');
-        }
+        ApiPost.logIn(logInData)
+            .then(response => {
+
+                console.log(response);
+
+                const userRole = response.role;
+
+
+            })
+            .then(data => {
+                console.log(data);
+                // access the email, password, or role number as needed
+            })
+            .catch(error => {
+                setError("Email or password wrong")
+                console.error(error);
+            });
+
 
     }
 

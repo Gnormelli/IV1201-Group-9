@@ -25,4 +25,13 @@ public class AuthController {
     ){
         return ResponseEntity.ok(authService.authenticate(authRequest));
     }
+
+    @GetMapping("/loginRoute")
+    public ResponseEntity<AuthResponse> login(
+            @RequestParam AuthRequest object
+    ){
+        System.out.println("This is an object:" + object);
+
+        return ResponseEntity.ok(authService.authenticate(object));
+    }
 }

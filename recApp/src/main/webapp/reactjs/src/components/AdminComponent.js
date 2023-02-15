@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import {Box, Text, Stack, List, ListItem, ListIcon, Button, Heading, Flex, Link} from '@chakra-ui/react';
-import {Grid, Select} from "@chakra-ui/core";
+import React from 'react';
+import {Box, Text, Button, Flex, Stack,} from '@chakra-ui/react';
+import {Select} from "@chakra-ui/react";
 
 
 const names = ["John", "Jane", "Jim", "Jill"];
@@ -24,7 +24,7 @@ function AdminComponent() {
                 <Text fontFamily="Roboto, sans-serif" fontWeight="bold" color="white" fontSize={20}>
                     HappyCoaster AB
                 </Text>
-                <Button bg="lightblue" variantColor="white" mr={4} onClick={logout}>
+                <Button bg="lightblue" variantcolor="white" mr={4} onClick={logout}>
                     Logout
                 </Button>
             </Flex>
@@ -39,7 +39,8 @@ function AdminComponent() {
                         </Text>
                     </Flex>
                 </Box>
-                <Box p={4}>
+
+                <Box p={4} >
                     {names.map((name, index) => (
                         <Flex
                             key={index}
@@ -53,9 +54,18 @@ function AdminComponent() {
                             transition="background-color 0.2s ease-in-out"
                         >
                             <Text fontFamily="Roboto, sans-serif">{name}</Text>
+                            <Stack ml="auto">
+                                <Select variant='filled' placeholder='Status' >
+                                    <option value="Option 1">Accepted</option>
+                                    <option value="Option 2">Not Accepted</option>
+                                    <option value="Option 3">Pending</option>
+                                </Select>
+                            </Stack>
                         </Flex>
                     ))}
+
                 </Box>
+
 
             </Box>
 

@@ -1,11 +1,11 @@
 package com.iv1201.recapp.Service;
 
+import com.iv1201.recapp.Integration.RoleRepo;
 import com.iv1201.recapp.Integration.UserRepo;
 import com.iv1201.recapp.Models.User;
 import com.iv1201.recapp.Models.auth.AuthRequest;
 import com.iv1201.recapp.Models.auth.AuthResponse;
 import com.iv1201.recapp.Models.auth.RegisterRequest;
-import com.sun.jdi.event.ExceptionEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,35 +22,34 @@ public class AuthService {
     @Autowired
     private UserRepo userRepo;
     @Autowired
+    private RoleRepo roleRepo;
+    @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private JwtService jwtService;
 
     public AuthResponse authenticate(AuthRequest authRequest) {
         User user;
-
-        System.out.println("Line 34 AuthService " + authRequest.toString());
-
+        System.out.println(authRequest);
+        AuthResponse authResponse = new AuthResponse("Token could not be authenticated",null);
         try {
             this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     authRequest.getEmail(),
                     authRequest.getPassword())
             );
         }catch (Exception e ){
-//            Todo Add exception for user when token cannot be authenticated
-            System.out.println("Token could not be authenticated " + e);
+            System.out.println("Token could not be authenticated" + e);
+            return authResponse;
         }
 
         try {
-            System.out.println("Line 41 AuthService");
             user = userRepo.findByEmail(authRequest.getEmail());
-            System.out.println("This is our user: " + user);
+
         }catch (Exception e ){
             throw new UsernameNotFoundException("User not found and could therefore " +
                     "not be authenticated");
         }
-        AuthResponse authResponse =
-                new AuthResponse(jwtService.createToken(user));
+        authResponse.setJwtToken(jwtService.createToken(user));
         return authResponse;
     }
 
@@ -59,7 +58,9 @@ public class AuthService {
         User user = new User();
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        user.setRoleId(2);
+        user.setUserRole(roleRepo.findRoleById(2L));
+
+        System.out.println(user);
 
         try {
             userRepo.save(user);
@@ -67,7 +68,7 @@ public class AuthService {
             throw new RuntimeException("User could not be saved in repo");
         }
         AuthResponse authResponse =
-                new AuthResponse(jwtService.createToken(user));
+                new AuthResponse(jwtService.createToken(user), user.getUserRole());
         return authResponse;
     }
 }
