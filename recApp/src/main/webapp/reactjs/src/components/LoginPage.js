@@ -4,9 +4,8 @@ import { Link } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
 import { Heading } from '@chakra-ui/react'
 import ApiPost from "../ApiInterface/ApiPost";
-import ApiCall from "../ApiInterface/ApiCall";
 
-function LoginComponent() {
+function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState('')
@@ -25,25 +24,15 @@ function LoginComponent() {
             password
         };
 
-
         ApiPost.logIn(logInData)
             .then(response => {
-
+                localStorage.setItem('token', response.jwtToken);
                 console.log(response);
 
-                const userRole = response.role;
-
-
-            })
-            .then(data => {
-                console.log(data);
-                // access the email, password, or role number as needed
             })
             .catch(error => {
-                setError("Email or password wrong")
                 console.error(error);
             });
-
 
     }
 
@@ -92,7 +81,7 @@ function LoginComponent() {
             <center >
             <Text marginTop={5}>
                 Are you new?{' '}
-                <Link color='teal.500' href="/signup">
+                <Link color='teal.500' href='/signup'>
                     create account
                 </Link>
             </Text>
@@ -103,4 +92,4 @@ function LoginComponent() {
     )
 }
 
-export default LoginComponent;
+export default LoginPage;
