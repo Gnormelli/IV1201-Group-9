@@ -1,7 +1,7 @@
 import React from 'react';
-import LoginComponent from './components/LoginComponent.js';
+import LoginPage from './components/LoginPage.js';
 import {ChakraProvider} from '@chakra-ui/react'
-import SignupComponent from "./components/SignupComponent";
+import SignupPage from "./components/SignupPage";
 import { BrowserRouter,Route, Routes } from "react-router-dom";
 
 function App() {
@@ -10,8 +10,8 @@ function App() {
       <ChakraProvider>
           <BrowserRouter>
               <Routes>
-                  <Route exact path="/" element={<LoginComponent />} />
-                  <Route exact path="/signup" element={<SignupComponent />} />
+                  <Route exact path="/" element={<LoginPage />} />
+                  <Route exact path="/signup" element={<SignupPage />} />
                   </Routes>
               </BrowserRouter>
 

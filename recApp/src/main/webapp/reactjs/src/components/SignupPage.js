@@ -5,7 +5,7 @@ import { Text } from '@chakra-ui/react'
 import { Heading } from '@chakra-ui/react'
 import ApiPost from "../ApiInterface/ApiPost";
 
-function SignupComponent() {
+function SignupPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -40,8 +40,7 @@ function SignupComponent() {
 
         ApiPost.signUp(signUpData)
             .then(response => {
-                console.log(response);
-
+                localStorage.setItem('token', response.jwtToken);
             })
             .catch(error => {
                 console.error(error);
@@ -111,4 +110,4 @@ function SignupComponent() {
 }
 
 
-export default SignupComponent;
+export default SignupPage;

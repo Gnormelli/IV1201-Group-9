@@ -5,7 +5,7 @@ import { Text } from '@chakra-ui/react'
 import { Heading } from '@chakra-ui/react'
 import ApiPost from "../ApiInterface/ApiPost";
 
-function LoginComponent() {
+function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState('')
@@ -24,9 +24,9 @@ function LoginComponent() {
             password
         };
 
-
         ApiPost.logIn(logInData)
             .then(response => {
+                localStorage.setItem('token', response.jwtToken);
                 console.log(response);
 
             })
@@ -92,4 +92,4 @@ function LoginComponent() {
     )
 }
 
-export default LoginComponent;
+export default LoginPage;
