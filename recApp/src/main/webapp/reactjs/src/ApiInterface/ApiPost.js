@@ -17,8 +17,7 @@ const ApiPost = {
             },
 
         body: JSON.stringify(object),
-        })
-            .then((response) =>
+        }).then((response) =>
             response.status === 200
                 ? response
                 : doThrow(
@@ -26,8 +25,7 @@ const ApiPost = {
                     "Status was: " + response.statusText + " " + response.status
                     )
                 )
-            )
-            .then((response) => {
+            ).then((response) => {
                     return response.json()
             });
         },

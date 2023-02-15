@@ -5,12 +5,13 @@ function doThrow(e) {
 const url = "http://localhost:8081";
 
 const ApiCall = {
-  apiCall(params) {
+  apiCall(params, token) {
     return fetch(url + params, {
       method: "GET", // HTTP method
       crossDomain: true,
       headers: {
         // HTTP headers
+        "Authorization" : token,
         "Content-Type": "application/json",
         "Access-Control-Allow-Headers":
           "Origin, X-Requested-With, Content-Type, Accept",
@@ -24,7 +25,13 @@ const ApiCall = {
                 "Status was: " + response.statusText + " " + response.status + " " + params
               )
             )
-      )
+      ).then((response) => {
+          // if (response.data) {
+            console.log(response);
+            // localStorage.setItem("user", JSON.stringify(response.data));
+          // }
+          localStorage.setItem('token', response.jwtToken);
+        })
       .then((response) => {
         return response.json()
 
