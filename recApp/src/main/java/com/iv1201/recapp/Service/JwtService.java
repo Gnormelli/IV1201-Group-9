@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.sql.SQLOutput;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,27 +29,26 @@ public class JwtService {
     public JwtService(){
     }
 
-    public<T> T getSingleClaim(String jwtToken, Function<Claims, T> claimFetcher){
-        final Claims allClaims = getAllClaims(jwtToken);
-        return claimFetcher.apply(allClaims);
-    }
-
-    public String getUsernameFromToken(String jwtToken) {
-        return getSingleClaim(jwtToken, Claims::getSubject);
-    }
-
     public String createToken(UserDetails userDetails){
         return createToken(new HashMap<>(), userDetails);
     }
 
+    /**
+     * Creates a token from claims and user details.
+     * Set when the token is created and how long til token expires.
+     * Expiration now set to 1 sec -> 1 min -> 1 hour -> 24 hour
+     * @param creationClaims
+     * @param userDetails
+     * @return a build JWT
+     */
     public String createToken(Map<String, Object> creationClaims, UserDetails userDetails){
         return Jwts
                 .builder()
                 .setClaims(creationClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() * 1000 * 60 * 90 ))
-                .signWith(generateSignInKey(), SignatureAlgorithm.HS512)
+                .setExpiration(new Date(System.currentTimeMillis()+1000*60*60*24)) // 1 sec -> 1 min -> 1 hour
+                .signWith(generateSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -57,12 +57,25 @@ public class JwtService {
         return (username.equals(userDetails.getUsername())) && !checkExpirationOfToken(jwtToken);
     }
 
-    private boolean checkExpirationOfToken(String jwtToken) {
+    public boolean checkExpirationOfToken(String jwtToken) {
         return getExpirationFromToken(jwtToken).before(new Date());
     }
 
-    private Date getExpirationFromToken(String jwtToken) {
+    private Key generateSignInKey() {
+        byte[] keyBase64 = Decoders.BASE64.decode(secret);
+        return Keys.hmacShaKeyFor(keyBase64);
+    }
+    public Date getExpirationFromToken(String jwtToken) {
         return getSingleClaim(jwtToken, Claims::getExpiration);
+    }
+
+    public String getUsernameFromToken(String jwtToken) {
+        return getSingleClaim(jwtToken, Claims::getSubject);
+    }
+
+    public<T> T getSingleClaim(String jwtToken, Function<Claims, T> claimFetcher){
+        final Claims allClaims = getAllClaims(jwtToken);
+        return claimFetcher.apply(allClaims);
     }
 
     private Claims getAllClaims(String jwtToken){
@@ -74,8 +87,4 @@ public class JwtService {
                 .getBody();
     }
 
-    private Key generateSignInKey() {
-        byte[] keyBase64 = Decoders.BASE64.decode(secret);
-        return Keys.hmacShaKeyFor(keyBase64);
-    }
 }

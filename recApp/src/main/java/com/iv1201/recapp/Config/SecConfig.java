@@ -38,7 +38,7 @@ public class SecConfig {
         http
                 .csrf().disable() // todo Check how or if to configure
                 .cors(Customizer.withDefaults()) // Uses the Bean CorsConfigurationSource
-                .authorizeRequests()
+                .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**").permitAll() // Row for all the whitelisted endpoints
 //                /api/v1/testEndpoint
                 .anyRequest().authenticated()

@@ -9,7 +9,7 @@ const ApiPost = {
         method: "POST", // HTTP method
         crossDomain: true,
         headers: {
-            "Authorization" : token ,
+            // "Authorization" : token ,
             "Content-Type": "application/json",
             "Access-Control-Request-Headers":
                 "Authorization , Origin, X-Requested-With, " +
@@ -33,12 +33,13 @@ const ApiPost = {
         },
         signUp(object) {
             const signUpEndpoint = "/api/v1/auth/signup";
-            const token = localStorage.setItem("token", "");
-            return ApiPost.apiCall(signUpEndpoint, object, ).then((data) => data);
+            const token = null;
+            return ApiPost.apiCall(signUpEndpoint, object, token).then((data) => data);
         },
         logIn(object) {
-            const logInEndpoint = "/api/v1/auth/login";
-            const token = localStorage.getItem("token");
+            const logInEndpoint = "/api/v1/auth/authenticate";
+            const token = null;
+                // "Bearer "+ localStorage.getItem("token");
             return ApiPost.apiCall(logInEndpoint, object, token).then((data) => data);
         }
     };

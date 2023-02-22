@@ -46,6 +46,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         jwtToken = authFromHeader.substring(7);
         username = jwtService.getUsernameFromToken(jwtToken);
+
         if(username != null && SecurityContextHolder
                 .getContext()
                 .getAuthentication() == null){
@@ -56,11 +57,18 @@ public class JwtFilter extends OncePerRequestFilter {
                         new UsernamePasswordAuthenticationToken(
                                 userDetails,
                                 null,
-                                userDetails.getAuthorities()
+                                userDetails.getAuthorities() // gets authorities for the user
                         );
+                // Builds and sets the details of the user to a token
                 token.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request));
+                // Gives the complete token witt all details to the Security Context holder
                 SecurityContextHolder.getContext().setAuthentication(token);
+            } else if (username.equals(userDetails.getUsername()) &&
+                    jwtService.checkExpirationOfToken(jwtToken)) {
+                System.out.println("Row 70 - JWT Filter");
+                filterChain.doFilter(request, response);
+                return;
             }
         }
         filterChain.doFilter(request,response);

@@ -26,9 +26,8 @@ function LoginPage() {
 
         ApiPost.logIn(logInData)
             .then(response => {
+                console.log(response.jwtToken);
                 localStorage.setItem('token', response.jwtToken);
-                console.log(response);
-
             })
             .catch(error => {
                 console.error(error);
