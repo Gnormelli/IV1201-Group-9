@@ -5,16 +5,19 @@ function doThrow(e) {
 const url = "http://localhost:8081";
 
 const ApiCall = {
-  apiCall(params) {
+  apiCall(params, object) {
+    console.log("body: ")
+    console.log(object);
     return fetch(url + params, {
       method: "GET", // HTTP method
       crossDomain: true,
       headers: {
         // HTTP headers
         "Content-Type": "application/json",
-        "Access-Control-Allow-Headers":
+        "Access-Control-Request-Headers":
           "Origin, X-Requested-With, Content-Type, Accept",
       },
+      body: JSON.stringify(object),
     })
       .then((response) =>
         response.status === 200
@@ -30,9 +33,9 @@ const ApiCall = {
 
       });
   },
-  getData() {
-    const getQueueEndpoint = "/getQueue";
-    return ApiCall.apiCall(getQueueEndpoint).then((data) => data);
+  getData(object) {
+    const getQueueEndpoint = "/api/v1/auth/loginRoute";
+    return ApiCall.apiCall(getQueueEndpoint,object).then((data) => data);
   }
 };
 

@@ -10,23 +10,27 @@ function SignupPage() {
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
     const [error, setError] = useState('')
+    const [success, setSuccess] = useState('')
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
         if (!email || !password) {
+            setSuccess('');
             setError('Please enter email and password')
             return
         }
         setError('')
 
         if (password !== passwordConfirmation) {
+            setSuccess('');
             setError('Password and confirm password should be same');
             return
         }
         setError('')
 
         if (!password) {
+            setSuccess('');
             setError('Password should not be empty');
             return
         }
@@ -41,13 +45,20 @@ function SignupPage() {
         ApiPost.signUp(signUpData)
             .then(response => {
                 localStorage.setItem('token', response.jwtToken);
+                console.log(response);
+                setSuccess("User successfully added.");
+
             })
             .catch(error => {
                 console.error(error);
+                setError('Error adding user.');
+                setSuccess('');
             });
 
     }
-    return (
+
+
+        return (
         <Box
             as="form"
             onSubmit={handleSubmit}
@@ -90,10 +101,14 @@ function SignupPage() {
                         value={passwordConfirmation}
                         onChange={(e) => setPasswordConfirmation(e.target.value)}
                     />
+                    {error && (
+                        <FormHelperText color="red.500">{error}</FormHelperText>
+                    )}
+                    {success && (
+                        <FormHelperText color="green.500">{success}</FormHelperText>
+                    )}
                 </FormControl>
-                {error && (
-                    <FormHelperText color="red.500">{error}</FormHelperText>
-                )}
+
                 <Button type="submit" bg={"lightblue"}>Sign up</Button>
             </Stack>
             <center >

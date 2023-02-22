@@ -19,6 +19,8 @@ function LoginPage() {
         }
         setError('')
 
+
+
         const logInData = {
             email,
             password
@@ -28,12 +30,20 @@ function LoginPage() {
             .then(response => {
                 console.log(response.jwtToken);
                 localStorage.setItem('token', response.jwtToken);
+                console.log(response);
+               // console.log("ROLE ID:" + response.role.id);
+
+
+
+
+
             })
             .catch(error => {
                 console.error(error);
             });
 
     }
+
 
     return (
         <Box
