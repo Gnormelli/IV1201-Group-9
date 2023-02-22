@@ -2,6 +2,7 @@ package com.iv1201.recapp.Service;
 
 import com.iv1201.recapp.Integration.RoleRepo;
 import com.iv1201.recapp.Integration.UserRepo;
+import com.iv1201.recapp.Models.Role;
 import com.iv1201.recapp.Models.User;
 import com.iv1201.recapp.Models.auth.AuthRequest;
 import com.iv1201.recapp.Models.auth.AuthResponse;
@@ -12,8 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-
 
 @Service
 public class AuthService {
@@ -30,12 +29,16 @@ public class AuthService {
 
     public AuthResponse authenticate(AuthRequest authRequest) {
         User user;
+        Role role = new Role();
         System.out.println(authRequest);
         AuthResponse authResponse = new AuthResponse("Token could not be authenticated",null);
+        role.setId(roleRepo.findRoleById(2L).getId());
+
         try {
             this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     authRequest.getEmail(),
                     authRequest.getPassword())
+
             );
         }catch (Exception e ){
             System.out.println("Token could not be authenticated" + e);
@@ -57,6 +60,7 @@ public class AuthService {
     public AuthResponse register(RegisterRequest registerRequest) {
         User user = new User();
         user.setEmail(registerRequest.getEmail());
+        user.setUsername(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setUserRole(roleRepo.findRoleById(2L));
 

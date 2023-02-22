@@ -1,33 +1,21 @@
 import React from 'react';
-import {Box, Text, Button, Flex, Stack,} from '@chakra-ui/react';
+import {Box, Text, Flex, Stack,} from '@chakra-ui/react';
 import {Select} from "@chakra-ui/react";
+import {NavbarComponent} from './NavbarComponent';
 
 
 const names = ["John", "Jane", "Jim", "Jill"];
-function AdminComponent() {
+function AdminPage() {
 
 
     const handleClick = (name) => {
         console.log(`${name} was clicked`);
     };
 
-    const logout = () => {
-        // Remove the user's session data
-        localStorage.removeItem("userToken");
-        // Redirect the user to the login page
-        window.location.replace("/");
-    };
 
     return (
         <>
-            <Flex bg="cyan.800" p={4} justifyContent="space-between" alignItems="center">
-                <Text fontFamily="Roboto, sans-serif" fontWeight="bold" color="white" fontSize={20}>
-                    HappyCoaster AB
-                </Text>
-                <Button bg="lightblue" variantcolor="white" mr={4} onClick={logout}>
-                    Logout
-                </Button>
-            </Flex>
+            <NavbarComponent />
             <Box bg="gray.200" p={4} minHeight="100vh">
                 <Text fontFamily="Roboto, sans-serif" fontWeight="bold" fontSize={24}>
                     WELCOME ADMIN!
@@ -74,4 +62,4 @@ function AdminComponent() {
         </>
     );
 }
-    export default AdminComponent;
+    export default AdminPage;

@@ -34,7 +34,7 @@ public class AuthResponse {
     public String toString() {
         return "AuthResponse{" +
                 "jwtToken='" + jwtToken + '\'' +
-                ", id_role=" + role +
+                ", role=" + role +
                 '}';
     }
 }
