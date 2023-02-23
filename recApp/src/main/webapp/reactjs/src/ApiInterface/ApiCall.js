@@ -5,9 +5,7 @@ function doThrow(e) {
 const url = "http://localhost:8081";
 
 const ApiCall = {
-  apiCall(params, object) {
-    console.log("body: ")
-    console.log(object);
+  apiCall(params) {
     return fetch(url + params, {
       method: "GET", // HTTP method
       crossDomain: true,
@@ -17,7 +15,6 @@ const ApiCall = {
         "Access-Control-Request-Headers":
           "Origin, X-Requested-With, Content-Type, Accept",
       },
-      body: JSON.stringify(object),
     })
       .then((response) =>
         response.status === 200
@@ -30,8 +27,11 @@ const ApiCall = {
       )
       .then((response) => {
         return response.json()
-
       });
+  },
+  test() {
+    const testEndPoint = "/api/v1/testEndpoint/anotherTestEndpoint";
+    return ApiCall.apiCall(testEndPoint).then((data) => data);
   },
   getData(object) {
     const getQueueEndpoint = "/api/v1/auth/loginRoute";

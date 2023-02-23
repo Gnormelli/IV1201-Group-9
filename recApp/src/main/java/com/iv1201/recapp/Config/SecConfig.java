@@ -23,7 +23,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 /**
- * @Author Gustav Normelli
+ * Security Configuration class for defining instance of Spring Security
  */
 @Configuration
 @EnableWebSecurity
@@ -33,17 +33,27 @@ public class SecConfig {
     @Autowired
     private UserService userService;
 
+    /**
+     * Bean for configuring the filter for spring Security
+     * @param http for security configuring of http request
+     * @return
+     * @throws Exception
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable() // todo Check how or if to configure
                 .cors(Customizer.withDefaults()) // Uses the Bean CorsConfigurationSource
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**").permitAll() // Row for all the whitelisted endpoints
-//                /api/v1/testEndpoint
+                .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("/api/v1/testEndpoint/**").hasRole("ROLE_recruiter")
+//
                 .anyRequest().authenticated()
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .invalidSessionUrl("/api/v1/auth/authenticate")
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider()) //Authentication provider
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

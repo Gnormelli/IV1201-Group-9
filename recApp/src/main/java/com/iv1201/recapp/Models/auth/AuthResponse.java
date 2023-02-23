@@ -4,7 +4,7 @@ import com.iv1201.recapp.Models.Role;
 
 public class AuthResponse {
     private String jwtToken;
-   private Role role;
+    private Role role;
 
     public AuthResponse() {
     }
