@@ -9,7 +9,7 @@ const ApiPost = {
         method: "POST", // HTTP method
         crossDomain: true,
         headers: {
-            // "Authorization" : token ,
+            "Authorization" : token ,
             "Content-Type": "application/json",
             "Access-Control-Request-Headers":
                 "Authorization , Origin, X-Requested-With, " +

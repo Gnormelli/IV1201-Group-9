@@ -10,6 +10,7 @@ import com.iv1201.recapp.Models.auth.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,7 @@ public class AuthService {
                     authRequest.getEmail(),
                     authRequest.getPassword());
             this.authenticationManager.authenticate(upaToken);
+            System.out.println(SecurityContextHolder.getContext().getAuthentication());
             user = userRepo.findByEmail(authRequest.getEmail());
             role = user.getUserRole();
         }catch (Exception e ){

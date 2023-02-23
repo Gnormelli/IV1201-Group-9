@@ -5,12 +5,13 @@ function doThrow(e) {
 const url = "http://localhost:8081";
 
 const ApiCall = {
-  apiCall(params) {
+  apiCall(params,token) {
     return fetch(url + params, {
       method: "GET", // HTTP method
       crossDomain: true,
       headers: {
         // HTTP headers
+        "Authorization" : token,
         "Content-Type": "application/json",
         "Access-Control-Request-Headers":
           "Origin, X-Requested-With, Content-Type, Accept",
@@ -31,11 +32,12 @@ const ApiCall = {
   },
   test() {
     const testEndPoint = "/api/v1/testEndpoint/anotherTestEndpoint";
-    return ApiCall.apiCall(testEndPoint).then((data) => data);
+    const token = "Bearer "+ localStorage.getItem("token");
+    return ApiCall.apiCall(testEndPoint,token).then((data) => data);
   },
-  getData(object) {
+  getData() {
     const getQueueEndpoint = "/api/v1/auth/loginRoute";
-    return ApiCall.apiCall(getQueueEndpoint,object).then((data) => data);
+    return ApiCall.apiCall(getQueueEndpoint).then((data) => data);
   }
 };
 

@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -47,6 +49,7 @@ public class JwtFilter extends OncePerRequestFilter {
         jwtToken = authFromHeader.substring(7);
         username = jwtService.getUsernameFromToken(jwtToken);
 
+
         if(username != null && SecurityContextHolder
                 .getContext()
                 .getAuthentication() == null){
@@ -64,13 +67,9 @@ public class JwtFilter extends OncePerRequestFilter {
                         new WebAuthenticationDetailsSource().buildDetails(request));
                 // Gives the complete token witt all details to the Security Context holder
                 SecurityContextHolder.getContext().setAuthentication(token);
-            } else if (username.equals(userDetails.getUsername()) &&
-                    jwtService.checkExpirationOfToken(jwtToken)) {
-                System.out.println("Row 70 - JWT Filter");
-                filterChain.doFilter(request, response);
-                return;
             }
         }
+        Object auth = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         filterChain.doFilter(request,response);
     }
 }

@@ -11,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  *
  */
 @SpringBootApplication
-@EnableConfigurationProperties(ConfigProperties.class)
 public class RecAppApplication {
 
 	public static void main(String[] args) {
