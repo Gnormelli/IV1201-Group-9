@@ -1,6 +1,5 @@
 package com.iv1201.recapp;
 
-import com.iv1201.recapp.Config.ConfigProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

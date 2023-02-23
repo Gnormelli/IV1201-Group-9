@@ -1,6 +1,5 @@
 package com.iv1201.recapp.Service;
 
-import com.iv1201.recapp.Config.ConfigProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -11,18 +10,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.sql.SQLOutput;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ *
+ */
 @Service
 public class JwtService {
 
-//    Does not seam to work might check later.
-//    private static ConfigProperties configProperties;
-//    private static final String SECRET_KEY = configProperties.secret();
     @Value("${jwt.secret}")
     private String secret;
 

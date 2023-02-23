@@ -14,10 +14,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
+/**
+ * Provides user service for end-point use.
+ */
 @Service
 public class UserService implements UserDetailsService {
     @Autowired
     UserRepo userRepo;
+
+    /**
+     * Load user details by username, from user repository.
+     * @param username username of user to be loaded from database.
+     * @return UserDetails of user.
+     * @throws UsernameNotFoundException if username did not exist.
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepo.findByUsername(username);

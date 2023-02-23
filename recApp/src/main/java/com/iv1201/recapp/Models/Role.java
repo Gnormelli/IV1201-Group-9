@@ -2,6 +2,9 @@ package com.iv1201.recapp.Models;
 
 import jakarta.persistence.*;
 
+/**
+ * POJO for user roles.
+ */
 @Entity
 @Table(name = "role")
 public class Role {
