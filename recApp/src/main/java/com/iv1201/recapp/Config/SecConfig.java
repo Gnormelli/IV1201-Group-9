@@ -41,6 +41,7 @@ public class SecConfig {
                 .authorizeRequests()
                 .requestMatchers("/api/v1/auth/**").permitAll() // Row for all the whitelisted endpoints
 //                /api/v1/testEndpoint
+                .requestMatchers("/api/v1/auth/admin/**").hasRole("1L")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -1,6 +1,12 @@
 import React from 'react';
 import {Button, Flex, Text} from "@chakra-ui/react";
 
+
+/**
+ *
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const logout = () => {
     // Remove the user's session data
     localStorage.removeItem("userToken");
