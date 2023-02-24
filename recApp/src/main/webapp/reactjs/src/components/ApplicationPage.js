@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Box, Button, Input, Stack, Heading, VStack, StackDivider, Select, CloseButton, CheckboxGroup, Text, Checkbox } from '@chakra-ui/react';
 import { FormControl, FormLabel } from '@chakra-ui/react'
+import {NavbarComponent} from './NavbarComponent';
 
-function ApplicationComponent() {
+function ApplicationPage() {
     const [currentSection, setCurrentSection] = useState(0);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -129,64 +130,67 @@ function ApplicationComponent() {
         </Box>
     ];
     return (
-        <Box
-            display='flex'
-            flexDirection='column'
-            justifyContent='center'
-            alignItems='center'
-            minHeight='100vh'
-            backgroundColor='gray.50'
-        >
-            <Box width='80%' maxWidth='800px' backgroundColor='white' p={6} borderRadius='lg'>
-                <Box mb={6}>
-                    <Heading as='h1' size='xl'>
-                        Welcome to the Application
-                    </Heading>
-                </Box>
-                <Box display='flex' flexDirection='column' alignItems='center'>
-                    {sections[currentSection]}
-                    <Box
-                        display='flex'
-                        justifyContent='space-between'
-                        width='100%'
-                        mt={6}
-                    >
-                        {currentSection > 0 && (
-                            <Button
-                                onClick={() => setCurrentSection(currentSection - 1)}
-                                disabled={currentSection === 0}
-                            >
-                                Back
-                            </Button>
-                        )}
-                        <Box display='flex' justifyContent='center' alignItems='center'>
-                            <Stack direction='row' spacing={2}>
-                                {sections.map((_, i) => (
-                                    <Box
-                                        key={i}
-                                        h='12px'
-                                        w='12px'
-                                        bg={i === currentSection ? 'blue.500' : 'gray.200'}
-                                        borderRadius='full'
-                                        cursor='pointer'
-                                        onClick={() => setCurrentSection(i)}
-                                    />
-                                ))}
-                            </Stack>
+        <>
+            <NavbarComponent />
+            <Box
+                display='flex'
+                flexDirection='column'
+                justifyContent='center'
+                alignItems='center'
+                minHeight='100vh'
+                backgroundColor='gray.50'
+            >
+                <Box width='80%' maxWidth='800px' backgroundColor='white' p={6} borderRadius='lg'>
+                    <Box mb={6}>
+                        <Heading as='h1' size='xl'>
+                            Welcome to the Application
+                        </Heading>
+                    </Box>
+                    <Box display='flex' flexDirection='column' alignItems='center'>
+                        {sections[currentSection]}
+                        <Box
+                            display='flex'
+                            justifyContent='space-between'
+                            width='100%'
+                            mt={6}
+                        >
+                            {currentSection > 0 && (
+                                <Button
+                                    onClick={() => setCurrentSection(currentSection - 1)}
+                                    disabled={currentSection === 0}
+                                >
+                                    Back
+                                </Button>
+                            )}
+                            <Box display='flex' justifyContent='center' alignItems='center'>
+                                <Stack direction='row' spacing={2}>
+                                    {sections.map((_, i) => (
+                                        <Box
+                                            key={i}
+                                            h='12px'
+                                            w='12px'
+                                            bg={i === currentSection ? 'blue.500' : 'gray.200'}
+                                            borderRadius='full'
+                                            cursor='pointer'
+                                            onClick={() => setCurrentSection(i)}
+                                        />
+                                    ))}
+                                </Stack>
+                            </Box>
+                            {currentSection < sections.length - 1 && (
+                                <Button
+                                    onClick={() => setCurrentSection(currentSection + 1)}
+                                    disabled={currentSection === sections.length - 1}
+                                >
+                                    Next
+                                </Button>
+                            )}
                         </Box>
-                        {currentSection < sections.length - 1 && (
-                            <Button
-                                onClick={() => setCurrentSection(currentSection + 1)}
-                                disabled={currentSection === sections.length - 1}
-                            >
-                                Next
-                            </Button>
-                        )}
                     </Box>
                 </Box>
             </Box>
-        </Box>
+        </>
     )
 }
 
-export default ApplicationComponent;
+export default ApplicationPage;

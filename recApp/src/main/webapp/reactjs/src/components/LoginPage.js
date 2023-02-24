@@ -49,7 +49,7 @@ function LoginPage() {
                 if (userRole === 1) {
                     pageHref = '/admin';
                 } else if (userRole === 2) {
-                    pageHref = '/signup';
+                    pageHref = '/applicants';
                 } else {
                     pageHref = '/';
                 }
