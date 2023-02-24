@@ -25,13 +25,7 @@ const ApiCall = {
                 "Status was: " + response.statusText + " " + response.status + " " + params
               )
             )
-      ).then((response) => {
-          // if (response.data) {
-            console.log(response);
-            // localStorage.setItem("user", JSON.stringify(response.data));
-          // }
-          localStorage.setItem('token', response.jwtToken);
-        })
+      )
       .then((response) => {
         console.log(response)
         return response.json()
@@ -42,8 +36,8 @@ const ApiCall = {
     const token = "Bearer "+ localStorage.getItem("token");
     return ApiCall.apiCall(testEndPoint,token).then((data) => data);
   },
-  getData() {
-    const getQueueEndpoint = "/api/v1/auth/loginRoute";
+  getApplications() {
+    const getQueueEndpoint = "/api/v1/auth/applicants";
     return ApiCall.apiCall(getQueueEndpoint).then((data) => data);
   }
 };

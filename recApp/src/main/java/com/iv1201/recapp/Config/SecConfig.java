@@ -48,6 +48,7 @@ public class SecConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/api/v1/testEndpoint/**").hasAuthority(" recruiter")
+                .requestMatchers("/api/v1/recruiters/**").hasAuthority(" recruiter")
 //                .requestMatchers("/api/v1/testEndpoint/**").hasAuthority(" applicant")
                 .anyRequest().authenticated()
                 .and()

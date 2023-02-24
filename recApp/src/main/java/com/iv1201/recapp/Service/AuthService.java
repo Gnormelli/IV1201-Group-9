@@ -3,7 +3,7 @@ package com.iv1201.recapp.Service;
 import com.iv1201.recapp.Integration.ApplicantRepo;
 import com.iv1201.recapp.Integration.RoleRepo;
 import com.iv1201.recapp.Integration.UserRepo;
-import com.iv1201.recapp.Models.Applications;
+import com.iv1201.recapp.Models.Application;
 import com.iv1201.recapp.Models.Role;
 import com.iv1201.recapp.Models.User;
 import com.iv1201.recapp.Models.auth.AuthRequest;
@@ -12,11 +12,11 @@ import com.iv1201.recapp.Models.auth.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Provides authentication service for end-point use.
@@ -33,8 +33,6 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private JwtService jwtService;
-    @Autowired
-    private ApplicantRepo applicantRepo;
 
     String errorMsgForClient = "User could not be";
 
@@ -94,17 +92,7 @@ public class AuthService {
         return authResponse;
     }
 
-    public List<Applications> applicants() {
-        List<Applications> applicant = applicantRepo.findAllApplicants();
 
-        if(applicant == null){
-            throw new IllegalArgumentException();
-        }
-       //Collection<SimpleGrantedAuthority> authority = new ArrayList<>();
-        //SimpleGrantedAuthority simpleGrantedAuthority= new SimpleGrantedAuthority();
-        //authority.add(simpleGrantedAuthority);
-        return applicant;
-    }
 
 
 

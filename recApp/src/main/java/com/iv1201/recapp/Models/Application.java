@@ -8,7 +8,7 @@ import jakarta.persistence.SequenceGenerator;
 
 @Entity
 @Table(name = "applications")
-public class Applications {
+public class Application {
 
     @Id
     @Column(name = "id")
@@ -45,10 +45,10 @@ public class Applications {
     )
     String age;
 
-    public Applications() {
+    public Application() {
     }
 
-    public Applications(Long id, String firstname, String surname, String age) {
+    public Application(Long id, String firstname, String surname, String age) {
         this.id = id;
         this.firstname = firstname;
         this.surname = surname;

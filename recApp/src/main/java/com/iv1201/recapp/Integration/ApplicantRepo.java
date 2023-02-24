@@ -1,16 +1,15 @@
 package com.iv1201.recapp.Integration;
 
-import com.iv1201.recapp.Models.Applications;
+import com.iv1201.recapp.Models.Application;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface ApplicantRepo extends JpaRepository<Applications, Long> {
+public interface ApplicantRepo extends JpaRepository<Application, Long> {
 
-    @Query("SELECT a FROM Applications a")
-    List<Applications> findAllApplicants();
+    @Query("SELECT a FROM Application a")
+    List<Application> findAllApplicants();
 
 }

@@ -42,17 +42,17 @@ function LoginPage() {
                 console.log(response);
                 localStorage.setItem('token', response.jwtToken);
                 console.log(response);
-               // console.log("ROLE ID:" + response.role.id);
+               console.log("ROLE ID:" + response.role.id);
 
-                // const userRole = response.role.id;
-                let pageHref = '/admin';
-                // if (userRole === 2) {
-                //     pageHref = '/admin';
-                // } else if (userRole === 1) {
-                //     pageHref = '/signup';
-                // } else {
-                //     pageHref = '/';
-                // }
+                const userRole = response.role.id;
+                let pageHref;
+                if (userRole === 1) {
+                    pageHref = '/admin';
+                } else if (userRole === 2) {
+                    pageHref = '/signup';
+                } else {
+                    pageHref = '/';
+                }
 
                 window.location.href = pageHref;
             })

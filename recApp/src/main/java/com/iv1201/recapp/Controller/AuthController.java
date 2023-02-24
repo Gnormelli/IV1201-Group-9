@@ -1,7 +1,5 @@
 package com.iv1201.recapp.Controller;
 
-import com.iv1201.recapp.Integration.ApplicantRepo;
-import com.iv1201.recapp.Models.Applications;
 import com.iv1201.recapp.Models.auth.AuthRequest;
 import com.iv1201.recapp.Models.auth.AuthResponse;
 import com.iv1201.recapp.Models.auth.RegisterRequest;
