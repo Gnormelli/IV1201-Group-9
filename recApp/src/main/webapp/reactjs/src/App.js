@@ -1,11 +1,12 @@
 import React from 'react';
 import LoginComponent from './components/LoginComponent.js';
 import { ChakraProvider } from '@chakra-ui/react'
+import ApplicationComponent from "./components/ApplicationComponent";
 function App() {
   return (
       <ChakraProvider>
     <div>
-        <LoginComponent />
+        <ApplicationComponent />
 
     </div>
       </ChakraProvider>
