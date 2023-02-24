@@ -5,6 +5,11 @@ import { Text } from '@chakra-ui/react'
 import { Heading } from '@chakra-ui/react'
 import ApiPost from "../ApiInterface/ApiPost";
 
+/**
+ * 
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -19,6 +24,8 @@ function LoginPage() {
         }
         setError('')
 
+
+
         const logInData = {
             email,
             password
@@ -26,13 +33,29 @@ function LoginPage() {
 
         ApiPost.logIn(logInData)
             .then(response => {
+                console.log(response);
                 localStorage.setItem('token', response.jwtToken);
+                console.log(response);
+               // console.log("ROLE ID:" + response.role.id);
+
+                // const userRole = response.role.id;
+                let pageHref = '/admin';
+                // if (userRole === 2) {
+                //     pageHref = '/admin';
+                // } else if (userRole === 1) {
+                //     pageHref = '/signup';
+                // } else {
+                //     pageHref = '/';
+                // }
+
+                window.location.href = pageHref;
             })
             .catch(error => {
                 console.error(error);
             });
 
     }
+
 
     return (
         <Box

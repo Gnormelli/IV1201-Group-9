@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
- * A user entity for the database named person
+ * POJO for Users.
  */
 @Entity
 @Table(name = "person")
@@ -72,9 +72,22 @@ public class User implements UserDetails {
     @JoinColumn(name = "fk_id_role")
     Role userRole;
 
+    /**
+     * Empty constructor
+     */
     public User() {
     }
 
+    /**
+     * Constructor for creating Users
+     * @param username of User
+     * @param firstname of User
+     * @param surname of User
+     * @param password of User
+     * @param pnr of User
+     * @param email of User
+     * @param userRole of User
+     */
     public User(String username,
                 String firstname,
                 String surname,

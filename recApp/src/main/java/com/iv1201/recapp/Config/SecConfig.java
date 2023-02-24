@@ -23,7 +23,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 /**
- * @Author Gustav Normelli
+ * Security Configuration class for defining instance of Spring Security
  */
 @Configuration
 @EnableWebSecurity
@@ -33,16 +33,26 @@ public class SecConfig {
     @Autowired
     private UserService userService;
 
+    /**
+     * Bean for configuring the filter for spring Security. Sets up the filter when server
+     * starts.
+     * @param http for security configuring of http request
+     * @return Builds a SecurityFilterChain with configuration for the application.
+     * @throws Exception If something goes wrong
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable() // todo Check how or if to configure
                 .cors(Customizer.withDefaults()) // Uses the Bean CorsConfigurationSource
-                .authorizeRequests()
-                .requestMatchers("/api/v1/auth/**").permitAll() // Row for all the whitelisted endpoints
-//                /api/v1/testEndpoint
+                .authorizeHttpRequests()
+                .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("/api/v1/testEndpoint/**").hasAuthority(" recruiter")
+//                .requestMatchers("/api/v1/testEndpoint/**").hasAuthority(" applicant")
                 .anyRequest().authenticated()
                 .and()
+//                .exceptionHandling().accessDeniedPage("/accessDenied");
+//                .sessionManagement()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider()) //Authentication provider
@@ -51,6 +61,11 @@ public class SecConfig {
         return http.build();
     }
 
+    /**
+     * Bean for configuration of Cross-origin resource sharing in Spring application
+     * @return <code>UrlBasedCorsConfigurationSource<code/> to be used for configuration
+     * so that incoming data created by other source can be handled by server.
+     */
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -64,6 +79,13 @@ public class SecConfig {
         return source;
     }
 
+    /**
+     * Bean for configuration of Spring Security filter which provides authentication.
+     * Is to be used by the <code>AuthenticationManager<code/> when authenticating
+     * user credentials.
+     * @return <code>daoAuthProvider<code/> for access of user information from
+     * database.
+     */
     @Bean
     public AuthenticationProvider authenticationProvider() {
         final DaoAuthenticationProvider daoAuthProvider =
@@ -74,10 +96,26 @@ public class SecConfig {
         return daoAuthProvider;
     }
 
+    /**
+     * Bean for configuration of Authentication Manager to be used by Spring Security to
+     * allocate authentication provider.
+     * @param authConf the configured <code>AuthenticationConfiguration</code> set up by
+     * Spring Security.
+     * @return the <code>AuthenticationManager</code> from the
+     * <code>AuthenticationConfiguration</code> set up by Spring Security.
+     * @throws Exception if there were no <code>AuthenticationManager</code> to return
+     * <code>AuthenticationConfiguration</code>
+     */
     @Bean
     public AuthenticationManager authManager(AuthenticationConfiguration authConf) throws Exception {
         return authConf.getAuthenticationManager();
     }
+
+    /**
+     * Bean for the <code>PasswordEncoder</code> to be used by
+     * Spring Security when entering new user or accessing user data.
+     * @return the encoder object to be used.
+     */
     @Bean
     public PasswordEncoder bcryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
