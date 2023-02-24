@@ -48,15 +48,11 @@ public class SecConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/api/v1/testEndpoint/**").hasAuthority(" recruiter")
-                .requestMatchers("/api/v1/testEndpoint/**").hasAuthority(" applicant")
-//                  "1L"
-//                "ROLE_recruiter"
+//                .requestMatchers("/api/v1/testEndpoint/**").hasAuthority(" applicant")
                 .anyRequest().authenticated()
                 .and()
 //                .exceptionHandling().accessDeniedPage("/accessDenied");
 //                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-//                .invalidSessionUrl("/api/v1/auth/authenticate")
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider()) //Authentication provider

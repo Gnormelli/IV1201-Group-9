@@ -11,7 +11,7 @@ const test = () => {
 };
 const logout = () => {
     // Remove the user's session data
-    localStorage.removeItem("userToken");
+    localStorage.removeItem("token");
     // Redirect the user to the login page
     window.location.replace("/");
 };
