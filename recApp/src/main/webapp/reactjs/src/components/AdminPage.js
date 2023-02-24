@@ -1,17 +1,35 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Box, Text, Flex, Stack,} from '@chakra-ui/react';
 import {Select} from "@chakra-ui/react";
 import {NavbarComponent} from './NavbarComponent';
-
+import ApiCall from "../ApiInterface/ApiCall";
 
 const names = ["John", "Jane", "Jim", "Jill"];
+
+/**
+ *
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function AdminPage() {
 
+    const [users, setUsers] = React.useState([]);
+
+    useEffect(() => {
+        ApiCall.getApplications()
+            .then(response => {
+                localStorage.setItem('token', response.jwtToken);
+                console.log(response);
+                setUsers(response);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
 
     const handleClick = (name) => {
         console.log(`${name} was clicked`);
     };
-
 
     return (
         <>
@@ -29,7 +47,7 @@ function AdminPage() {
                 </Box>
 
                 <Box p={4} >
-                    {names.map((name, index) => (
+                    {users.map((name, index) => (
                         <Flex
                             key={index}
                             p={2}
@@ -37,11 +55,13 @@ function AdminPage() {
                             bg={index % 2 === 0 ? "white" : "gray.300"}
                             onClick={() => handleClick(name)}
                             cursor="pointer"
-
+                            justifyContent="space-between"
                             _hover={{ bg: "gray.200" }}
                             transition="background-color 0.2s ease-in-out"
                         >
-                            <Text fontFamily="Roboto, sans-serif">{name}</Text>
+                            <Text fontFamily="Roboto, sans-serif" mr={5} fontWeight="bold">{name.firstname}</Text>
+                            <Text fontFamily="Roboto, sans-serif" mr={5} fontWeight="bold">{name.surname}</Text>
+                            <Text fontFamily="Roboto, sans-serif"fontWeight="bold">{name.age}</Text>
                             <Stack ml="auto">
                                 <Select variant='filled' placeholder='Status' >
                                     <option value="Option 1">Accepted</option>

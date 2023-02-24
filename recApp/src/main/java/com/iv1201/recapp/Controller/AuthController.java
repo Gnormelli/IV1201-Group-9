@@ -1,5 +1,7 @@
 package com.iv1201.recapp.Controller;
 
+import com.iv1201.recapp.Integration.ApplicantRepo;
+import com.iv1201.recapp.Models.Applications;
 import com.iv1201.recapp.Models.auth.AuthRequest;
 import com.iv1201.recapp.Models.auth.AuthResponse;
 import com.iv1201.recapp.Models.auth.RegisterRequest;
@@ -50,12 +52,4 @@ public class AuthController {
         return ResponseEntity.ok(authService.authenticate(authRequest));
     }
 
-    @GetMapping("/loginRoute")
-    public ResponseEntity<AuthResponse> login(
-            @RequestParam AuthRequest object
-    ){
-        System.out.println("This is an object:" + object);
-
-        return ResponseEntity.ok(authService.authenticate(object));
-    }
 }

@@ -5,6 +5,12 @@ import { Text } from '@chakra-ui/react'
 import { Heading } from '@chakra-ui/react'
 import ApiPost from "../ApiInterface/ApiPost";
 
+
+/**
+ *
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function SignupPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
