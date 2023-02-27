@@ -1,5 +1,6 @@
 package com.iv1201.recapp.Config;
 
+import com.iv1201.recapp.Exceptions.EmailNotFoundException;
 import com.iv1201.recapp.Service.JwtService;
 import com.iv1201.recapp.Service.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -38,14 +39,20 @@ public class JwtFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     )throws ServletException, IOException {
-        final String authFromHeader = request.getHeader(AUTHORIZATION);
+        String authFromHeader = request.getHeader(AUTHORIZATION);
         final String username;
         final String jwtToken;
 
-        if(authFromHeader == null || !authFromHeader.startsWith("Bearer ")){
-            filterChain.doFilter(request, response);
+//        if(authFromHeader == null || !authFromHeader.startsWith("Bearer ")){
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
+
+        boolean willReturn = checkAuthFromHeader(authFromHeader, filterChain, response, request);
+        if (willReturn){
             return;
         }
+
         try {
             jwtToken = authFromHeader.substring(7);
             username = jwtService.getUsernameFromToken(jwtToken);
@@ -74,7 +81,20 @@ public class JwtFilter extends OncePerRequestFilter {
             filterChain.doFilter(request,response);
         }catch (ExpiredJwtException e ){
             System.out.println("The token has expired");
+            checkAuthFromHeader(null, filterChain, response, request);
         }
-
     }
+    private boolean checkAuthFromHeader(String authFromHeader,
+                                     FilterChain filterChain,
+                                     HttpServletResponse response,
+                                     HttpServletRequest request
+                                     ) throws ServletException, IOException {
+        boolean willBreak = false;
+        if(authFromHeader == null || !authFromHeader.startsWith("Bearer ") || authFromHeader.contains("Bearer null")){
+            filterChain.doFilter(request, response);
+            willBreak = true;
+        }
+        return willBreak;
+    }
+
 }

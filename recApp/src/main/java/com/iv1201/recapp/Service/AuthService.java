@@ -1,5 +1,6 @@
 package com.iv1201.recapp.Service;
 
+import com.iv1201.recapp.Exceptions.EmailNotFoundException;
 import com.iv1201.recapp.Integration.ApplicantRepo;
 import com.iv1201.recapp.Integration.RoleRepo;
 import com.iv1201.recapp.Integration.UserRepo;
@@ -41,7 +42,7 @@ public class AuthService {
      * @param authRequest defines the data needed to authenticate the user.
      * @return <code>authResponse<code/> object with token and role for client.
      */
-    public AuthResponse authenticate(AuthRequest authRequest) {
+    public AuthResponse authenticate(AuthRequest authRequest) throws EmailNotFoundException {
         AuthResponse authResponse = new AuthResponse();
         User user;
         Role role;
@@ -55,10 +56,8 @@ public class AuthService {
             user = userRepo.findByEmail(authRequest.getEmail());
             role = user.getUserRole();
         }catch (Exception e ){
-            String errorMessage = " authenticated";
-            System.out.println(errorMsgForClient+errorMessage);
-            authResponse.setJwtToken(errorMsgForClient+errorMessage);
-            return authResponse;
+            System.out.println(e);
+           throw new EmailNotFoundException("Email could not be found");
         }
         authResponse.setJwtToken(jwtService.createToken(user));
         authResponse.setRole(role);

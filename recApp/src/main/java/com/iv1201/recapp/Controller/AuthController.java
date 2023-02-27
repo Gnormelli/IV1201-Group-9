@@ -1,5 +1,6 @@
 package com.iv1201.recapp.Controller;
 
+import com.iv1201.recapp.Exceptions.EmailNotFoundException;
 import com.iv1201.recapp.Models.auth.AuthRequest;
 import com.iv1201.recapp.Models.auth.AuthResponse;
 import com.iv1201.recapp.Models.auth.RegisterRequest;
@@ -38,7 +39,7 @@ public class AuthController {
     @PostMapping("/authenticate")
     public ResponseEntity<AuthResponse> authenticate(
             @RequestBody AuthRequest authRequest
-    ){
+    ) throws EmailNotFoundException {
 
         return ResponseEntity.ok(authService.authenticate(authRequest));
     }
@@ -46,7 +47,7 @@ public class AuthController {
     @PostMapping("/refresh")
     public ResponseEntity<AuthResponse> refresh(
             @RequestBody AuthRequest authRequest
-    ){
+    ) throws EmailNotFoundException {
         return ResponseEntity.ok(authService.authenticate(authRequest));
     }
 

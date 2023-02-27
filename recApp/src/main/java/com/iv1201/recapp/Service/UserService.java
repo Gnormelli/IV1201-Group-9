@@ -1,5 +1,6 @@
 package com.iv1201.recapp.Service;
 
+import com.iv1201.recapp.Exceptions.EmailNotFoundException;
 import com.iv1201.recapp.Integration.UserRepo;
 import com.iv1201.recapp.Models.User;
 
@@ -30,10 +31,17 @@ public class UserService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userRepo.findByUsername(username);
-        if(user == null){
-            throw new UsernameNotFoundException("Username not found");
+        Optional<User> user = null;
+        try{
+             user = userRepo.findByUsername(username);
+        }catch (Exception e){
+            try {
+                throw new EmailNotFoundException("Email does not found");
+            } catch (EmailNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
         }
+
         Collection<SimpleGrantedAuthority> authority = new ArrayList<>();
         SimpleGrantedAuthority simpleGrantedAuthority= new SimpleGrantedAuthority(" " + user.get().getUserRole().getRoleName());
         authority.add(simpleGrantedAuthority);

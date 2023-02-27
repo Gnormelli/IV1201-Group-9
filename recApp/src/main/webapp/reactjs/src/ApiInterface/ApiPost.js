@@ -17,15 +17,17 @@ const ApiPost = {
             },
 
         body: JSON.stringify(object),
-        }).then((response) =>
-            response.status === 200
-                ? response
-                : doThrow(
-                    new Error(
-                    "Status was: " + response.statusText + " " + response.status
-                    )
-                )
+        }
+        // ).then((response) =>
+        //     response.status === 200
+        //         ? response
+        //         : console.log(response) && doThrow(
+        //             new Error(
+        //             "Status was: " + response.statusText + " " + response.status + response.ErrorMessage
+        //             )
+        //         )
             ).then((response) => {
+                console.log(response);
                     return response.json()
             });
         },
@@ -36,8 +38,10 @@ const ApiPost = {
         },
         logIn(object) {
             const logInEndpoint = "/api/v1/auth/authenticate";
-            const token = null;
-                // "Bearer "+ localStorage.getItem("token");
+            let token = "Bearer "+ localStorage.getItem("token");
+            if(token === "Bearer undefined"){
+                token = "Bearer null";
+            }
             return ApiPost.apiCall(logInEndpoint, object, token).then((data) => data);
         }
     };
