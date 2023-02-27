@@ -6,6 +6,8 @@ import ApiCall from "../ApiInterface/ApiCall";
 
 const names = ["John", "Jane", "Jim", "Jill"];
 
+
+
 /**
  *
  * @returns {JSX.Element}
@@ -14,6 +16,8 @@ const names = ["John", "Jane", "Jim", "Jill"];
 function AdminPage() {
 
     const [users, setUsers] = React.useState([]);
+
+
 
     useEffect(() => {
         ApiCall.getApplications()
@@ -27,8 +31,11 @@ function AdminPage() {
             });
     }, []);
 
-    const handleClick = (name) => {
-        console.log(`${name} was clicked`);
+
+    const handleChange = (e, index) => {
+        console.log(`${e} was clicked`);
+        console.log(`${index} was index`);
+
     };
 
     return (
@@ -53,7 +60,7 @@ function AdminPage() {
                             p={2}
                             alignItems="center"
                             bg={index % 2 === 0 ? "white" : "gray.300"}
-                            onClick={() => handleClick(name)}
+
                             cursor="pointer"
                             justifyContent="space-between"
                             _hover={{ bg: "gray.200" }}
@@ -63,10 +70,10 @@ function AdminPage() {
                             <Text fontFamily="Roboto, sans-serif" mr={5} fontWeight="bold">{name.surname}</Text>
                             <Text fontFamily="Roboto, sans-serif"fontWeight="bold">{name.age}</Text>
                             <Stack ml="auto">
-                                <Select variant='filled' placeholder='Status' >
-                                    <option value="Option 1">Accepted</option>
-                                    <option value="Option 2">Not Accepted</option>
-                                    <option value="Option 3">Pending</option>
+                                <Select variant='filled' placeholder={name.status} onChange={(e) => handleChange(e.target.value, index)}>
+                                    <option value="Accepted" style={{ display: name.status === 'Accepted' ? 'none' : 'block' }}>Accepted</option>
+                                    <option value="Rejected" style={{ display: name.status === 'Rejected' ? 'none' : 'block' }}>Rejected</option>
+                                    <option value="Unhandled" style={{ display: name.status === 'Unhandled' ? 'none' : 'block' }}>Unhandled</option>
                                 </Select>
                             </Stack>
                         </Flex>

@@ -45,14 +45,23 @@ public class Application {
     )
     String age;
 
+    @Column(
+            name = "status",
+            nullable = true,
+            columnDefinition = "TEXT"
+    )
+    String status;
+
     public Application() {
     }
 
-    public Application(Long id, String firstname, String surname, String age) {
+
+    public Application(Long id, String firstname, String surname, String age, String status) {
         this.id = id;
         this.firstname = firstname;
         this.surname = surname;
         this.age = age;
+        this.status = status;
     }
 
     public Long getId() {
@@ -87,13 +96,22 @@ public class Application {
         this.age = age;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Applications{" +
+        return "Application{" +
                 "id=" + id +
                 ", firstname='" + firstname + '\'' +
                 ", surname='" + surname + '\'' +
                 ", age='" + age + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

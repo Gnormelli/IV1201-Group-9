@@ -10,8 +10,8 @@ import java.util.List;
 @Service
 public class ApplicationService {
     @Autowired
-    private static ApplicantRepo applicantRepo;
-    public static List<Application> applicants() {
+    private ApplicantRepo applicantRepo;
+    public List<Application> applicants() {
         List<Application> applicant = applicantRepo.findAllApplicants();
 
         if(applicant == null){

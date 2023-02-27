@@ -16,7 +16,7 @@ public class RecruiterController {
     @Autowired
     private ApplicationService applicationService;
 
-    @GetMapping("/applicants")
+    @GetMapping("/applicants" )
     public ResponseEntity<List<Application>> getAllApplicants(){
         return ResponseEntity.ok(applicationService.applicants());
     }
