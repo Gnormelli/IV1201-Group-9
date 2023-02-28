@@ -5,12 +5,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import java.util.Collection;
 import java.util.Collections;
 
 /**
  * POJO for Users.
  */
+
 @Entity
 @Table(name = "person")
 public class User implements UserDetails {
@@ -29,9 +33,12 @@ public class User implements UserDetails {
             updatable = false
     )
     long id;
+
+
     @Column(
             name = "username",
             nullable = true,
+            unique=true,
             columnDefinition = "TEXT"
     )
     String username;
@@ -48,6 +55,7 @@ public class User implements UserDetails {
     )
     String surname;
 
+    @NotEmpty(message = "Password cannot be empty")
     @Column(
             name = "password",
             nullable = false,
@@ -58,10 +66,12 @@ public class User implements UserDetails {
     @Column(
             name = "pnr",
             nullable = true,
+            unique=true,
             columnDefinition = "TEXT"
     )
     String pnr;
 
+    @Email(message = "Not an email")
     @Column(
             name = "email",
             nullable = false,

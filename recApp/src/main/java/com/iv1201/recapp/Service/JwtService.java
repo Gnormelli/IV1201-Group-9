@@ -16,7 +16,9 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- *
+ * Provides Jason Web Token service functions for <code>JwtFilter<code/>
+ * so tokens can be created and checked. Also holds methods for getting
+ * information of the token.
  */
 @Service
 public class JwtService {
@@ -27,6 +29,11 @@ public class JwtService {
     public JwtService(){
     }
 
+    /**
+     *
+     * @param userDetails
+     * @return
+     */
     public String createToken(UserDetails userDetails){
         return createToken(new HashMap<>(), userDetails);
     }
@@ -45,9 +52,14 @@ public class JwtService {
                 .setClaims(creationClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000*60*60*24)) // 1 sec -> 1 min -> 1 hour
-                .signWith(generateSignInKey(), SignatureAlgorithm.HS256)
+                .setExpiration(new Date(System.currentTimeMillis()+1000*60)) // 1 sec -> 1 min -> 1 hour
+                .signWith(createSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    private Key createSignInKey() {
+        byte[] keyBase64 = Decoders.BASE64.decode(secret);
+        return Keys.hmacShaKeyFor(keyBase64);
     }
 
     public boolean checkTokenValidity(String jwtToken, UserDetails userDetails){
@@ -55,15 +67,11 @@ public class JwtService {
         return (username.equals(userDetails.getUsername())) && !checkExpirationOfToken(jwtToken);
     }
 
-    public boolean checkExpirationOfToken(String jwtToken) {
+    private boolean checkExpirationOfToken(String jwtToken) {
         return getExpirationFromToken(jwtToken).before(new Date());
     }
 
-    private Key generateSignInKey() {
-        byte[] keyBase64 = Decoders.BASE64.decode(secret);
-        return Keys.hmacShaKeyFor(keyBase64);
-    }
-    public Date getExpirationFromToken(String jwtToken) {
+    private Date getExpirationFromToken(String jwtToken) {
         return getSingleClaim(jwtToken, Claims::getExpiration);
     }
 
@@ -79,7 +87,7 @@ public class JwtService {
     private Claims getAllClaims(String jwtToken){
         return Jwts
                 .parserBuilder()
-                .setSigningKey(generateSignInKey())
+                .setSigningKey(createSignInKey())
                 .build()
                 .parseClaimsJws(jwtToken)
                 .getBody();

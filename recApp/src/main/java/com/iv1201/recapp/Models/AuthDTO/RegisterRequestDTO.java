@@ -1,13 +1,17 @@
-package com.iv1201.recapp.Models.auth;
+package com.iv1201.recapp.Models.AuthDTO;
 
-public class AuthRequest {
+import javax.validation.constraints.Email;
+
+public class RegisterRequestDTO {
+    @Email(message = "Not an email")
     private String email;
     private String password;
 
-    public AuthRequest() {
+    public RegisterRequestDTO() {
     }
 
-    public AuthRequest(String email, String password) {
+    public RegisterRequestDTO(String email,
+                              String password) {
         this.email = email;
         this.password = password;
     }
@@ -30,7 +34,7 @@ public class AuthRequest {
 
     @Override
     public String toString() {
-        return "AuthenticationRequest{" +
+        return "RegisterRequest{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';

@@ -1,6 +1,5 @@
 package com.iv1201.recapp.Config;
 
-import com.iv1201.recapp.Exceptions.EmailNotFoundException;
 import com.iv1201.recapp.Service.JwtService;
 import com.iv1201.recapp.Service.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -10,7 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -18,12 +16,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Collection;
+
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 
 // todo add error handling for the jwtfilter
+
+/**
+ * The filter for handling Jason Web Tokens sent in Authorization header in
+ * HTTP requests to the server.
+ * Updates the Security Context Holder with the user stored in the token.
+ */
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
@@ -80,6 +84,10 @@ public class JwtFilter extends OncePerRequestFilter {
             Object auth = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             filterChain.doFilter(request,response);
         }catch (ExpiredJwtException e ){
+            /**
+             * Handle the exception to expired token by setting the
+             * willBreak to true so login credentials can be checked.
+             */
             System.out.println("The token has expired");
             checkAuthFromHeader(null, filterChain, response, request);
         }

@@ -12,7 +12,7 @@ import java.util.Map;
 
 
 @RestControllerAdvice
-public class ApplicationExceptionHandler {
+public class AppExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -24,13 +24,30 @@ public class ApplicationExceptionHandler {
         return expMap;
     }
 
-//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(NoSuchFieldError.class)
+    public Map<String, String> handleInvalidArgument(NoSuchFieldError e){
+        Map<String, String> expMap = new HashMap<>();
+        System.out.println(e.getMessage());
+        expMap.put("ErrorMessage", e.getMessage());
+
+        return ResponseEntity.status(403).body(expMap).getBody();
+    }
+
     @ExceptionHandler(EmailNotFoundException.class)
     public ResponseEntity handleBusinessException(EmailNotFoundException e){
         Map<String, String> expMap = new HashMap<>();
+        System.out.println(e.getMessage());
         expMap.put("ErrorMessage", e.getMessage());
 
         return ResponseEntity.status(403).body(expMap);
-//        return expMap;
+    }
+
+    @ExceptionHandler(EmailAllreadyExcistsException.class)
+    public ResponseEntity handleBusinessException(EmailAllreadyExcistsException e){
+        Map<String, String> expMap = new HashMap<>();
+        System.out.println(e.getMessage());
+        expMap.put("ErrorMessage", e.getMessage());
+
+        return ResponseEntity.status(406).body(expMap);
     }
 }
