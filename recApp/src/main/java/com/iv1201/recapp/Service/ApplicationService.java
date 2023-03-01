@@ -5,6 +5,8 @@ import com.iv1201.recapp.Integration.ApplicantRepo;
 import com.iv1201.recapp.Models.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +14,7 @@ import java.util.Objects;
 import static java.lang.Long.parseLong;
 
 @Service
+@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
 public class ApplicationService {
     @Autowired
     private ApplicantRepo applicantRepo;
