@@ -3,8 +3,8 @@ import {Box, Text, Flex, Stack,} from '@chakra-ui/react';
 import {Select} from "@chakra-ui/react";
 import {NavbarComponent} from './NavbarComponent';
 import ApiCall from "../ApiInterface/ApiCall";
+import ApiPost from "../ApiInterface/ApiPost";
 
-const names = ["John", "Jane", "Jim", "Jill"];
 
 /**
  *
@@ -15,10 +15,11 @@ function AdminPage() {
 
     const [users, setUsers] = React.useState([]);
 
+
+
     useEffect(() => {
         ApiCall.getApplications()
             .then(response => {
-                localStorage.setItem('token', response.jwtToken);
                 console.log(response);
                 setUsers(response);
             })
@@ -27,9 +28,28 @@ function AdminPage() {
             });
     }, []);
 
-    const handleClick = (name) => {
-        console.log(`${name} was clicked`);
-    };
+
+    const handleChange = (status, id) => {
+
+        const statusData = {
+            status,
+            id: id + 1,
+        };
+        console.log(`${status} was clicked`);
+        console.log(`${id+1} was index`);
+
+
+        ApiPost.setStatus(statusData)
+            .then(response => {
+                console.log(response);
+
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+    }
 
     return (
         <>
@@ -47,13 +67,13 @@ function AdminPage() {
                 </Box>
 
                 <Box p={4} >
-                    {users.map((name, index) => (
+                    {users.map((name, id) => (
                         <Flex
-                            key={index}
+                            key={id}
                             p={2}
                             alignItems="center"
-                            bg={index % 2 === 0 ? "white" : "gray.300"}
-                            onClick={() => handleClick(name)}
+                            bg={id % 2 === 0 ? "white" : "gray.300"}
+
                             cursor="pointer"
                             justifyContent="space-between"
                             _hover={{ bg: "gray.200" }}
@@ -63,10 +83,10 @@ function AdminPage() {
                             <Text fontFamily="Roboto, sans-serif" mr={5} fontWeight="bold">{name.surname}</Text>
                             <Text fontFamily="Roboto, sans-serif"fontWeight="bold">{name.age}</Text>
                             <Stack ml="auto">
-                                <Select variant='filled' placeholder='Status' >
-                                    <option value="Option 1">Accepted</option>
-                                    <option value="Option 2">Not Accepted</option>
-                                    <option value="Option 3">Pending</option>
+                                <Select variant='filled' placeholder={name.status} onChange={(status) => handleChange(status.target.value, id)}>
+                                    <option value="Accepted" style={{ display: name.status === 'Accepted' ? 'none' : 'block' }}>Accepted</option>
+                                    <option value="Rejected" style={{ display: name.status === 'Rejected' ? 'none' : 'block' }}>Rejected</option>
+                                    <option value="Unhandled" style={{ display: name.status === 'Unhandled' ? 'none' : 'block' }}>Unhandled</option>
                                 </Select>
                             </Stack>
                         </Flex>
