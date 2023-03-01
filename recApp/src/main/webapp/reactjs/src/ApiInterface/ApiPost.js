@@ -39,6 +39,11 @@ const ApiPost = {
             const token = null;
                 // "Bearer "+ localStorage.getItem("token");
             return ApiPost.apiCall(logInEndpoint, object, token).then((data) => data);
+        },
+        setStatus(object) {
+            const statusEndpoint = "/api/v1/recruiters/status";
+             const token = "Bearer "+ localStorage.getItem("token");
+            return ApiPost.apiCall(statusEndpoint, object, token).then((data) => data);
         }
     };
 

@@ -3,9 +3,7 @@ import {Box, Text, Flex, Stack,} from '@chakra-ui/react';
 import {Select} from "@chakra-ui/react";
 import {NavbarComponent} from './NavbarComponent';
 import ApiCall from "../ApiInterface/ApiCall";
-
-const names = ["John", "Jane", "Jim", "Jill"];
-
+import ApiPost from "../ApiInterface/ApiPost";
 
 
 /**
@@ -22,7 +20,6 @@ function AdminPage() {
     useEffect(() => {
         ApiCall.getApplications()
             .then(response => {
-                localStorage.setItem('token', response.jwtToken);
                 console.log(response);
                 setUsers(response);
             })
@@ -32,11 +29,27 @@ function AdminPage() {
     }, []);
 
 
-    const handleChange = (e, index) => {
-        console.log(`${e} was clicked`);
-        console.log(`${index} was index`);
+    const handleChange = (status, id) => {
 
-    };
+        const statusData = {
+            status,
+            id: id + 1,
+        };
+        console.log(`${status} was clicked`);
+        console.log(`${id+1} was index`);
+
+
+        ApiPost.setStatus(statusData)
+            .then(response => {
+                console.log(response);
+
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+    }
 
     return (
         <>
@@ -54,12 +67,12 @@ function AdminPage() {
                 </Box>
 
                 <Box p={4} >
-                    {users.map((name, index) => (
+                    {users.map((name, id) => (
                         <Flex
-                            key={index}
+                            key={id}
                             p={2}
                             alignItems="center"
-                            bg={index % 2 === 0 ? "white" : "gray.300"}
+                            bg={id % 2 === 0 ? "white" : "gray.300"}
 
                             cursor="pointer"
                             justifyContent="space-between"
@@ -70,7 +83,7 @@ function AdminPage() {
                             <Text fontFamily="Roboto, sans-serif" mr={5} fontWeight="bold">{name.surname}</Text>
                             <Text fontFamily="Roboto, sans-serif"fontWeight="bold">{name.age}</Text>
                             <Stack ml="auto">
-                                <Select variant='filled' placeholder={name.status} onChange={(e) => handleChange(e.target.value, index)}>
+                                <Select variant='filled' placeholder={name.status} onChange={(status) => handleChange(status.target.value, id)}>
                                     <option value="Accepted" style={{ display: name.status === 'Accepted' ? 'none' : 'block' }}>Accepted</option>
                                     <option value="Rejected" style={{ display: name.status === 'Rejected' ? 'none' : 'block' }}>Rejected</option>
                                     <option value="Unhandled" style={{ display: name.status === 'Unhandled' ? 'none' : 'block' }}>Unhandled</option>
