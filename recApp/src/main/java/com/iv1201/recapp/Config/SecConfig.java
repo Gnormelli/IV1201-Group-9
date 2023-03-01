@@ -43,7 +43,7 @@ public class SecConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable() // todo Check how or if to configure
+                .csrf().disable()
                 .cors(Customizer.withDefaults()) // Uses the Bean CorsConfigurationSource
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**").permitAll()

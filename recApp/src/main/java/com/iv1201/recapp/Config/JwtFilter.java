@@ -22,8 +22,6 @@ import java.io.IOException;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 
-// todo add error handling for the jwtfilter
-
 /**
  * The filter for handling Jason Web Tokens sent in Authorization header in
  * HTTP requests to the server.
