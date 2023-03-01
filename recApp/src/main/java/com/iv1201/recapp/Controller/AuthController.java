@@ -6,11 +6,12 @@ import com.iv1201.recapp.Models.AuthDTO.AuthRequestDTO;
 import com.iv1201.recapp.Models.AuthDTO.AuthResponseDTO;
 import com.iv1201.recapp.Models.AuthDTO.RegisterRequestDTO;
 import com.iv1201.recapp.Service.AuthService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+
 
 /**
  * Controller for Authentication of user.
@@ -41,7 +42,7 @@ public class AuthController {
      */
     @PostMapping("/authenticate")
     public ResponseEntity<AuthResponseDTO> authenticate(
-            @RequestBody @Valid  AuthRequestDTO authRequestDTO
+            @RequestBody @Valid AuthRequestDTO authRequestDTO
     ) throws EmailNotFoundException {
         return ResponseEntity.ok(authService.authenticate(authRequestDTO));
     }
