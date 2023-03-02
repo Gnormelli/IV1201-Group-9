@@ -23,13 +23,13 @@ public class Application {
 
     private Long id;
 
-
     @Column(
             name = "firstname",
             nullable = true,
             columnDefinition = "TEXT"
     )
     String firstname;
+
 
     @Column(
             name = "surname",

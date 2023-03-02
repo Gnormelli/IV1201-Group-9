@@ -5,7 +5,6 @@ import {NavbarComponent} from './NavbarComponent';
 import ApiCall from "../ApiInterface/ApiCall";
 import ApiPost from "../ApiInterface/ApiPost";
 
-
 /**
  *
  * @returns {JSX.Element}
@@ -14,7 +13,6 @@ import ApiPost from "../ApiInterface/ApiPost";
 function AdminPage() {
 
     const [users, setUsers] = React.useState([]);
-
 
 
     useEffect(() => {
@@ -35,14 +33,13 @@ function AdminPage() {
             status,
             id: id + 1,
         };
+
         console.log(`${status} was clicked`);
         console.log(`${id+1} was index`);
-
 
         ApiPost.setStatus(statusData)
             .then(response => {
                 console.log(response);
-
 
             })
             .catch(error => {

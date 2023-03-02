@@ -44,7 +44,12 @@ const ApiPost = {
             const statusEndpoint = "/api/v1/recruiters/status";
              const token = "Bearer "+ localStorage.getItem("token");
             return ApiPost.apiCall(statusEndpoint, object, token).then((data) => data);
-        }
+        },
+        setSubmit(object) {
+        const statusEndpoint = "/api/v1/recruiters/status";
+        const token = "Bearer "+ localStorage.getItem("token");
+        return ApiPost.apiCall(statusEndpoint, object, token).then((data) => data);
+    }
     };
 
 export default ApiPost;
