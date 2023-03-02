@@ -1,4 +1,4 @@
-package com.iv1201.recapp.Validation;
+package com.iv1201.recapp.Config.Validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

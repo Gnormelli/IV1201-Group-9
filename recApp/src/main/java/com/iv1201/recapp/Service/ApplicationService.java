@@ -1,6 +1,6 @@
 package com.iv1201.recapp.Service;
 
-import com.iv1201.recapp.Exceptions.ApplicationDTOStatusException;
+import com.iv1201.recapp.Config.Exceptions.ApplicationDTOStatusException;
 import com.iv1201.recapp.Integration.ApplicantRepo;
 import com.iv1201.recapp.Models.Application;
 import org.springframework.beans.factory.annotation.Autowired;

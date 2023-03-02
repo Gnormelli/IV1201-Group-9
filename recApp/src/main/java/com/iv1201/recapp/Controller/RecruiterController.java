@@ -1,6 +1,6 @@
 package com.iv1201.recapp.Controller;
 
-import com.iv1201.recapp.Exceptions.ApplicationDTOStatusException;
+import com.iv1201.recapp.Config.Exceptions.ApplicationDTOStatusException;
 import com.iv1201.recapp.Models.Application;
 import com.iv1201.recapp.Models.RecruiterDTO.ApplicationDTO;
 import com.iv1201.recapp.Service.ApplicationService;

@@ -47,13 +47,10 @@ public class SecConfig {
                 .cors(Customizer.withDefaults()) // Uses the Bean CorsConfigurationSource
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers("/api/v1/testEndpoint/**").hasAuthority(" recruiter")
+                .requestMatchers("/api/v1/testEndpoint/**").permitAll()
                 .requestMatchers("/api/v1/recruiters/**").hasAuthority(" recruiter")
-//                .requestMatchers("/api/v1/testEndpoint/**").hasAuthority(" applicant")
                 .anyRequest().authenticated()
                 .and()
-//                .exceptionHandling().accessDeniedPage("/accessDenied");
-//                .sessionManagement()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider()) //Authentication provider

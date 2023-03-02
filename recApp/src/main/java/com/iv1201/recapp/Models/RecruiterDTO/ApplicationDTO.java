@@ -1,6 +1,6 @@
 package com.iv1201.recapp.Models.RecruiterDTO;
 
-import com.iv1201.recapp.Validation.ValidateApplicationDTOStatus;
+import com.iv1201.recapp.Config.Validation.ValidateApplicationDTOStatus;
 import jakarta.validation.constraints.NotEmpty;
 
 public class ApplicationDTO {

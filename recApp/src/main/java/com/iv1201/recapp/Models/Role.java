@@ -1,7 +1,6 @@
 package com.iv1201.recapp.Models;
 
-import com.iv1201.recapp.Validation.ValidateRoleId;
-import com.iv1201.recapp.Validation.ValidateRoleName;
+import com.iv1201.recapp.Config.Validation.ValidateRoleId;
 import jakarta.persistence.*;
 
 /**
@@ -29,7 +28,7 @@ public class Role {
             nullable = false,
             columnDefinition = "TEXT"
     )
-    @ValidateRoleName
+//    @ValidateRoleName
     private String roleName;
 
     public Role() {
