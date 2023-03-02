@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Box, Button, Input, Stack, Heading, VStack, StackDivider, Select, CloseButton, CheckboxGroup, Text, Checkbox } from '@chakra-ui/react';
+import { Box, Button, Input, Stack, Heading, VStack, StackDivider, Select, CloseButton, Text, HStack } from '@chakra-ui/react';
 import { FormControl, FormLabel } from '@chakra-ui/react'
 import {NavbarComponent} from './NavbarComponent';
 
+// The form allows the user to input personal information, experience, and availability.
 function ApplicationPage() {
     const [currentSection, setCurrentSection] = useState(0);
     const [firstName, setFirstName] = useState('');
@@ -11,7 +12,25 @@ function ApplicationPage() {
     const [email, setEmail] = useState('');
     const [items, setItems] = useState([]);
     const options = ["Expertise 1", "Expertise 2", "Expertise 3", "Expertise 4", "Expertise 5"];
+    const [availability, setAvailability] = useState([]);
 
+    const chooseOptions = (e) => {
+        const option = e.target.value;
+        if (availability.includes(option)) {
+            setAvailability(availability.filter(o => o !== option));
+        } else {
+            setAvailability([...availability, option]);
+        }
+    }
+
+    const cancel = () => {
+        setFirstName('')
+        setLastName('')
+        setPersonalNumber('')
+        setEmail('')
+        setItems([])
+        setAvailability([])
+    }
 
     const addItem = () => {
         const newOption = document.getElementById("select-option").value;
@@ -119,13 +138,73 @@ function ApplicationPage() {
                     </Heading>
                 </Box>
                 <Box>
-                    <Stack spacing={10} direction="row">
-                        <Checkbox isDisabled>Checkbox</Checkbox>
-                        <Checkbox isDisabled defaultIsChecked>
-                            Checkbox
-                        </Checkbox>
-                    </Stack>
+                    <label>
+                        Select options:
+                        <br />
+                        <input type="checkbox" value="Jan-March" checked={availability.includes('Jan-March')} onChange={chooseOptions} />
+                        Jan-March
+                        <br />
+                        <input type="checkbox" value="April-June" checked={availability.includes('April-June')} onChange={chooseOptions} />
+                        April-June
+                        <br />
+                        <input type="checkbox" value="July-Sept" checked={availability.includes('July-Sept')} onChange={chooseOptions} />
+                        July-Sept
+                        <br />
+                        <input type="checkbox" value="Oct-Dec" checked={availability.includes('Oct-Dec')} onChange={chooseOptions} />
+                        Oct-Dec
+                    </label>
+
                 </Box>
+            </VStack>
+        </Box>,
+        <Box>
+            <VStack
+                divider={<StackDivider borderColor="gray.200" />}
+                spacing={4}
+                align="stretch"
+            >
+                <Box h="40px">
+                    <Heading as="h3" size="lg">
+                        Summary
+                    </Heading>
+                </Box>
+                <Box>
+                    <Text>
+                        Name: {firstName} {lastName}
+                    </Text>
+                    <Text>
+                        Personal number: {personalNumber}
+                    </Text>
+                    <Text>
+                        Email address: {email}
+                    </Text>
+                    {items.length > 0 && (
+                        <Box>
+                            <Text fontWeight="bold">Experience:</Text>
+                            {items.map((item, index) => (
+                                <Text key={index}>
+                                    {item.option} ({item.years} years)
+                                </Text>
+                            ))}
+                        </Box>
+                    )}
+                    {availability.length > 0 && (
+                        <Box>
+                            <Text fontWeight="bold">Availability:</Text>
+                            {availability.map((option, index) => (
+                                <Text key={index}>{option}</Text>
+                            ))}
+                        </Box>
+                    )}
+                </Box>
+                <HStack justify="flex-end">
+                    <Button colorScheme="red" onClick={cancel}>
+                        Cancel
+                    </Button>
+                    <Button colorScheme="green" >
+                        Submit
+                    </Button>
+                </HStack>
             </VStack>
         </Box>
     ];
