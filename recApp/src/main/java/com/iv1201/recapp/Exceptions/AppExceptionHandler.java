@@ -59,6 +59,8 @@ public class AppExceptionHandler {
         expMap.put("ErrorMessage", e.getMessage());
         if(e.getMessage().contains("updated")){
             statusCode = 500;
+        }else if(e.getMessage().contains("Could not find applicants")){
+            statusCode = 500;
         }
         return ResponseEntity.status(statusCode).body(expMap.toString());
     }

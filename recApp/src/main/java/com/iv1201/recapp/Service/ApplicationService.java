@@ -18,13 +18,17 @@ import static java.lang.Long.parseLong;
 public class ApplicationService {
     @Autowired
     private ApplicantRepo applicantRepo;
-    public List<Application> applicants() {
-        List<Application> applicant = applicantRepo.findAllApplicants();
-
-        if(applicant == null){
-            throw new IllegalArgumentException();
+    public List<Application> applicants() throws ApplicationDTOStatusException {
+        List<Application> applicant = null;
+        try {
+            applicant = applicantRepo.findAllApplicants();
+            if(applicant.size() == 0){
+                throw new IllegalArgumentException();
+            }
+        }catch (Exception e ){
+            throw new ApplicationDTOStatusException("ApplicationDTO: " +
+                    "Could not find applicants");
         }
-
         return applicant;
     }
 

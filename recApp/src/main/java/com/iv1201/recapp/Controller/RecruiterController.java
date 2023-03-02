@@ -18,7 +18,8 @@ public class RecruiterController {
     private ApplicationService applicationService;
 
     @GetMapping("/applicants")
-    public ResponseEntity<List<Application>> getAllApplicants() {
+    public ResponseEntity<List<Application>> getAllApplicants()
+            throws ApplicationDTOStatusException {
         return ResponseEntity.ok(applicationService.applicants());
     }
 

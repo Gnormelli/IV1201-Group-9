@@ -1,15 +1,13 @@
 package com.iv1201.recapp.Models.RecruiterDTO;
 
-import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.NotBlank;
+import com.iv1201.recapp.Validation.ValidateApplicationDTOStatus;
 import jakarta.validation.constraints.NotEmpty;
 
 public class ApplicationDTO {
     @NotEmpty(message = "ApplictionDTO id does not exist")
     private String id;
 
-//    @Enumerated()
-    // Todo Check how to make annotation with enum
+    @ValidateApplicationDTOStatus
     private String status;
 
     public ApplicationDTO() {
