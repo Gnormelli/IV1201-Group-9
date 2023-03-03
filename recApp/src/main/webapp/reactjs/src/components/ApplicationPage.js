@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { Box, Button, Input, Stack, Heading, VStack, StackDivider, Select, CloseButton, Text, HStack } from '@chakra-ui/react';
+import React, {useEffect, useState} from 'react';
+import { Box, Button, Input, Stack, Heading, VStack, StackDivider, Select, CloseButton, Text, HStack, Flex, InputGroup, InputLeftAddon } from '@chakra-ui/react';
 import { FormControl, FormLabel } from '@chakra-ui/react'
 import {NavbarComponent} from './NavbarComponent';
+import ApiPost from "../ApiInterface/ApiPost";
+import ApiCall from "../ApiInterface/ApiCall";
 
 // The form allows the user to input personal information, experience, and availability.
 function ApplicationPage() {
@@ -11,8 +13,40 @@ function ApplicationPage() {
     const [personalNumber, setPersonalNumber] = useState('');
     const [email, setEmail] = useState('');
     const [items, setItems] = useState([]);
-    const options = ["Expertise 1", "Expertise 2", "Expertise 3", "Expertise 4", "Expertise 5"];
+    const [options, setOptions] = useState([]);
     const [availability, setAvailability] = useState([]);
+    const [dateRanges, setDateRanges] = useState([]);
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+
+    useEffect(() => {
+        ApiCall.getCompetence()
+            .then(response => {
+                console.log(response);
+                setOptions(response);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
+
+
+
+    const handleChange = (competence) => {
+        const competenceData = {
+            competence,
+        };
+
+        ApiPost.setOptions(competenceData)
+            .then(response => {
+                console.log(response);
+                setOptions([...options, response.competence]);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+
 
     const chooseOptions = (e) => {
         const option = e.target.value;
@@ -43,6 +77,22 @@ function ApplicationPage() {
         setItems(items.filter((item, i) => i !== index));
     };
 
+    const startDateChange = (event) => {
+        setStartDate(event.target.value);
+    };
+
+    const endDateChange = (event) => {
+        setEndDate(event.target.value);
+    };
+
+    const addDateRange = () => {
+        if (startDate !== "" && endDate !== "") {
+            setDateRanges([...dateRanges, { startDate, endDate }]);
+            setStartDate("");
+            setEndDate("");
+        }
+    };
+
     const sections = [
         <Box>
             <VStack
@@ -70,11 +120,6 @@ function ApplicationPage() {
                         <FormLabel>Personal number</FormLabel>
                         <Input value={personalNumber} onChange={(e) => setPersonalNumber(e.target.value)} />
                     </FormControl>
-
-                    <FormControl h='80px' isRequired>
-                        <FormLabel>Email address</FormLabel>
-                        <Input type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
-                    </FormControl>
                 </Box>
             </VStack>
         </Box>,
@@ -92,10 +137,10 @@ function ApplicationPage() {
             <Stack spacing="4">
                 <FormControl id="Area of expertise">
                     <FormLabel>Area of expertise</FormLabel>
-                    <Select placeholder="Select an option" id="select-option">
+                    <Select  placeholder="Select an option" onChange={(e) => handleChange(e.target.value)}>
                         {options.map((option) => (
                             <option key={option} value={option}>
-                                {option}
+                                {option.competence}
                             </option>
                         ))}
                     </Select>
@@ -105,7 +150,7 @@ function ApplicationPage() {
                     <Input type="number" id="years-of-experience" />
                 </FormControl>
                 <Button colorScheme="blue" onClick={addItem}>
-                    Add item
+                    Add to list
                 </Button>
             </Stack>
             <Box height="80px" overflowY="scroll">
@@ -126,35 +171,43 @@ function ApplicationPage() {
             </Box>
             </VStack>
         </Box>,
-        <Box>
+        <Box mt={8}>
             <VStack
                 divider={<StackDivider borderColor='gray.200' />}
                 spacing={4}
                 align='stretch'
             >
-                <Box h='40px'>
-                    <Heading as='h3' size='lg'>
-                        Availability
-                    </Heading>
-                </Box>
-                <Box>
-                    <label>
-                        Select options:
-                        <br />
-                        <input type="checkbox" value="Jan-March" checked={availability.includes('Jan-March')} onChange={chooseOptions} />
-                        Jan-March
-                        <br />
-                        <input type="checkbox" value="April-June" checked={availability.includes('April-June')} onChange={chooseOptions} />
-                        April-June
-                        <br />
-                        <input type="checkbox" value="July-Sept" checked={availability.includes('July-Sept')} onChange={chooseOptions} />
-                        July-Sept
-                        <br />
-                        <input type="checkbox" value="Oct-Dec" checked={availability.includes('Oct-Dec')} onChange={chooseOptions} />
-                        Oct-Dec
-                    </label>
-
-                </Box>
+            <Box h='40px'>
+                <Heading as='h3' size='lg'>
+                    Availability
+                </Heading>
+            </Box>
+            <Flex>
+                <InputGroup>
+                    <InputLeftAddon children="From" />
+                    <Input
+                        type="date"
+                        value={startDate}
+                        onChange={startDateChange}
+                    />
+                </InputGroup>
+                <InputGroup ml={4}>
+                    <InputLeftAddon children="To" />
+                    <Input type="date" value={endDate} onChange={endDateChange} />
+                </InputGroup>
+                <Button ml={4} size='md' colorScheme="blue" onClick={addDateRange}>
+                    +
+                </Button>
+            </Flex>
+            <Stack height="80px" overflowY="scroll" mt={4}>
+                {dateRanges.map((dateRange, index) => (
+                    <Flex key={index}>
+                        <Text>{dateRange.startDate}</Text>
+                        <Text mx={2}>-</Text>
+                        <Text>{dateRange.endDate}</Text>
+                    </Flex>
+                ))}
+            </Stack>
             </VStack>
         </Box>,
         <Box>
@@ -175,9 +228,6 @@ function ApplicationPage() {
                     <Text>
                         Personal number: {personalNumber}
                     </Text>
-                    <Text>
-                        Email address: {email}
-                    </Text>
                     {items.length > 0 && (
                         <Box>
                             <Text fontWeight="bold">Experience:</Text>
@@ -196,6 +246,18 @@ function ApplicationPage() {
                             ))}
                         </Box>
                     )}
+                    <Box>
+                        <FormControl>
+                            Availability:
+                            {dateRanges.map((item, index) => (
+                                <HStack key={index}>
+                                    <Text>{item.startDate}</Text>
+                                    <Text>-</Text>
+                                    <Text>{item.endDate}</Text>
+                                </HStack>
+                            ))}
+                        </FormControl>
+                    </Box>
                 </Box>
                 <HStack justify="flex-end">
                     <Button colorScheme="red" onClick={cancel}>
