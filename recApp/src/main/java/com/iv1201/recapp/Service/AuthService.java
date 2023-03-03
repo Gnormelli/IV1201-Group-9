@@ -1,7 +1,7 @@
 package com.iv1201.recapp.Service;
 
-import com.iv1201.recapp.Exceptions.EmailAllreadyExcistsException;
-import com.iv1201.recapp.Exceptions.EmailNotFoundException;
+import com.iv1201.recapp.Config.Exceptions.EmailAllreadyExcistsException;
+import com.iv1201.recapp.Config.Exceptions.EmailNotFoundException;
 import com.iv1201.recapp.Integration.RoleRepo;
 import com.iv1201.recapp.Integration.UserRepo;
 import com.iv1201.recapp.Models.Role;
@@ -39,9 +39,10 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private JwtService jwtService;
-
     @Autowired
     private UserService userService;
+    @Autowired
+    private ApplicationService applicationService;
 
     String errorMsgForClient = "User could not be";
 

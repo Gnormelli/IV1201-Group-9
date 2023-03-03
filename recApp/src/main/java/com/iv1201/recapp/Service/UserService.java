@@ -1,6 +1,6 @@
 package com.iv1201.recapp.Service;
 
-import com.iv1201.recapp.Exceptions.EmailNotFoundException;
+import com.iv1201.recapp.Config.Exceptions.EmailNotFoundException;
 import com.iv1201.recapp.Integration.UserRepo;
 import com.iv1201.recapp.Models.User;
 

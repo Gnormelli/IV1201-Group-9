@@ -28,7 +28,11 @@ const ApiCall = {
       )
       .then((response) => {
         console.log(response)
-        return response.json()
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          throw new Error("Status was: " + response.statusText + " " + response.status);
+        }
       });
   },
   test() {
@@ -37,8 +41,9 @@ const ApiCall = {
     return ApiCall.apiCall(testEndPoint,token).then((data) => data);
   },
   getApplications() {
-    const getQueueEndpoint = "/api/v1/auth/applicants";
-    return ApiCall.apiCall(getQueueEndpoint).then((data) => data);
+    const getQueueEndpoint = "/api/v1/recruiters/applicants";
+    const token = "Bearer "+ localStorage.getItem("token");
+    return ApiCall.apiCall(getQueueEndpoint, token).then((data) => data);
   }
 };
 

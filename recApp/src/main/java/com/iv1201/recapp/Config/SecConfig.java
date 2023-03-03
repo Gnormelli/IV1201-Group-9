@@ -43,17 +43,16 @@ public class SecConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable() // todo Check how or if to configure
+                .csrf().disable()
                 .cors(Customizer.withDefaults()) // Uses the Bean CorsConfigurationSource
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers("/api/v1/testEndpoint/**").hasAuthority(" recruiter")
+                .requestMatchers("/api/v1/testEndpoint/**").permitAll()
                 .requestMatchers("/api/v1/recruiters/**").hasAuthority(" recruiter")
-//                .requestMatchers("/api/v1/testEndpoint/**").hasAuthority(" applicant")
+                .requestMatchers("/api/v1/applicants/**").permitAll()
+//                .requestMatchers("/api/v1/applicants/**").hasAuthority(" applicant")
                 .anyRequest().authenticated()
                 .and()
-//                .exceptionHandling().accessDeniedPage("/accessDenied");
-//                .sessionManagement()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider()) //Authentication provider

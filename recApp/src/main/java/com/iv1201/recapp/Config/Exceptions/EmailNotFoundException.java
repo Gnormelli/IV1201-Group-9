@@ -1,4 +1,4 @@
-package com.iv1201.recapp.Exceptions;
+package com.iv1201.recapp.Config.Exceptions;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 

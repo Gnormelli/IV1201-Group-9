@@ -1,5 +1,6 @@
 package com.iv1201.recapp.Config;
 
+import com.iv1201.recapp.Models.User;
 import com.iv1201.recapp.Service.JwtService;
 import com.iv1201.recapp.Service.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -20,8 +21,6 @@ import java.io.IOException;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
-
-// todo add error handling for the jwtfilter
 
 /**
  * The filter for handling Jason Web Tokens sent in Authorization header in
@@ -81,7 +80,6 @@ public class JwtFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(token);
                 }
             }
-            Object auth = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             filterChain.doFilter(request,response);
         }catch (ExpiredJwtException e ){
             /**

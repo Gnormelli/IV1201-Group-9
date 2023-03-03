@@ -1,6 +1,7 @@
 package com.iv1201.recapp.Integration;
 
 import com.iv1201.recapp.Models.Application;
+import com.iv1201.recapp.Models.Competence;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -11,9 +12,10 @@ import java.util.List;
 
 @Repository
 @Transactional(propagation = Propagation.MANDATORY)
-public interface ApplicantRepo extends JpaRepository<Application, Long> {
+public interface CompetenceRepo extends JpaRepository <Competence, Long> {
 
-    @Query("SELECT a FROM Application a ORDER BY a.id ASC")
-    List<Application> findAllApplicants();
+    Competence findCompetenceById(Long id);
 
+    @Query("SELECT c FROM Competence c ORDER BY c.id ASC")
+    List<Competence> findAllCompetences();
 }

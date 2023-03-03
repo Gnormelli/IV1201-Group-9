@@ -1,4 +1,4 @@
-package com.iv1201.recapp.Exceptions;
+package com.iv1201.recapp.Config.Exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,20 +34,43 @@ public class AppExceptionHandler {
     }
 
     @ExceptionHandler(EmailNotFoundException.class)
-    public ResponseEntity handleBusinessException(EmailNotFoundException e){
+    public ResponseEntity<String> handleBusinessException(EmailNotFoundException e){
         Map<String, String> expMap = new HashMap<>();
         System.out.println(e.getMessage());
         expMap.put("ErrorMessage", e.getMessage());
 
-        return ResponseEntity.status(403).body(expMap);
+        return ResponseEntity.status(403).body(expMap.toString());
     }
 
     @ExceptionHandler(EmailAllreadyExcistsException.class)
-    public ResponseEntity handleBusinessException(EmailAllreadyExcistsException e){
+    public ResponseEntity<String> handleBusinessException(EmailAllreadyExcistsException e){
         Map<String, String> expMap = new HashMap<>();
         System.out.println(e.getMessage());
         expMap.put("ErrorMessage", e.getMessage());
 
-        return ResponseEntity.status(406).body(expMap);
+        return ResponseEntity.status(406).body(expMap.toString());
+    }
+
+    @ExceptionHandler(CouldNotFindCompetencesException.class)
+    public ResponseEntity<String> handleBusinessException(CouldNotFindCompetencesException e){
+        Map<String, String> expMap = new HashMap<>();
+        System.out.println(e.getMessage());
+        expMap.put("ErrorMessage", e.getMessage());
+
+        return ResponseEntity.status(500).body(expMap.toString());
+    }
+
+    @ExceptionHandler(ApplicationDTOStatusException.class)
+    public ResponseEntity<String> handleBusinessException(ApplicationDTOStatusException e){
+        int statusCode = 400;
+        Map<String, String> expMap = new HashMap<>();
+        System.out.println(e.getMessage());
+        expMap.put("ErrorMessage", e.getMessage());
+        if(e.getMessage().contains("updated")){
+            statusCode = 500;
+        }else if(e.getMessage().contains("Could not find applicants")){
+            statusCode = 500;
+        }
+        return ResponseEntity.status(statusCode).body(expMap.toString());
     }
 }

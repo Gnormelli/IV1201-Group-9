@@ -1,4 +1,4 @@
-package com.iv1201.recapp.Exceptions;
+package com.iv1201.recapp.Config.Exceptions;
 
 public class UserNotFoundException extends Exception {
     public UserNotFoundException(String message) {

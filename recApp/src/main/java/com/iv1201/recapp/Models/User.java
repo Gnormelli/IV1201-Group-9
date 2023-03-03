@@ -1,13 +1,11 @@
 package com.iv1201.recapp.Models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -32,28 +30,25 @@ public class User implements UserDetails {
             name = "person_id",
             updatable = false
     )
-    long id;
+    private long id;
 
 
     @Column(
             name = "username",
-            nullable = true,
-            unique=true,
             columnDefinition = "TEXT"
     )
-    String username;
+    private String username;
     @Column(
             name = "firstname",
             nullable = true,
             columnDefinition = "TEXT"
     )
-    String firstname;
+    private String firstname;
     @Column(
             name = "surname",
-            nullable = true,
             columnDefinition = "TEXT"
     )
-    String surname;
+    private String surname;
 
     @NotEmpty(message = "Password cannot be empty")
     @Column(
@@ -61,15 +56,14 @@ public class User implements UserDetails {
             nullable = false,
             columnDefinition = "TEXT"
     )
-    String password;
+    private String password;
 
     @Column(
             name = "pnr",
-            nullable = true,
             unique=true,
             columnDefinition = "TEXT"
     )
-    String pnr;
+    private String pnr;
 
     @Email(message = "Not an email")
     @Column(
@@ -77,10 +71,11 @@ public class User implements UserDetails {
             nullable = false,
             columnDefinition = "TEXT"
     )
-    String email;
+    private String email;
     @ManyToOne
     @JoinColumn(name = "fk_id_role")
-    Role userRole;
+    private Role userRole;
+
 
     /**
      * Empty constructor
@@ -112,6 +107,10 @@ public class User implements UserDetails {
         this.pnr = pnr;
         this.email = email;
         this.userRole = userRole;
+    }
+
+    public long getId() {
+        return id;
     }
 
     @Override
