@@ -3,7 +3,7 @@ import {Button, Flex, Text} from "@chakra-ui/react";
 import ApiCall from "../ApiInterface/ApiCall";
 
 const test = () => {
-    ApiCall.test().then(response =>{
+    ApiCall.getApplications().then(response =>{
         console.log(response);
     }).catch(error => {
         console.error(error);

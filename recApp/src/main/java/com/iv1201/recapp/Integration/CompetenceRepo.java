@@ -1,6 +1,5 @@
 package com.iv1201.recapp.Integration;
 
-import com.iv1201.recapp.Models.Application;
 import com.iv1201.recapp.Models.Competence;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

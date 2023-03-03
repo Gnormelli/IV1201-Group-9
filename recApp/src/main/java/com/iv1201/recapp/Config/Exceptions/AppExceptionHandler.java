@@ -69,15 +69,15 @@ public class AppExceptionHandler {
         return ResponseEntity.status(500).body(expMap.toString());
     }
 
-    @ExceptionHandler(ApplicationDTOStatusException.class)
-    public ResponseEntity<String> handleBusinessException(ApplicationDTOStatusException e){
+    @ExceptionHandler(StatusDTOException.class)
+    public ResponseEntity<String> handleBusinessException(StatusDTOException e){
         int statusCode = 400;
         Map<String, String> expMap = new HashMap<>();
         System.out.println(e.getMessage());
         expMap.put("ErrorMessage", e.getMessage());
         if(e.getMessage().contains("updated")){
             statusCode = 500;
-        }else if(e.getMessage().contains("Could not find applicants")){
+        }else if(e.getMessage().contains("Could not find getAllApplicants")){
             statusCode = 500;
         }
         return ResponseEntity.status(statusCode).body(expMap.toString());
