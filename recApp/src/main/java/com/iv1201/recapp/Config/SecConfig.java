@@ -49,6 +49,8 @@ public class SecConfig {
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/api/v1/testEndpoint/**").permitAll()
                 .requestMatchers("/api/v1/recruiters/**").hasAuthority(" recruiter")
+                .requestMatchers("/api/v1/applicants/**").permitAll()
+//                .requestMatchers("/api/v1/applicants/**").hasAuthority(" applicant")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

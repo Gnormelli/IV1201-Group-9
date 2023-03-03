@@ -39,9 +39,10 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private JwtService jwtService;
-
     @Autowired
     private UserService userService;
+    @Autowired
+    private ApplicationService applicationService;
 
     String errorMsgForClient = "User could not be";
 
