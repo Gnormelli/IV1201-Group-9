@@ -1,15 +1,15 @@
-package com.iv1201.recapp.Models.auth;
+package com.iv1201.recapp.Models.AuthDTO;
 
 import com.iv1201.recapp.Models.Role;
 
-public class AuthResponse {
+public class AuthResponseDTO {
     private String jwtToken;
     private Role role;
 
-    public AuthResponse() {
+    public AuthResponseDTO() {
     }
 
-    public AuthResponse(String jwtToken, Role role) {
+    public AuthResponseDTO(String jwtToken, Role role) {
         this.jwtToken = jwtToken;
         this.role = role;
     }

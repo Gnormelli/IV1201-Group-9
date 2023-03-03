@@ -29,6 +29,15 @@ function LoginPage() {
         setError('') // clear error message state
 
 
+        // response.status === 500
+        //         ? response
+        //         : console.log(response) && doThrow(
+        //             new Error(
+        //             "Status was: " + response.statusText + " " + response.status + response
+        //             )
+        //         )
+
+
         // create an object containing the user's email and password
         const logInData = {
             email,
@@ -39,10 +48,15 @@ function LoginPage() {
         // save the JWT token to local storage
         ApiPost.logIn(logInData)
             .then(response => {
-                console.log(response);
+                console.log(response)
                 localStorage.setItem('token', response.jwtToken);
-                console.log(response);
                console.log("ROLE ID:" + response.role.id);
+
+               if(response.status === 403){
+                   console.log(response.ErrorMessage)
+                   let error = response.ErrorMessage
+                   setError(error)
+               }
 
                 const userRole = response.role.id;
                 let pageHref;
@@ -57,7 +71,7 @@ function LoginPage() {
                 window.location.href = pageHref;
             })
             .catch(error => {
-                console.error(error);
+                console.log(error);
             });
 
     }
