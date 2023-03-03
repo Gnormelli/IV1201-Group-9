@@ -76,12 +76,20 @@ public class User implements UserDetails {
     @JoinColumn(name = "fk_id_role")
     private Role userRole;
 
+    @Column(
+            name = "status",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
+    private String applicationStatus;
+
 
     /**
      * Empty constructor
      */
     public User() {
     }
+
 
     /**
      * Constructor for creating Users
@@ -99,7 +107,8 @@ public class User implements UserDetails {
                 String password,
                 String pnr,
                 String email,
-                Role userRole) {
+                Role userRole,
+                String applicationStatus) {
         this.username = username;
         this.firstname = firstname;
         this.surname = surname;
@@ -107,6 +116,7 @@ public class User implements UserDetails {
         this.pnr = pnr;
         this.email = email;
         this.userRole = userRole;
+        this.applicationStatus = applicationStatus;
     }
 
     public long getId() {
@@ -171,6 +181,14 @@ public class User implements UserDetails {
         this.userRole = userRole;
     }
 
+    public String getApplicationStatus() {
+        return applicationStatus;
+    }
+
+    public void setApplicationStatus(String applicationStatus) {
+        this.applicationStatus = applicationStatus;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -182,6 +200,7 @@ public class User implements UserDetails {
                 ", pnr='" + pnr + '\'' +
                 ", email='" + email + '\'' +
                 ", userRole=" + userRole +
+                ", applicationStatus='" + applicationStatus + '\'' +
                 '}';
     }
 

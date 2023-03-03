@@ -1,22 +1,22 @@
 package com.iv1201.recapp.Models.ApplicantDTOs;
 
 public class AreaOfExpertiseDTO {
-    int areaOfExpertiseID;
-    String yearsOfExperience;
+    Long areaOfExpertiseID;
+    float yearsOfExperience;
 
     public AreaOfExpertiseDTO() {
     }
 
-    public AreaOfExpertiseDTO(int areaOfExpertiseID, String yearsOfExperience) {
+    public AreaOfExpertiseDTO(long areaOfExpertiseID, float yearsOfExperience) {
         this.areaOfExpertiseID = areaOfExpertiseID;
         this.yearsOfExperience = yearsOfExperience;
     }
 
-    public int getAreaOfExpertiseID() {
+    public long getAreaOfExpertiseID() {
         return areaOfExpertiseID;
     }
 
-    public String getYearsOfExperience() {
+    public float getYearsOfExperience() {
         return yearsOfExperience;
     }
 

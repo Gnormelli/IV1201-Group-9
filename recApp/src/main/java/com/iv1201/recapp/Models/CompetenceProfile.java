@@ -33,25 +33,18 @@ public class CompetenceProfile {
             name = "years_of_experience",
             columnDefinition = "INTEGER"
     )
-    private int yearsOfExperience;
+    private float yearsOfExperience;
 
-    @Column(
-            name = "status",
-            columnDefinition = "TEXT"
-    )
-    private String status;
 
     public CompetenceProfile() {
     }
 
     public CompetenceProfile(User user,
                              Competence competence,
-                             int yearsOfExperience,
-                             String status) {
+                             float yearsOfExperience) {
         this.user = user;
         this.competence = competence;
         this.yearsOfExperience = yearsOfExperience;
-        this.status = status;
     }
 
     public User getUser() {
@@ -70,7 +63,7 @@ public class CompetenceProfile {
         this.competence = competence;
     }
 
-    public int getYearsOfExperience() {
+    public float getYearsOfExperience() {
         return yearsOfExperience;
     }
 
@@ -78,11 +71,4 @@ public class CompetenceProfile {
         this.yearsOfExperience = yearsOfExperience;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

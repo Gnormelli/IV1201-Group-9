@@ -60,6 +60,15 @@ public class AppExceptionHandler {
         return ResponseEntity.status(500).body(expMap.toString());
     }
 
+    @ExceptionHandler(ApplicationCouldNotSubmitException.class)
+    public ResponseEntity<String> handleBusinessException(ApplicationCouldNotSubmitException e) {
+        Map<String, String> expMap = new HashMap<>();
+        System.out.println(e.getMessage());
+        expMap.put("ErrorMessage", e.getMessage());
+
+        return ResponseEntity.status(500).body(expMap.toString());
+    }
+
     @ExceptionHandler(ApplicationDTOStatusException.class)
     public ResponseEntity<String> handleBusinessException(ApplicationDTOStatusException e){
         int statusCode = 400;

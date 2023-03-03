@@ -29,16 +29,12 @@ public class Availability {
 
     @Column(
             name = "from_date",
-            nullable = true,
-            unique=true,
             columnDefinition = "DATE"
     )
     Date fromDate;
 
     @Column(
             name = "to_date",
-            nullable = true,
-            unique=true,
             columnDefinition = "DATE"
     )
     Date toDate;
