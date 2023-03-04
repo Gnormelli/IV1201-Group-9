@@ -44,6 +44,11 @@ const ApiCall = {
     const getQueueEndpoint = "/api/v1/recruiters/applicants";
     const token = "Bearer "+ localStorage.getItem("token");
     return ApiCall.apiCall(getQueueEndpoint, token).then((data) => data);
+  },
+  getCompetence() {
+    const getQueueEndpoint = "/api/v1/applicants/competences";
+    const token = "Bearer "+ localStorage.getItem("token");
+    return ApiCall.apiCall(getQueueEndpoint, token).then((data) => data);
   }
 };
 
