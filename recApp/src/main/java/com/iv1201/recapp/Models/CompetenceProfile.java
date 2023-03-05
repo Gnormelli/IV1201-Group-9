@@ -9,7 +9,8 @@ public class CompetenceProfile {
     @SequenceGenerator(
             name = "competence_profile_sequence",
             sequenceName = "competence_profile_sequence",
-            allocationSize = 1
+            allocationSize = 1,
+            initialValue=7000
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
@@ -31,9 +32,9 @@ public class CompetenceProfile {
 
     @Column(
             name = "years_of_experience",
-            columnDefinition = "INTEGER"
+            columnDefinition = "NUMERIC"
     )
-    private float yearsOfExperience;
+    private Float yearsOfExperience;
 
 
     public CompetenceProfile() {
@@ -41,7 +42,7 @@ public class CompetenceProfile {
 
     public CompetenceProfile(User user,
                              Competence competence,
-                             float yearsOfExperience) {
+                             Float yearsOfExperience) {
         this.user = user;
         this.competence = competence;
         this.yearsOfExperience = yearsOfExperience;
@@ -67,7 +68,7 @@ public class CompetenceProfile {
         return yearsOfExperience;
     }
 
-    public void setYearsOfExperience(int yearsOfExperience) {
+    public void setYearsOfExperience(Float yearsOfExperience) {
         this.yearsOfExperience = yearsOfExperience;
     }
 

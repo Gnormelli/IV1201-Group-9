@@ -34,6 +34,7 @@ public class User implements UserDetails {
     private long id;
 
 
+    @NotEmpty(message = "Password cannot be empty")
     @Column(
             name = "username",
             columnDefinition = "TEXT"
@@ -78,7 +79,7 @@ public class User implements UserDetails {
             name = "status",
             columnDefinition = "TEXT"
     )
-    private String status;
+    private String applicationStatus;
 
 
     /**
@@ -105,7 +106,7 @@ public class User implements UserDetails {
                 String pnr,
                 String email,
                 Role userRole,
-                String status) {
+                String applicationStatus) {
         this.username = username;
         this.firstname = firstname;
         this.surname = surname;
@@ -113,7 +114,7 @@ public class User implements UserDetails {
         this.pnr = pnr;
         this.email = email;
         this.userRole = userRole;
-        this.status = status;
+        this.applicationStatus = applicationStatus;
     }
 
     public long getId() {
@@ -178,12 +179,12 @@ public class User implements UserDetails {
         this.userRole = userRole;
     }
 
-    public String getStatus() {
-        return status;
+    public String getApplicationStatus() {
+        return applicationStatus;
     }
 
-    public void setStatus(String applicationStatus) {
-        this.status = status;
+    public void setApplicationStatus(String applicationStatus) {
+        this.applicationStatus = applicationStatus;
     }
 
     @Override
@@ -197,7 +198,7 @@ public class User implements UserDetails {
                 ", pnr='" + pnr + '\'' +
                 ", email='" + email + '\'' +
                 ", userRole=" + userRole +
-                ", status='" + status + '\'' +
+                ", applicationStatus='" + applicationStatus + '\'' +
                 '}';
     }
 

@@ -22,7 +22,9 @@ public interface UserRepo extends JpaRepository<User, Long> {
     List<User> findAllByUserRole(Long userRole);
 
     List<User> findAllByApplicationStatusNotNull();
-    List<User> findAllByApplicationStatusNotNullAndFirstnameNotNullOrderOrderById();
+
+    List<User> findAllByApplicationStatusNotNullAndFirstnameNotNullOrderById();
+    List<User> findAllByApplicationStatusNotNullAndFirstnameNotNull();
 
     User findUserById(Long userId);
 }

@@ -30,7 +30,7 @@ public class RecruiterService {
         List<User> applicants = null;
         List<SingleUserApplicationDTO> singleUserApplicationDTOs = new ArrayList<>();
         try {
-            applicants = applicantRepo.findAllByApplicationStatusNotNullAndFirstnameNotNullOrderOrderById();
+            applicants = applicantRepo.findAllByApplicationStatusNotNullAndFirstnameNotNullOrderById();
             if(applicants.size() == 0){
                 throw new IllegalArgumentException();
             }
@@ -42,7 +42,7 @@ public class RecruiterService {
                             application.getFirstname(),
                             application.getSurname(),
                             getAgeFromPnr(application.getPnr()),
-                            application.getStatus()
+                            application.getApplicationStatus()
                     ));
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
@@ -77,7 +77,7 @@ public class RecruiterService {
 
         try {
             User user = applicantRepo.findUserById(statusDTO.getId());
-            user.setStatus(statusDTO.getStatus());
+            user.setApplicationStatus(statusDTO.getStatus());
             applicantRepo.save(user);
         }catch (Exception e){
             throw new StatusDTOException("ApplicationDTO " +

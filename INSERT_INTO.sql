@@ -19,16 +19,16 @@ COPY competence (competence_id, competence_name) FROM stdin;
 
 
 COPY person (person_id, firstname, surname, pnr, email, password, fk_id_role, username) FROM stdin;
-1	Joelle	Wilkinson	\N	\N	LiZ98qvL8Lw	1	JoelleWilkinson
-2	Martin	Cummings	\N	\N	QkK48drV2Da	1	MartinCummings
-3	Dante	Mason	\N	\N	EyD84euX5Nj	1	DanteMason
-4	Risa	Mayer	\N	\N	VdE34mqY2Xy	1	RisaMayer
-5	Maxwell	Bailey	\N	\N	NmK87boS4Lf	1	MaxwellBailey
-6	Emi	Flowers	\N	\N	LqK20ygU3Lw	1	EmiFlowers
-7	Hedley	Arnold	\N	\N	OjP41mkY3Vb	1	HedleyArnold
-8	Armand	Todd	\N	\N	LbH38urF4Kn	1	ArmandTodd
-9	Phillip	Ramsey	\N	\N	XoH15hnY3Bw	1	PhillipRamsey
-10	Austin	Mueller	\N	\N	MvZ46kfC1Kr	1	AustinMueller
+1	Joelle	Wilkinson	\N	\N	$2a$10$c2u.r94WXryopGVVLbWplOfAJ3NccypDFLydDQweQRJdhHwI0/Euy	1	JoelleWilkinson
+2	Martin	Cummings	\N	\N	$2a$10$HEuC70S4VI9s4WMD2X97r.2QWX1XkYrbRZf/u6QxgOkASKxyetHgC	1	MartinCummings
+3	Dante	Mason	\N	\N	$2a$10$WGk0D9BwjzFHR6WDncXTbuYe/YWB1hetE6WhBCGjEH72kqkn40FcS	1	DanteMason
+4	Risa	Mayer	\N	\N	$2a$10$NdobvlGQFapE/n3LZsWxxez4S8NQZy3mHpdAPfBcgIUjC5qxfBMIi	1	RisaMayer
+5	Maxwell	Bailey	\N	\N	$2a$10$XqZ0vIySIg0A4YhnocigdusbrVXZRFJIBdfqurwHmE8hD1P.kW3Se	1	MaxwellBailey
+6	Emi	Flowers	\N	\N	$2a$10$mUN9vyoN68SiErdvwShI9eyicNil/uNmyObanlEoLl91vVRLjd4Om	1	EmiFlowers
+7	Hedley	Arnold	\N	\N	$2a$10$aO8ltHm5d5HUeCKzQjd/6uZOanl8f6oEV8Ey1hS.Tfzb95vmmpKHG	1	HedleyArnold
+8	Armand	Todd	\N	\N	$2a$10$gho2.lqitZ7I5lkQ4jGG5.cvWDhEGYI9qzQxf9J9xQSgJ8xLfwUhq	1	ArmandTodd
+9	Phillip	Ramsey	\N	\N	$2a$10$qxj3YC1xYqfSCMtVa2z9EOR5KbzLabGDz3aYYYxEDGbfdCzEfFkfW	1	PhillipRamsey
+10	Austin	Mueller	\N	\N	$2a$10$OYsPsr0rUonmjmYyo/altOPAKDQzMMZ7frP4kvfCbznquY0CwI816	1	AustinMueller
 11	Leroy	Crane	20070114-1252	l_crane118@finnsinte.se	\N	2	\N
 12	Aristotle	Meadows	20030413-5765	a-meadows7789@finnsinte.se	\N	2	\N
 13	Tucker	Travis	20090317-7750	tucker-travis2407@finnsinte.se	\N	2	\N

@@ -5,7 +5,7 @@ public class SingleUserApplicationDTO {
     String firstname;
     String surname;
     int age;
-    String applicationStatus;
+    String status;
 
     public SingleUserApplicationDTO() {
     }
@@ -14,12 +14,12 @@ public class SingleUserApplicationDTO {
                                     String firstname,
                                     String surname,
                                     int age,
-                                    String applicationStatus) {
+                                    String status) {
         this.id = id;
         this.firstname = firstname;
         this.surname = surname;
         this.age = age;
-        this.applicationStatus = applicationStatus;
+        this.status = status;
     }
 
     public Long getId() {
@@ -54,12 +54,12 @@ public class SingleUserApplicationDTO {
         this.age = age;
     }
 
-    public String getApplicationStatus() {
-        return applicationStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setApplicationStatus(String applicationStatus) {
-        this.applicationStatus = applicationStatus;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
@@ -68,8 +68,8 @@ public class SingleUserApplicationDTO {
                 "id=" + id +
                 ", firstname='" + firstname + '\'' +
                 ", surname='" + surname + '\'' +
-                ", age='" + age + '\'' +
-                ", applicationStatus='" + applicationStatus + '\'' +
+                ", age=" + age +
+                ", status='" + status + '\'' +
                 '}';
     }
 }
