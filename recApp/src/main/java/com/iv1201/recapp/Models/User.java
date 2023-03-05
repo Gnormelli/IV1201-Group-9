@@ -20,7 +20,8 @@ public class User implements UserDetails {
     @SequenceGenerator(
             name = "person_sequence",
             sequenceName = "person_sequence",
-            allocationSize = 1
+            allocationSize = 1,
+            initialValue=1000
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
@@ -40,7 +41,6 @@ public class User implements UserDetails {
     private String username;
     @Column(
             name = "firstname",
-            nullable = true,
             columnDefinition = "TEXT"
     )
     private String firstname;
@@ -53,7 +53,6 @@ public class User implements UserDetails {
     @NotEmpty(message = "Password cannot be empty")
     @Column(
             name = "password",
-            nullable = false,
             columnDefinition = "TEXT"
     )
     private String password;
@@ -68,7 +67,6 @@ public class User implements UserDetails {
     @Email(message = "Not an email")
     @Column(
             name = "email",
-            nullable = false,
             columnDefinition = "TEXT"
     )
     private String email;
@@ -78,7 +76,6 @@ public class User implements UserDetails {
 
     @Column(
             name = "status",
-            nullable = false,
             columnDefinition = "TEXT"
     )
     private String applicationStatus;
