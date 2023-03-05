@@ -26,9 +26,6 @@ public class RecruiterController {
     @PostMapping("/status")
     public ResponseEntity<String> setStatus(@RequestBody @Valid StatusDTO statusDTO)
             throws StatusDTOException {
-
-        System.out.println("This is Status : "+ statusDTO);
-        System.out.println("This is ID? : "+ statusDTO.getId());
         recruiterService.updateStatus(statusDTO);
         return ResponseEntity.ok("Status updated successfully");
 

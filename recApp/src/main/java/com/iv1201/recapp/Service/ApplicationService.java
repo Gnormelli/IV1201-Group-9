@@ -44,7 +44,6 @@ public class ApplicationService {
 
         try {
             competences = competenceRepo.findAllCompetences();
-
             if(competences.size() == 0){
                 throw new IllegalArgumentException();
             }

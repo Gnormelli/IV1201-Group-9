@@ -30,7 +30,7 @@ public class RecruiterService {
         List<User> applicants = null;
         List<SingleUserApplicationDTO> singleUserApplicationDTOs = new ArrayList<>();
         try {
-            applicants = applicantRepo.findAllByApplicationStatusNotNullAndFirstnameNotNullOrderById();
+            applicants = applicantRepo.findAllByApplicationStatusNotNullAndFirstnameNotNull();
             if(applicants.size() == 0){
                 throw new IllegalArgumentException();
             }
@@ -74,18 +74,14 @@ public class RecruiterService {
             throw new StatusDTOException("StatusDTO: " +
                     "Status value cannot be null");
         }
+
         try {
             User user = applicantRepo.findUserById(statusDTO.getId());
-            System.out.println("saved " + statusDTO.getStatus());
             user.setApplicationStatus(statusDTO.getStatus());
-
             applicantRepo.save(user);
-
         }catch (Exception e){
-            System.err.println(e);
             throw new StatusDTOException("ApplicationDTO " +
                     "Status value could not be updated");
-
         }
     }
 }
