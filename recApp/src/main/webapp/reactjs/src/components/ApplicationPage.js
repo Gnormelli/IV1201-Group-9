@@ -12,8 +12,13 @@ function ApplicationPage() {
     const [lastName, setLastName] = useState('');
     const [personalNumber, setPersonalNumber] = useState('');
     const [email, setEmail] = useState('');
+
     const [items, setItems] = useState([]);
     const [options, setOptions] = useState([]);
+    const [index, setIndex] = useState('');
+    let experience = null;
+    let years = null;
+
     const [availability, setAvailability] = useState([]);
     const [dateRanges, setDateRanges] = useState([]);
     const [startDate, setStartDate] = useState("");
@@ -36,15 +41,10 @@ function ApplicationPage() {
         const competenceData = {
             competence,
         };
+        experience = competence;
+        console.log(experience);
 
-        ApiPost.setOptions(competenceData)
-            .then(response => {
-                console.log(response);
-                setItems([...options, response.competenceName]);
-            })
-            .catch(error => {
-                console.error(error);
-            });
+
     };
 
 
@@ -67,9 +67,8 @@ function ApplicationPage() {
     }
 
     const addItem = () => {
-        const newOption = document.getElementById("select-option").value;
         const newYears = document.getElementById("years-of-experience").value;
-        const newItem = { option: newOption, years: newYears };
+        const newItem = { option: experience, years: newYears };
         setItems([...items, newItem]);
     };
 
@@ -137,9 +136,9 @@ function ApplicationPage() {
             <Stack spacing="4">
                 <FormControl id="Area of expertise">
                     <FormLabel>Area of expertise</FormLabel>
-                    <Select  placeholder="Select an option" onChange={(e) => handleChange(e.target.value)}>
+                    <Select  placeholder="Select experience" onChange={(e) => handleChange(e.target.value)}>
                         {options.map((competence, index) => (
-                            <option key={competence.id || index} value={competence.competenceName}>
+                            <option key={index} value={competence.competenceName}>
                                 {competence.competenceName}
                             </option>
                         ))}
