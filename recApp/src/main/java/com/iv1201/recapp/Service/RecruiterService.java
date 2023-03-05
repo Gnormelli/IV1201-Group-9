@@ -30,7 +30,7 @@ public class RecruiterService {
         List<User> applicants = null;
         List<SingleUserApplicationDTO> singleUserApplicationDTOs = new ArrayList<>();
         try {
-            applicants = applicantRepo.findAllByApplicationStatusNotNullAndFirstnameNotNull();
+            applicants = applicantRepo.findAllByApplicationStatusNotNullAndFirstnameNotNullOrderById();
             if(applicants.size() == 0){
                 throw new IllegalArgumentException();
             }

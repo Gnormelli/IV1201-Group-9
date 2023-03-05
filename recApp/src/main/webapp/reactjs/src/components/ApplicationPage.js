@@ -40,7 +40,7 @@ function ApplicationPage() {
         ApiPost.setOptions(competenceData)
             .then(response => {
                 console.log(response);
-                setOptions([...options, response.competence]);
+                setItems([...options, response.competenceName]);
             })
             .catch(error => {
                 console.error(error);
@@ -138,9 +138,9 @@ function ApplicationPage() {
                 <FormControl id="Area of expertise">
                     <FormLabel>Area of expertise</FormLabel>
                     <Select  placeholder="Select an option" onChange={(e) => handleChange(e.target.value)}>
-                        {options.map((option) => (
-                            <option key={option} value={option}>
-                                {option.competence}
+                        {options.map((competence, index) => (
+                            <option key={competence.id || index} value={competence.competenceName}>
+                                {competence.competenceName}
                             </option>
                         ))}
                     </Select>

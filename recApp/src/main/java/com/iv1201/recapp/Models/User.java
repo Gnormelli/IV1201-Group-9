@@ -34,6 +34,7 @@ public class User implements UserDetails {
     private long id;
 
 
+    @NotEmpty(message = "Password cannot be empty")
     @Column(
             name = "username",
             columnDefinition = "TEXT"

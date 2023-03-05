@@ -6,11 +6,6 @@ import { Heading } from '@chakra-ui/react'
 import ApiPost from "../ApiInterface/ApiPost";
 
 
-/**
- *
- * @returns {JSX.Element}
- * @constructor
- */
 function SignupPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -18,6 +13,11 @@ function SignupPage() {
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
 
+    /**
+     * Handles form submission for signing up a new user.
+     * @param {Object} e - The form submission event.
+     * @returns {void}
+     */
     const handleSubmit = (e) => {
         e.preventDefault()
 
