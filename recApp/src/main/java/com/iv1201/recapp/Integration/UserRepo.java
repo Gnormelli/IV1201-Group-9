@@ -22,7 +22,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
     List<User> findAllByUserRole(Long userRole);
 
     List<User> findAllByApplicationStatusNotNull();
-    List<User> findAllByApplicationStatusNotNullAndFirstnameNotNull();
+    List<User> findAllByApplicationStatusNotNullAndFirstnameNotNullOrderOrderById();
 
     User findUserById(Long userId);
 }

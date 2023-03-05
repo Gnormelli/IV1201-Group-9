@@ -46,11 +46,6 @@ public class JwtFilter extends OncePerRequestFilter {
         final String username;
         final String jwtToken;
 
-//        if(authFromHeader == null || !authFromHeader.startsWith("Bearer ")){
-//            filterChain.doFilter(request, response);
-//            return;
-//        }
-
         boolean willReturn = checkAuthFromHeader(authFromHeader, filterChain, response, request);
         if (willReturn){
             return;
@@ -91,10 +86,10 @@ public class JwtFilter extends OncePerRequestFilter {
         }
     }
     private boolean checkAuthFromHeader(String authFromHeader,
-                                     FilterChain filterChain,
-                                     HttpServletResponse response,
-                                     HttpServletRequest request
-                                     ) throws ServletException, IOException {
+                                        FilterChain filterChain,
+                                        HttpServletResponse response,
+                                        HttpServletRequest request
+    ) throws ServletException, IOException {
         boolean willBreak = false;
         if(authFromHeader == null || !authFromHeader.startsWith("Bearer ") || authFromHeader.contains("Bearer null")){
             filterChain.doFilter(request, response);

@@ -78,7 +78,7 @@ public class User implements UserDetails {
             name = "status",
             columnDefinition = "TEXT"
     )
-    private String applicationStatus;
+    private String status;
 
 
     /**
@@ -105,7 +105,7 @@ public class User implements UserDetails {
                 String pnr,
                 String email,
                 Role userRole,
-                String applicationStatus) {
+                String status) {
         this.username = username;
         this.firstname = firstname;
         this.surname = surname;
@@ -113,7 +113,7 @@ public class User implements UserDetails {
         this.pnr = pnr;
         this.email = email;
         this.userRole = userRole;
-        this.applicationStatus = applicationStatus;
+        this.status = status;
     }
 
     public long getId() {
@@ -178,12 +178,12 @@ public class User implements UserDetails {
         this.userRole = userRole;
     }
 
-    public String getApplicationStatus() {
-        return applicationStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setApplicationStatus(String applicationStatus) {
-        this.applicationStatus = applicationStatus;
+    public void setStatus(String applicationStatus) {
+        this.status = status;
     }
 
     @Override
@@ -197,7 +197,7 @@ public class User implements UserDetails {
                 ", pnr='" + pnr + '\'' +
                 ", email='" + email + '\'' +
                 ", userRole=" + userRole +
-                ", applicationStatus='" + applicationStatus + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 
