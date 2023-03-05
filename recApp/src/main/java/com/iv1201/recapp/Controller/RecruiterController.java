@@ -1,11 +1,10 @@
 package com.iv1201.recapp.Controller;
 
-import com.iv1201.recapp.Integration.ApplicantRepo;
-import com.iv1201.recapp.Models.Application;
-import com.iv1201.recapp.Models.auth.AuthRequest;
-import com.iv1201.recapp.Models.auth.AuthResponse;
-import com.iv1201.recapp.Service.ApplicationService;
-import com.iv1201.recapp.Service.AuthService;
+import com.iv1201.recapp.Config.Exceptions.StatusDTOException;
+import com.iv1201.recapp.Models.RecruiterDTOs.SingleUserApplicationDTO;
+import com.iv1201.recapp.Models.RecruiterDTOs.StatusDTO;
+import com.iv1201.recapp.Service.RecruiterService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,30 +15,22 @@ import java.util.List;
 @RequestMapping("/api/v1/recruiters")
 public class RecruiterController {
     @Autowired
-    private ApplicationService applicationService;
+    private RecruiterService recruiterService;
 
     @GetMapping("/applicants")
-    public ResponseEntity<List<Application>> getAllApplicants() {
-        return ResponseEntity.ok(applicationService.applicants());
+    public ResponseEntity<List<SingleUserApplicationDTO>> getAllApplicants()
+            throws StatusDTOException {
+        return ResponseEntity.ok(recruiterService.getAllApplicants());
     }
 
-
     @PostMapping("/status")
-    public ResponseEntity<String> setStatus(@RequestBody Application application) {
+    public ResponseEntity<String> setStatus(@RequestBody @Valid StatusDTO statusDTO)
+            throws StatusDTOException {
 
-        System.out.println("STATUS: " + application.getStatus());
-
-        if (application.getStatus() == null) {
-            return ResponseEntity.badRequest().body("Status value cannot be null");
-        }
-
-        boolean updated = applicationService.updateStatus(application.getId(), application.getStatus());
-
-        if (updated) {
-            return ResponseEntity.ok("Status updated successfully");
-        } else {
-            return ResponseEntity.badRequest().body("Invalid ID or status value");
-        }
+        System.out.println("This is Status : "+ statusDTO);
+        System.out.println("This is ID? : "+ statusDTO.getId());
+        recruiterService.updateStatus(statusDTO);
+        return ResponseEntity.ok("Status updated successfully");
 
     }
 }

@@ -2,7 +2,18 @@ function doThrow(e) {
   throw e;
 }
 
-const url = "http://localhost:8081";
+
+const url = "http://localhost:8080";
+
+/**
+ * Makes an API call using HTTP GET method with the provided parameters and token
+ * @function
+ * @memberof ApiCall
+ * @param {string} params - The API endpoint and parameters
+ * @param {string} token - The user token for authentication
+ * @returns {Promise} A Promise that resolves to the API response data
+ * @throws {Error} If the API response status is not 200
+ */
 
 const ApiCall = {
   apiCall(params,token) {
@@ -42,6 +53,11 @@ const ApiCall = {
   },
   getApplications() {
     const getQueueEndpoint = "/api/v1/recruiters/applicants";
+    const token = "Bearer "+ localStorage.getItem("token");
+    return ApiCall.apiCall(getQueueEndpoint, token).then((data) => data);
+  },
+  getCompetence() {
+    const getQueueEndpoint = "/api/v1/applicants/competences";
     const token = "Bearer "+ localStorage.getItem("token");
     return ApiCall.apiCall(getQueueEndpoint, token).then((data) => data);
   }

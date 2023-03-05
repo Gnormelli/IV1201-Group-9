@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import { Box, Button, Input, Stack, Heading, VStack, StackDivider, Select, CloseButton, CheckboxGroup, Text, Checkbox } from '@chakra-ui/react';
+import React, {useEffect, useState} from 'react';
+import { Box, Button, Input, Stack, Heading, VStack, StackDivider, Select, CloseButton, Text, HStack, Flex, InputGroup, InputLeftAddon } from '@chakra-ui/react';
 import { FormControl, FormLabel } from '@chakra-ui/react'
 import {NavbarComponent} from './NavbarComponent';
+import ApiPost from "../ApiInterface/ApiPost";
+import ApiCall from "../ApiInterface/ApiCall";
 
+// The form allows the user to input personal information, experience, and availability.
 function ApplicationPage() {
     const [currentSection, setCurrentSection] = useState(0);
     const [firstName, setFirstName] = useState('');
@@ -10,8 +13,58 @@ function ApplicationPage() {
     const [personalNumber, setPersonalNumber] = useState('');
     const [email, setEmail] = useState('');
     const [items, setItems] = useState([]);
-    const options = ["Expertise 1", "Expertise 2", "Expertise 3", "Expertise 4", "Expertise 5"];
+    const [options, setOptions] = useState([]);
+    const [availability, setAvailability] = useState([]);
+    const [dateRanges, setDateRanges] = useState([]);
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
 
+    useEffect(() => {
+        ApiCall.getCompetence()
+            .then(response => {
+                console.log(response);
+                setOptions(response);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
+
+
+
+    const handleChange = (competence) => {
+        const competenceData = {
+            competence,
+        };
+
+        ApiPost.setOptions(competenceData)
+            .then(response => {
+                console.log(response);
+                setItems([...options, response.competenceName]);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+
+
+    const chooseOptions = (e) => {
+        const option = e.target.value;
+        if (availability.includes(option)) {
+            setAvailability(availability.filter(o => o !== option));
+        } else {
+            setAvailability([...availability, option]);
+        }
+    }
+
+    const cancel = () => {
+        setFirstName('')
+        setLastName('')
+        setPersonalNumber('')
+        setEmail('')
+        setItems([])
+        setAvailability([])
+    }
 
     const addItem = () => {
         const newOption = document.getElementById("select-option").value;
@@ -22,6 +75,22 @@ function ApplicationPage() {
 
     const removeItem = (index) => {
         setItems(items.filter((item, i) => i !== index));
+    };
+
+    const startDateChange = (event) => {
+        setStartDate(event.target.value);
+    };
+
+    const endDateChange = (event) => {
+        setEndDate(event.target.value);
+    };
+
+    const addDateRange = () => {
+        if (startDate !== "" && endDate !== "") {
+            setDateRanges([...dateRanges, { startDate, endDate }]);
+            setStartDate("");
+            setEndDate("");
+        }
     };
 
     const sections = [
@@ -51,11 +120,6 @@ function ApplicationPage() {
                         <FormLabel>Personal number</FormLabel>
                         <Input value={personalNumber} onChange={(e) => setPersonalNumber(e.target.value)} />
                     </FormControl>
-
-                    <FormControl h='80px' isRequired>
-                        <FormLabel>Email address</FormLabel>
-                        <Input type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
-                    </FormControl>
                 </Box>
             </VStack>
         </Box>,
@@ -73,10 +137,10 @@ function ApplicationPage() {
             <Stack spacing="4">
                 <FormControl id="Area of expertise">
                     <FormLabel>Area of expertise</FormLabel>
-                    <Select placeholder="Select an option" id="select-option">
-                        {options.map((option) => (
-                            <option key={option} value={option}>
-                                {option}
+                    <Select  placeholder="Select an option" onChange={(e) => handleChange(e.target.value)}>
+                        {options.map((competence, index) => (
+                            <option key={competence.id || index} value={competence.competenceName}>
+                                {competence.competenceName}
                             </option>
                         ))}
                     </Select>
@@ -86,7 +150,7 @@ function ApplicationPage() {
                     <Input type="number" id="years-of-experience" />
                 </FormControl>
                 <Button colorScheme="blue" onClick={addItem}>
-                    Add item
+                    Add to list
                 </Button>
             </Stack>
             <Box height="80px" overflowY="scroll">
@@ -107,25 +171,102 @@ function ApplicationPage() {
             </Box>
             </VStack>
         </Box>,
-        <Box>
+        <Box mt={8}>
             <VStack
                 divider={<StackDivider borderColor='gray.200' />}
                 spacing={4}
                 align='stretch'
             >
-                <Box h='40px'>
-                    <Heading as='h3' size='lg'>
-                        Availability
+            <Box h='40px'>
+                <Heading as='h3' size='lg'>
+                    Availability
+                </Heading>
+            </Box>
+            <Flex>
+                <InputGroup>
+                    <InputLeftAddon children="From" />
+                    <Input
+                        type="date"
+                        value={startDate}
+                        onChange={startDateChange}
+                    />
+                </InputGroup>
+                <InputGroup ml={4}>
+                    <InputLeftAddon children="To" />
+                    <Input type="date" value={endDate} onChange={endDateChange} />
+                </InputGroup>
+                <Button ml={4} size='md' colorScheme="blue" onClick={addDateRange}>
+                    +
+                </Button>
+            </Flex>
+            <Stack height="80px" overflowY="scroll" mt={4}>
+                {dateRanges.map((dateRange, index) => (
+                    <Flex key={index}>
+                        <Text>{dateRange.startDate}</Text>
+                        <Text mx={2}>-</Text>
+                        <Text>{dateRange.endDate}</Text>
+                    </Flex>
+                ))}
+            </Stack>
+            </VStack>
+        </Box>,
+        <Box>
+            <VStack
+                divider={<StackDivider borderColor="gray.200" />}
+                spacing={4}
+                align="stretch"
+            >
+                <Box h="40px">
+                    <Heading as="h3" size="lg">
+                        Summary
                     </Heading>
                 </Box>
                 <Box>
-                    <Stack spacing={10} direction="row">
-                        <Checkbox isDisabled>Checkbox</Checkbox>
-                        <Checkbox isDisabled defaultIsChecked>
-                            Checkbox
-                        </Checkbox>
-                    </Stack>
+                    <Text>
+                        Name: {firstName} {lastName}
+                    </Text>
+                    <Text>
+                        Personal number: {personalNumber}
+                    </Text>
+                    {items.length > 0 && (
+                        <Box>
+                            <Text fontWeight="bold">Experience:</Text>
+                            {items.map((item, index) => (
+                                <Text key={index}>
+                                    {item.option} ({item.years} years)
+                                </Text>
+                            ))}
+                        </Box>
+                    )}
+                    {availability.length > 0 && (
+                        <Box>
+                            <Text fontWeight="bold">Availability:</Text>
+                            {availability.map((option, index) => (
+                                <Text key={index}>{option}</Text>
+                            ))}
+                        </Box>
+                    )}
+                    <Box>
+                        <FormControl>
+                            Availability:
+                            {dateRanges.map((item, index) => (
+                                <HStack key={index}>
+                                    <Text>{item.startDate}</Text>
+                                    <Text>-</Text>
+                                    <Text>{item.endDate}</Text>
+                                </HStack>
+                            ))}
+                        </FormControl>
+                    </Box>
                 </Box>
+                <HStack justify="flex-end">
+                    <Button colorScheme="red" onClick={cancel}>
+                        Cancel
+                    </Button>
+                    <Button colorScheme="green" >
+                        Submit
+                    </Button>
+                </HStack>
             </VStack>
         </Box>
     ];

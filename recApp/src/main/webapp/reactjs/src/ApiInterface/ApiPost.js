@@ -2,7 +2,7 @@ function doThrow(e) {
     throw e;
 }
 
-const url = "http://localhost:8081";
+const url = "http://localhost:8080";
 const ApiPost = {
     apiCall(params, object, token) {
         return fetch(url + params, {
@@ -17,15 +17,17 @@ const ApiPost = {
             },
 
         body: JSON.stringify(object),
-        }).then((response) =>
-            response.status === 200
-                ? response
-                : doThrow(
-                    new Error(
-                    "Status was: " + response.statusText + " " + response.status
-                    )
-                )
+        }
+        // ).then((response) =>
+        //     response.status === 200
+        //         ? response
+        //         : console.log(response) && doThrow(
+        //             new Error(
+        //             "Status was: " + response.statusText + " " + response.status + response.ErrorMessage
+        //             )
+        //         )
             ).then((response) => {
+                console.log(response);
                     return response.json()
             });
         },
@@ -36,8 +38,10 @@ const ApiPost = {
         },
         logIn(object) {
             const logInEndpoint = "/api/v1/auth/authenticate";
-            const token = null;
-                // "Bearer "+ localStorage.getItem("token");
+            let token = "Bearer "+ localStorage.getItem("token");
+            if(token === "Bearer undefined"){
+                token = "Bearer null";
+            }
             return ApiPost.apiCall(logInEndpoint, object, token).then((data) => data);
         },
         setStatus(object) {
@@ -45,11 +49,11 @@ const ApiPost = {
              const token = "Bearer "+ localStorage.getItem("token");
             return ApiPost.apiCall(statusEndpoint, object, token).then((data) => data);
         },
-        setSubmit(object) {
-        const statusEndpoint = "/api/v1/recruiters/status";
-        const token = "Bearer "+ localStorage.getItem("token");
-        return ApiPost.apiCall(statusEndpoint, object, token).then((data) => data);
-    }
+        setOptions(object) {
+            const statusEndpoint = "/api/v1/applicants/competence";
+            const token = "Bearer "+ localStorage.getItem("token");
+            return ApiPost.apiCall(statusEndpoint, object, token).then((data) => data);
+        }
     };
 
 export default ApiPost;

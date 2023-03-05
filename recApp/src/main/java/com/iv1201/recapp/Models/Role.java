@@ -1,5 +1,6 @@
 package com.iv1201.recapp.Models;
 
+import com.iv1201.recapp.Config.Validation.ValidateRoleId;
 import jakarta.persistence.*;
 
 /**
@@ -19,7 +20,7 @@ public class Role {
             strategy = GenerationType.SEQUENCE,
             generator = "role_sequence"
     )
-
+    @ValidateRoleId
     private Long id;
 
     @Column(
@@ -27,6 +28,7 @@ public class Role {
             nullable = false,
             columnDefinition = "TEXT"
     )
+//    @ValidateRoleName
     private String roleName;
 
     public Role() {

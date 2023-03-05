@@ -1,6 +1,7 @@
 package com.iv1201.recapp.Models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,7 @@ import java.util.Collections;
 /**
  * POJO for Users.
  */
+
 @Entity
 @Table(name = "person")
 public class User implements UserDetails {
@@ -28,55 +30,66 @@ public class User implements UserDetails {
             name = "person_id",
             updatable = false
     )
-    long id;
+    private long id;
+
+
     @Column(
             name = "username",
-            nullable = true,
             columnDefinition = "TEXT"
     )
-    String username;
+    private String username;
     @Column(
             name = "firstname",
             nullable = true,
             columnDefinition = "TEXT"
     )
-    String firstname;
+    private String firstname;
     @Column(
             name = "surname",
-            nullable = true,
             columnDefinition = "TEXT"
     )
-    String surname;
+    private String surname;
 
+    @NotEmpty(message = "Password cannot be empty")
     @Column(
             name = "password",
             nullable = false,
             columnDefinition = "TEXT"
     )
-    String password;
+    private String password;
 
     @Column(
             name = "pnr",
-            nullable = true,
+            unique=true,
             columnDefinition = "TEXT"
     )
-    String pnr;
+    private String pnr;
 
+    @Email(message = "Not an email")
     @Column(
             name = "email",
             nullable = false,
             columnDefinition = "TEXT"
     )
-    String email;
+    private String email;
     @ManyToOne
     @JoinColumn(name = "fk_id_role")
-    Role userRole;
+    private Role userRole;
+
+    @Column(
+            name = "status",
+            nullable = true,
+            columnDefinition = "TEXT"
+    )
+    private String applicationStatus;
+
 
     /**
      * Empty constructor
      */
     public User() {
     }
+
 
     /**
      * Constructor for creating Users
@@ -94,7 +107,8 @@ public class User implements UserDetails {
                 String password,
                 String pnr,
                 String email,
-                Role userRole) {
+                Role userRole,
+                String applicationStatus) {
         this.username = username;
         this.firstname = firstname;
         this.surname = surname;
@@ -102,6 +116,11 @@ public class User implements UserDetails {
         this.pnr = pnr;
         this.email = email;
         this.userRole = userRole;
+        this.applicationStatus = applicationStatus;
+    }
+
+    public long getId() {
+        return id;
     }
 
     @Override
@@ -162,6 +181,14 @@ public class User implements UserDetails {
         this.userRole = userRole;
     }
 
+    public String getApplicationStatus() {
+        return applicationStatus;
+    }
+
+    public void setApplicationStatus(String applicationStatus) {
+        this.applicationStatus = applicationStatus;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -173,6 +200,7 @@ public class User implements UserDetails {
                 ", pnr='" + pnr + '\'' +
                 ", email='" + email + '\'' +
                 ", userRole=" + userRole +
+                ", applicationStatus='" + applicationStatus + '\'' +
                 '}';
     }
 

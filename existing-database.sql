@@ -25,10 +25,10 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public.availability (
-    availability_id integer NOT NULL,
-    person_id integer,
-    from_date date,
-    to_date date
+                                     availability_id integer NOT NULL,
+                                     person_id integer,
+                                     from_date date,
+                                     to_date date
 );
 
 
@@ -45,7 +45,7 @@ ALTER TABLE public.availability ALTER COLUMN availability_id ADD GENERATED ALWAY
     NO MINVALUE
     NO MAXVALUE
     CACHE 1
-);
+    );
 
 
 --
@@ -53,8 +53,8 @@ ALTER TABLE public.availability ALTER COLUMN availability_id ADD GENERATED ALWAY
 --
 
 CREATE TABLE public.competence (
-    competence_id integer NOT NULL,
-    name character varying(255)
+                                   competence_id integer NOT NULL,
+                                   name character varying(255)
 );
 
 
@@ -71,7 +71,7 @@ ALTER TABLE public.competence ALTER COLUMN competence_id ADD GENERATED ALWAYS AS
     NO MINVALUE
     NO MAXVALUE
     CACHE 1
-);
+    );
 
 
 --
@@ -79,10 +79,10 @@ ALTER TABLE public.competence ALTER COLUMN competence_id ADD GENERATED ALWAYS AS
 --
 
 CREATE TABLE public.competence_profile (
-    competence_profile_id integer NOT NULL,
-    person_id integer,
-    competence_id integer,
-    years_of_experience numeric(4,2)
+                                           competence_profile_id integer NOT NULL,
+                                           person_id integer,
+                                           competence_id integer,
+                                           years_of_experience numeric(4,2)
 );
 
 
@@ -99,7 +99,7 @@ ALTER TABLE public.competence_profile ALTER COLUMN competence_profile_id ADD GEN
     NO MINVALUE
     NO MAXVALUE
     CACHE 1
-);
+    );
 
 
 --
@@ -107,14 +107,14 @@ ALTER TABLE public.competence_profile ALTER COLUMN competence_profile_id ADD GEN
 --
 
 CREATE TABLE public.person (
-    person_id integer NOT NULL,
-    name character varying(255),
-    surname character varying(255),
-    pnr character varying(255),
-    email character varying(255),
-    password character varying(255),
-    role_id integer,
-    username character varying(255)
+                               person_id integer NOT NULL,
+                               name character varying(255),
+                               surname character varying(255),
+                               pnr character varying(255),
+                               email character varying(255),
+                               password character varying(255),
+                               role_id integer,
+                               username character varying(255)
 );
 
 
@@ -131,7 +131,7 @@ ALTER TABLE public.person ALTER COLUMN person_id ADD GENERATED ALWAYS AS IDENTIT
     NO MINVALUE
     NO MAXVALUE
     CACHE 1
-);
+    );
 
 
 --
@@ -139,8 +139,8 @@ ALTER TABLE public.person ALTER COLUMN person_id ADD GENERATED ALWAYS AS IDENTIT
 --
 
 CREATE TABLE public.role (
-    role_id integer NOT NULL,
-    name character varying(255)
+                             role_id integer NOT NULL,
+                             name character varying(255)
 );
 
 
@@ -157,14 +157,14 @@ ALTER TABLE public.role ALTER COLUMN role_id ADD GENERATED ALWAYS AS IDENTITY (
     NO MINVALUE
     NO MAXVALUE
     CACHE 1
-);
+    );
 
 
 --
 -- Data for Name: availability; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.competence (competence_id, name) FROM stdin;
+COPY public.availability (availability_id, person_id, from_date, to_date) FROM stdin;
 18260	547	2019-09-07	2019-10-07
 18261	781	2018-05-18	2018-06-18
 18262	686	2019-09-06	2019-10-06
@@ -2496,7 +2496,7 @@ COPY public.competence (competence_id, name) FROM stdin;
 -- Data for Name: competence; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.availability (availability_id, person_id, from_date, to_date) FROM stdin;
+COPY public.competence (competence_id, name) FROM stdin;
 1	ticket sales
 2	lotteries
 3	roller coaster operation
