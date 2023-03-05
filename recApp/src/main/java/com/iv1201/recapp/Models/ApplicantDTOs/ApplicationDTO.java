@@ -18,10 +18,6 @@ public class ApplicationDTO {
     )
     String pnr;
 
-    @Pattern(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\." +
-            "[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$"
-            , message = "Please, check you email")
-    String email;
     List<AreaOfExpertiseDTO> areaOfExpertiseDTOList;
     List<DatesDTO> datesDTOList;
 
@@ -31,13 +27,11 @@ public class ApplicationDTO {
     public ApplicationDTO(String firstname,
                           String lastname,
                           String pnr,
-                          String email,
                           List<AreaOfExpertiseDTO> areaOfExpertiseDTOList,
                           List<DatesDTO> datesDTOList) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.pnr = pnr;
-        this.email = email;
         this.areaOfExpertiseDTOList = areaOfExpertiseDTOList;
         this.datesDTOList = datesDTOList;
     }
@@ -54,9 +48,6 @@ public class ApplicationDTO {
         return pnr;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
     public List<AreaOfExpertiseDTO> getAreaOfExpertiseDTOList() {
         return areaOfExpertiseDTOList;
@@ -72,7 +63,6 @@ public class ApplicationDTO {
                 "firstName='" + firstname + '\'' +
                 ", lastName='" + lastname + '\'' +
                 ", pnr='" + pnr + '\'' +
-                ", email='" + email + '\'' +
                 ", areaOfExpertiseDTOList=" + areaOfExpertiseDTOList +
                 ", datesDTOList=" + datesDTOList +
                 '}';

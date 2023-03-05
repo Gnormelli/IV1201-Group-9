@@ -11,7 +11,8 @@ public class Availability {
     @SequenceGenerator(
             name = "availability_sequence",
             sequenceName = "availability_sequence",
-            allocationSize = 1
+            allocationSize = 1,
+            initialValue=20000
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,

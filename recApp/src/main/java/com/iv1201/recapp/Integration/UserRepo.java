@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 @Transactional(propagation = Propagation.MANDATORY)
 public interface UserRepo extends JpaRepository<User, Long> {
-    Optional<User> findByUsername(String username);
+    User findByUsername(String username);
 
     User findByEmail(String email);
 
