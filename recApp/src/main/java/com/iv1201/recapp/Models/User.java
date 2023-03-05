@@ -179,11 +179,11 @@ public class User implements UserDetails {
         this.userRole = userRole;
     }
 
-    public String getApplicationStatus() {
+    public String getStatus() {
         return applicationStatus;
     }
 
-    public void setApplicationStatus(String applicationStatus) {
+    public void setStatus(String applicationStatus) {
         this.applicationStatus = applicationStatus;
     }
 
@@ -198,7 +198,7 @@ public class User implements UserDetails {
                 ", pnr='" + pnr + '\'' +
                 ", email='" + email + '\'' +
                 ", userRole=" + userRole +
-                ", applicationStatus='" + applicationStatus + '\'' +
+                ", status='" + applicationStatus + '\'' +
                 '}';
     }
 
