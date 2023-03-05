@@ -6,9 +6,9 @@ import { Heading } from '@chakra-ui/react'
 import ApiPost from "../ApiInterface/ApiPost";
 
 /**
- * 
- * @returns {JSX.Element}
- * @constructor
+ Represents the Login Page component with a login form that makes an API request to log in a user.
+ @function LoginPage
+ @returns {JSX.Element} JSX element that represents the login page component.
  */
 function LoginPage() {
 
@@ -17,17 +17,18 @@ function LoginPage() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState('')
 
-    // define handleSubmit function to handle form submission
+    /**
+     * Handles form submission.
+     * @param {Object} e - The form submission event object.
+     */
     const handleSubmit = (e) => {
         e.preventDefault() // prevent default form submission behavior
 
-        // check if email and password are empty, update error message state if either is empty
         if (!email || !password) {
             setError('Please enter email and password')
             return
         }
         setError('') // clear error message state
-
 
         // response.status === 500
         //         ? response
@@ -37,15 +38,11 @@ function LoginPage() {
         //             )
         //         )
 
-
-        // create an object containing the user's email and password
         const logInData = {
             email,
             password
         };
 
-        // make an API request to log in the user
-        // save the JWT token to local storage
         ApiPost.logIn(logInData)
             .then(response => {
                 console.log(response)
@@ -76,7 +73,6 @@ function LoginPage() {
 
     }
 
-    // return the UI for the login page
     return (
         <Box
             as="form"

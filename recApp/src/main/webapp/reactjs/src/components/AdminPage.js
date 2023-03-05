@@ -5,16 +5,15 @@ import {NavbarComponent} from './NavbarComponent';
 import ApiCall from "../ApiInterface/ApiCall";
 import ApiPost from "../ApiInterface/ApiPost";
 
-
 /**
- *
- * @returns {JSX.Element}
- * @constructor
+ * Renders the Admin Page component.
+ * Displays a list of users and their application status,
+ * with the ability to update their status by selecting from a dropdown menu.
+ * @returns {JSX.Element} - The Admin Page component.
  */
 function AdminPage() {
 
     const [users, setUsers] = React.useState([]);
-
 
 
     useEffect(() => {
@@ -28,21 +27,24 @@ function AdminPage() {
             });
     }, []);
 
-
+    /**
+     * Handles the change of status of a user's application.
+     * @param {string} status - The new status to set for the application.
+     * @param {number} id - The index of the user whose application is being updated.
+     */
     const handleChange = (status, id) => {
 
         const statusData = {
             status,
             id: id + 1,
         };
+
         console.log(`${status} was clicked`);
         console.log(`${id+1} was index`);
-
 
         ApiPost.setStatus(statusData)
             .then(response => {
                 console.log(response);
-
 
             })
             .catch(error => {
@@ -81,7 +83,6 @@ function AdminPage() {
                         >
                             <Text fontFamily="Roboto, sans-serif" mr={5} fontWeight="bold">{name.firstname}</Text>
                             <Text fontFamily="Roboto, sans-serif" mr={5} fontWeight="bold">{name.surname}</Text>
-                            <Text fontFamily="Roboto, sans-serif"fontWeight="bold">{name.age}</Text>
                             <Stack ml="auto">
                                 <Select variant='filled' placeholder={name.status} onChange={(status) => handleChange(status.target.value, id)}>
                                     <option value="Accepted" style={{ display: name.status === 'Accepted' ? 'none' : 'block' }}>Accepted</option>
