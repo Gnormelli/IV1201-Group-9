@@ -28,29 +28,23 @@ const ApiCall = {
           "Origin, X-Requested-With, Content-Type, Accept",
       },
     })
-      // .then((response) =>
-      //   response.status === 200
-      //     ? response
-      //     : doThrow(
-      //         new Error(
-      //           "Status was: " + response.statusText + " " + response.status + " " + params
-      //         )
-      //       )
-      // )
-      .then((response) => {
-        console.log("Row 41: ApiCall")
-        console.log(response)
-            if (response.status === 403) {
-              return response
-            }
-        console.log(response)
-        return response.json()
-        // if (response.status === 200) {
-        //   return response.json();
-        // } else {
-        //   throw new Error("Status was: " + response.statusText + " " + response.status);
-        // }
-      });
+      .then((response) =>
+        response.status === 200
+          ? response
+          : doThrow(
+              new Error(
+                "Status was: " + response.statusText + " " + response.status
+              )
+            )
+      )
+      // .then((response) => {
+      //   if (response.status === 200) {
+      //     console.log("Row 42: ApiCall")
+      //     return response.json();
+      //   } else if(response.status !== 200){
+      //     return response.json()
+      //     }
+      // });
   },
   test() {
     const testEndPoint = "/api/v1/testEndpoint/anotherTestEndpoint";

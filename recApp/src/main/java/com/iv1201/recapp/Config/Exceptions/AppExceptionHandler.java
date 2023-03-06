@@ -101,6 +101,6 @@ public class AppExceptionHandler {
             statusCode = 500;
         }
 //        return ResponseEntity.status(statusCode).body(expMap.toString());
-        return ResponseEntity.status(200).body(new ExceptionsDTO(expMap.toString()));
+        return ResponseEntity.status(statusCode).body(new ExceptionsDTO(expMap.toString()));
     }
 }

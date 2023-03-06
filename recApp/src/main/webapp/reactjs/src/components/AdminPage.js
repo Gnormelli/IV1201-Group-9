@@ -14,13 +14,14 @@ import ApiPost from "../ApiInterface/ApiPost";
 function AdminPage() {
 
     const [users, setUsers] = React.useState([]);
+    const [errorMessage, setErrorMessage] = React.useState([]);
 
 
     useEffect(() => {
         ApiCall.getApplications()
             .then(response => {
                 console.log("Row 22: Admin Page ")
-                if (response.status !== 200){
+                if (response.status === null){
                     console.log(response)
                     localStorage.removeItem("token");
                     // Redirect the user to the login page
@@ -29,8 +30,11 @@ function AdminPage() {
                 console.log(response);
                 setUsers(response);
             })
-            .catch(error => {
-                console.error(error);
+            .catch(errorCatch => {
+                console.log("An error was caught");
+                setErrorMessage(errorCatch);
+                console.log(errorCatch)
+                console.error(errorCatch);
             });
     }, []);
 
@@ -58,7 +62,6 @@ function AdminPage() {
             .catch(error => {
                 console.error(error);
             });
-
     }
 
     return (
@@ -101,14 +104,8 @@ function AdminPage() {
                             </Stack>
                         </Flex>
                     ))}
-
                 </Box>
-
-
             </Box>
-
-
-
         </>
     );
 }
