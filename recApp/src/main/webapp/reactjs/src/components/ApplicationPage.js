@@ -92,6 +92,33 @@ function ApplicationPage() {
         }
     };
 
+    const handleSubmit = () => {
+        console.log(firstName);
+        console.log(lastName);
+        console.log(personalNumber);
+        console.log(dateRanges);
+        console.log(items);
+
+        const applicationData = {
+            firstName,
+            lastName,
+            personalNumber,
+            items,
+            dateRanges
+        };
+
+        ApiPost.setSubmit(applicationData)
+            .then(response => {
+                console.log(response);
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+
+    }
+
     const sections = [
         <Box>
             <VStack
@@ -238,7 +265,7 @@ function ApplicationPage() {
                         </Box>
                     )}
                     {availability.length > 0 && (
-                        <Box>
+                        <Box fontWeight="bold">
                             <Text fontWeight="bold">Availability:</Text>
                             {availability.map((option, index) => (
                                 <Text key={index}>{option}</Text>
@@ -246,8 +273,8 @@ function ApplicationPage() {
                         </Box>
                     )}
                     <Box>
-                        <FormControl>
-                            Availability:
+                        <FormControl >
+                          <Text fontWeight="bold"> Availability:</Text>
                             {dateRanges.map((item, index) => (
                                 <HStack key={index}>
                                     <Text>{item.startDate}</Text>
@@ -262,7 +289,7 @@ function ApplicationPage() {
                     <Button colorScheme="red" onClick={cancel}>
                         Cancel
                     </Button>
-                    <Button colorScheme="green" >
+                    <Button colorScheme="green" onClick={() => handleSubmit()}>
                         Submit
                     </Button>
                 </HStack>

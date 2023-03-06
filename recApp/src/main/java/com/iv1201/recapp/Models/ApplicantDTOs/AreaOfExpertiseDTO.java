@@ -1,30 +1,34 @@
 package com.iv1201.recapp.Models.ApplicantDTOs;
 
 public class AreaOfExpertiseDTO {
-    Long areaOfExpertiseID;
-    float yearsOfExperience;
+    String option;
+    float years;
 
     public AreaOfExpertiseDTO() {
     }
 
-    public AreaOfExpertiseDTO(long areaOfExpertiseID, float yearsOfExperience) {
-        this.areaOfExpertiseID = areaOfExpertiseID;
-        this.yearsOfExperience = yearsOfExperience;
+    public AreaOfExpertiseDTO(String option, float years) {
+        this.option = option;
+        this.years = years;
     }
 
-    public long getAreaOfExpertiseID() {
-        return areaOfExpertiseID;
+    public String getOption() {
+        return option;
+    }
+
+    public float getYears() {
+        return years;
     }
 
     public float getYearsOfExperience() {
-        return yearsOfExperience;
+        return years;
     }
 
     @Override
     public String toString() {
         return "AreaOfExpertiseDTO{" +
-                "areaOfExpertiseID=" + areaOfExpertiseID +
-                ", yearsOfExperience='" + yearsOfExperience + '\'' +
+                "option=" + option +
+                ", years='" + years + '\'' +
                 '}';
     }
 }
