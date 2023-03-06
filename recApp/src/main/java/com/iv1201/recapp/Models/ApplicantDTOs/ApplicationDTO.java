@@ -1,5 +1,6 @@
 package com.iv1201.recapp.Models.ApplicantDTOs;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 
@@ -18,7 +19,11 @@ public class ApplicationDTO {
     )
     String pnr;
 
+
+    @Valid
     List<AreaOfExpertiseDTO> areaOfExpertiseDTOList;
+
+    @Valid
     List<DatesDTO> datesDTOList;
 
     public ApplicationDTO() {

@@ -20,8 +20,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
@@ -65,11 +70,17 @@ public class ApplicationService {
             userRepo.save(authUser);
 
             applicationDTO.getDatesDTOList().forEach(date ->
-                availabilityRepo.save(
-                        new Availability(
-                                authUser,
-                                date.getFrom_date(),
-                                date.getTo_date())));
+            {
+                try {
+                    availabilityRepo.save(
+                            new Availability(
+                                    authUser,
+                                    convertStringDate(date.getFrom_date()),
+                                    convertStringDate(date.getTo_date())));
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+            });
 
             applicationDTO.getAreaOfExpertiseDTOList().forEach(expertise ->
                 competenceProfileRepo.save(new CompetenceProfile(
@@ -79,6 +90,12 @@ public class ApplicationService {
         }catch (Exception e){
             throw new ApplicationCouldNotSubmitException("The application could not be submitted");
         }
+    }
+
+    private Date convertStringDate(String str) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date date = formatter.parse(str);
+        return date;
     }
 
 //    todo deleteApplication if there is time

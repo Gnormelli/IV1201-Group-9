@@ -1,22 +1,33 @@
 package com.iv1201.recapp.Models.ApplicantDTOs;
 
+import jakarta.validation.constraints.*;
+
+import java.math.BigDecimal;
+
 public class AreaOfExpertiseDTO {
+
+    @Min(1)
+    @Max(3)
     Long areaOfExpertiseID;
-    float yearsOfExperience;
+
+    @NotNull
+    @DecimalMin(value = "0.0", inclusive = false)
+    @Digits(integer=2, fraction=2)
+    BigDecimal yearsOfExperience;
 
     public AreaOfExpertiseDTO() {
     }
 
-    public AreaOfExpertiseDTO(long areaOfExpertiseID, float yearsOfExperience) {
+    public AreaOfExpertiseDTO(Long areaOfExpertiseID, BigDecimal yearsOfExperience) {
         this.areaOfExpertiseID = areaOfExpertiseID;
         this.yearsOfExperience = yearsOfExperience;
     }
 
-    public long getAreaOfExpertiseID() {
+    public Long getAreaOfExpertiseID() {
         return areaOfExpertiseID;
     }
 
-    public float getYearsOfExperience() {
+    public BigDecimal getYearsOfExperience() {
         return yearsOfExperience;
     }
 

@@ -17,6 +17,7 @@ const url = "http://localhost:8080";
 
 const ApiCall = {
   apiCall(params,token) {
+      // .then((response) => {
     return fetch(url + params, {
       method: "GET", // HTTP method
       crossDomain: true,
@@ -25,20 +26,19 @@ const ApiCall = {
         "Authorization" : token,
         "Content-Type": "application/json",
         "Access-Control-Request-Headers":
-          "Origin, X-Requested-With, Content-Type, Accept",
+            "Origin, X-Requested-With, Content-Type, Accept",
       },
     })
-      .then((response) =>
-        response.status === 200
-          ? response
-          : doThrow(
-              new Error(
-                "Status was: " + response.statusText + " " + response.status
-              )
-            )
-      )
-      // .then((response) => {
-      //   if (response.status === 200) {
+        .then(( response) =>
+            response.status === 200
+                ? response.json()
+                : doThrow(
+                    response.status
+                    // "Status was: " + response.statusText + " " + response.status
+
+                )
+        )
+    //   if (response.status === 200) {
       //     console.log("Row 42: ApiCall")
       //     return response.json();
       //   } else if(response.status !== 200){

@@ -1,9 +1,10 @@
 import React, {useEffect} from 'react';
-import {Box, Text, Flex, Stack,} from '@chakra-ui/react';
+import {Box, Text, Flex, Stack, FormHelperText,} from '@chakra-ui/react';
 import {Select} from "@chakra-ui/react";
 import {NavbarComponent} from './NavbarComponent';
 import ApiCall from "../ApiInterface/ApiCall";
 import ApiPost from "../ApiInterface/ApiPost";
+import {wait} from "@testing-library/user-event/dist/utils";
 
 /**
  * Renders the Admin Page component.
@@ -31,10 +32,16 @@ function AdminPage() {
                 setUsers(response);
             })
             .catch(errorCatch => {
-                console.log("An error was caught");
-                setErrorMessage(errorCatch);
-                console.log(errorCatch)
-                console.error(errorCatch);
+                if (errorCatch === 403){
+                    localStorage.removeItem("token");
+                    setErrorMessage("Token has expired, redirecting to login page")
+                    // Redirect the user to the login page
+                    wait(2).then(r => window.location.replace("/") )
+                } else{
+                    setErrorMessage(errorCatch);
+                    console.log(errorCatch)
+                }
+
             });
     }, []);
 
@@ -48,7 +55,7 @@ function AdminPage() {
 
         const statusData = {
             status,
-            id: id,
+            id: id
         };
 
         console.log(`${status} was clicked`);
@@ -104,6 +111,9 @@ function AdminPage() {
                             </Stack>
                         </Flex>
                     ))}
+                    {errorMessage && (
+                        <Text color="red.500">{errorMessage}</Text>
+                    )}
                 </Box>
             </Box>
         </>

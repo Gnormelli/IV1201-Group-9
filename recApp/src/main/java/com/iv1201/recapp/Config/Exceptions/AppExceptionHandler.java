@@ -24,6 +24,7 @@ public class AppExceptionHandler {
         });
         return expMap;
     }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
     public Map<String, String> handleInvalidArgument(ConstraintViolationException e){
@@ -34,6 +35,10 @@ public class AppExceptionHandler {
         return expMap;
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ExceptionsDTO> handleInvalidArgument(RuntimeException e){
+        return ResponseEntity.status(500).body(new ExceptionsDTO(e.getMessage()));
+    }
 
     @ExceptionHandler(NoSuchFieldError.class)
     public Map<String, String> handleInvalidArgument(NoSuchFieldError e){
@@ -92,15 +97,11 @@ public class AppExceptionHandler {
     @ExceptionHandler(StatusDTOException.class)
     public ResponseEntity<ExceptionsDTO> handleBusinessException(StatusDTOException e){
         int statusCode = 400;
-        Map<String, String> expMap = new HashMap<>();
-        System.out.println(e.getMessage());
-        expMap.put("ErrorMessage", e.getMessage());
         if(e.getMessage().contains("updated")){
             statusCode = 500;
         }else if(e.getMessage().contains("Could not find get All Applicants")){
             statusCode = 500;
         }
-//        return ResponseEntity.status(statusCode).body(expMap.toString());
-        return ResponseEntity.status(statusCode).body(new ExceptionsDTO(expMap.toString()));
+        return ResponseEntity.status(statusCode).body(new ExceptionsDTO(e.getMessage()));
     }
 }

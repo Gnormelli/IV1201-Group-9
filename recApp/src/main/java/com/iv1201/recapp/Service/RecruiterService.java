@@ -55,7 +55,6 @@ public class RecruiterService {
         }catch (Exception e ){
             throw new StatusDTOException("Could not get All Applicants " + e);
         }
-        if(true){throw new StatusDTOException("This is a test off error handling");}
         return singleUserApplicationDTOs;
     }
 
