@@ -42,6 +42,7 @@ public class RecruiterService {
                             application.getFirstname(),
                             application.getSurname(),
                             getAgeFromPnr(application.getPnr()),
+//                            Integer.parseInt(application.getPnr()),
                             application.getStatus()
                     ));
                 } catch (ParseException e) {
@@ -52,12 +53,15 @@ public class RecruiterService {
                 throw new IllegalArgumentException();
             }
         }catch (Exception e ){
-            throw new StatusDTOException("Could not get All Applicants");
+            throw new StatusDTOException("Could not get All Applicants " + e);
         }
+//        if(true){throw new StatusDTOException("This is a test off error handling");}
         return singleUserApplicationDTOs;
     }
 
+    // TODO Should we have age from personal number?
     private int getAgeFromPnr(String pnr) throws ParseException {
+
         String[] split = pnr.split("-");
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
             Date dob = formatter.parse(split[0]);
