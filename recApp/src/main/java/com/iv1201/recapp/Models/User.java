@@ -1,6 +1,7 @@
 package com.iv1201.recapp.Models;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -51,7 +52,10 @@ public class User implements UserDetails {
     )
     private String surname;
 
-    @NotEmpty(message = "Password cannot be empty")
+    /**
+     * No validation due to applicants not having passwords.
+     */
+//    @NotEmpty(message = "user must have password")
     @Column(
             name = "password",
             columnDefinition = "TEXT"
@@ -179,11 +183,11 @@ public class User implements UserDetails {
         this.userRole = userRole;
     }
 
-    public String getApplicationStatus() {
+    public String getStatus() {
         return applicationStatus;
     }
 
-    public void setApplicationStatus(String applicationStatus) {
+    public void setStatus(String applicationStatus) {
         this.applicationStatus = applicationStatus;
     }
 
@@ -198,7 +202,7 @@ public class User implements UserDetails {
                 ", pnr='" + pnr + '\'' +
                 ", email='" + email + '\'' +
                 ", userRole=" + userRole +
-                ", applicationStatus='" + applicationStatus + '\'' +
+                ", status='" + applicationStatus + '\'' +
                 '}';
     }
 

@@ -19,6 +19,13 @@ function AdminPage() {
     useEffect(() => {
         ApiCall.getApplications()
             .then(response => {
+                console.log("Row 22: Admin Page ")
+                if (response.status !== 200){
+                    console.log(response)
+                    localStorage.removeItem("token");
+                    // Redirect the user to the login page
+                    window.location.replace("/");
+                }
                 console.log(response);
                 setUsers(response);
             })
@@ -33,14 +40,15 @@ function AdminPage() {
      * @param {number} id - The index of the user whose application is being updated.
      */
     const handleChange = (status, id) => {
+        console.log("This is the id; " + id)
 
         const statusData = {
             status,
-            id: id + 1,
+            id: id,
         };
 
         console.log(`${status} was clicked`);
-        console.log(`${id+1} was index`);
+        console.log(`${id} was index`);
 
         ApiPost.setStatus(statusData)
             .then(response => {
@@ -81,10 +89,11 @@ function AdminPage() {
                             _hover={{ bg: "gray.200" }}
                             transition="background-color 0.2s ease-in-out"
                         >
-                            <Text fontFamily="Roboto, sans-serif" mr={5} fontWeight="bold">{name.firstname}</Text>
-                            <Text fontFamily="Roboto, sans-serif" mr={5} fontWeight="bold">{name.surname}</Text>
+                            <Text fontFamily="Roboto, sans-serif" mr={5} fontWeight="bold">{"First name: " + name.firstname + " "}</Text>
+                            <Text fontFamily="Roboto, sans-serif" mr={5} fontWeight="bold">{"Surname: " + name.surname + " "}</Text>
+                            <Text fontFamily="Roboto, sans-serif" mr={5} fontWeight="bold">{"Age: " +  name.age + " "}</Text>
                             <Stack ml="auto">
-                                <Select variant='filled' placeholder={name.status} onChange={(status) => handleChange(status.target.value, id)}>
+                                <Select variant='filled' placeholder={name.status} onChange={(status) => handleChange(status.target.value, name.id)}>
                                     <option value="Accepted" style={{ display: name.status === 'Accepted' ? 'none' : 'block' }}>Accepted</option>
                                     <option value="Rejected" style={{ display: name.status === 'Rejected' ? 'none' : 'block' }}>Rejected</option>
                                     <option value="Unhandled" style={{ display: name.status === 'Unhandled' ? 'none' : 'block' }}>Unhandled</option>

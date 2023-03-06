@@ -1,5 +1,6 @@
 package com.iv1201.recapp.Config;
 
+import com.iv1201.recapp.Config.Exceptions.TokenExpiredException;
 import com.iv1201.recapp.Models.User;
 import com.iv1201.recapp.Service.JwtService;
 import com.iv1201.recapp.Service.UserService;
@@ -46,7 +47,11 @@ public class JwtFilter extends OncePerRequestFilter {
         final String username;
         final String jwtToken;
 
-        boolean willReturn = checkAuthFromHeader(authFromHeader, filterChain, response, request);
+        boolean willReturn = false;
+
+        willReturn = checkAuthFromHeader(authFromHeader, filterChain, response, request);
+
+
         if (willReturn){
             return;
         }
@@ -81,15 +86,15 @@ public class JwtFilter extends OncePerRequestFilter {
              * Handle the exception to expired token by setting the
              * willBreak to true so login credentials can be checked.
              */
-            System.out.println("The token has expired");
-            checkAuthFromHeader(null, filterChain, response, request);
+                System.out.println("The token has expired");
+                checkAuthFromHeader(null, filterChain, response, request);
         }
     }
     private boolean checkAuthFromHeader(String authFromHeader,
-                                     FilterChain filterChain,
-                                     HttpServletResponse response,
-                                     HttpServletRequest request
-                                     ) throws ServletException, IOException {
+                                        FilterChain filterChain,
+                                        HttpServletResponse response,
+                                        HttpServletRequest request
+    ) throws ServletException, IOException {
         boolean willBreak = false;
         if(authFromHeader == null || !authFromHeader.startsWith("Bearer ") || authFromHeader.contains("Bearer null")){
             filterChain.doFilter(request, response);

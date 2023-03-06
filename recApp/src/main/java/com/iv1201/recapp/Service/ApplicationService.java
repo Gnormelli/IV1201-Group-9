@@ -60,7 +60,7 @@ public class ApplicationService {
             authUser.setFirstname(applicationDTO.getFirstname());
             authUser.setSurname(applicationDTO.getLastname());
             authUser.setPnr(applicationDTO.getPnr());
-            authUser.setApplicationStatus("Unhandled");
+            authUser.setStatus("Unhandled");
 
             userRepo.save(authUser);
 
