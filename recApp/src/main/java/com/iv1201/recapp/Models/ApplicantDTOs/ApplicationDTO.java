@@ -9,67 +9,76 @@ import java.util.List;
 public class ApplicationDTO {
 
     @NotEmpty(message = "Please, provide fist name")
-    String firstname;
+    String firstName;
 
     @NotEmpty(message = "Please, provide surname")
-    String lastname;
+    String lastName;
     
     @Pattern(regexp = "^(\\d{10}|\\d{12}|\\d{6}-\\d{4}|\\d{8}-\\d{4}|\\d{8} \\d{4}|\\d{6} \\d{4})"
             , message = "Please, Check your personal number"
     )
-    String pnr;
-
-
-    @Valid
-    List<AreaOfExpertiseDTO> areaOfExpertiseDTOList;
+    String personalNumber;
 
     @Valid
-    List<DatesDTO> datesDTOList;
+    List<AreaOfExpertiseDTO> items;
+    
+    @Valid
+    List<AreaOfExpertiseDTO> years;
+    
+    @Valid
+    List<DatesDTO> dateRanges;
 
     public ApplicationDTO() {
     }
 
-    public ApplicationDTO(String firstname,
-                          String lastname,
-                          String pnr,
-                          List<AreaOfExpertiseDTO> areaOfExpertiseDTOList,
-                          List<DatesDTO> datesDTOList) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.pnr = pnr;
-        this.areaOfExpertiseDTOList = areaOfExpertiseDTOList;
-        this.datesDTOList = datesDTOList;
+    public ApplicationDTO(String firstName,
+                          String lastName,
+                          String personalNumber,
+                          List<AreaOfExpertiseDTO> items,
+                          List<AreaOfExpertiseDTO> years,
+                          List<DatesDTO> dateRanges) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.personalNumber = personalNumber;
+        this.items = items;
+        this.dateRanges = dateRanges;
+        this.years = years;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public String getPnr() {
-        return pnr;
+    public String getPersonalNumber() {
+        return personalNumber;
     }
 
 
-    public List<AreaOfExpertiseDTO> getAreaOfExpertiseDTOList() {
-        return areaOfExpertiseDTOList;
+    public List<AreaOfExpertiseDTO> getItems() {
+        return items;
     }
 
-    public List<DatesDTO> getDatesDTOList() {
-        return datesDTOList;
+    public List<AreaOfExpertiseDTO> getYears() {
+        return years;
     }
+
+    public List<DatesDTO> getDateRanges() {
+        return dateRanges;
+    }
+
 
     @Override
     public String toString() {
         return "ApplicationDTO{" +
-                "firstName='" + firstname + '\'' +
-                ", lastName='" + lastname + '\'' +
-                ", pnr='" + pnr + '\'' +
-                ", areaOfExpertiseDTOList=" + areaOfExpertiseDTOList +
-                ", datesDTOList=" + datesDTOList +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", personalNumber='" + personalNumber + '\'' +
+                ", items=" + items +
+                ", dateRanges=" + dateRanges +
                 '}';
     }
 }

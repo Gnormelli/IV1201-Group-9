@@ -28,8 +28,16 @@ public class ApplicantController {
     //might need HttpServletRequest request to get token
     @PostMapping("/submit")
     public ResponseEntity<String> submitApplication(
-            @RequestBody @Valid ApplicationDTO applicationDTO)
+            @RequestBody ApplicationDTO applicationDTO)
             throws ApplicationCouldNotSubmitException {
+
+        System.out.println("FIRSTNAME: "+ applicationDTO.getFirstName());
+        System.out.println("LASTNAME: "+ applicationDTO.getLastName());
+        System.out.println("PNR: "+ applicationDTO.getPersonalNumber());
+        System.out.println("COMPETENCES: "+ applicationDTO.getItems());
+        System.out.println("DATES: "+ applicationDTO.getDateRanges());
+
+
         applicationService.submitApplication(applicationDTO);
         return ResponseEntity.ok("Application was submitted successfully");
     }

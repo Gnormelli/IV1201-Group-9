@@ -58,15 +58,14 @@ public class ApplicationService {
         return competences;
     }
 
-    public void submitApplication(ApplicationDTO applicationDTO) throws ApplicationCouldNotSubmitException {
+  public void submitApplication(ApplicationDTO applicationDTO) throws ApplicationCouldNotSubmitException {
         try {
             String principalName = SecurityContextHolder.getContext().getAuthentication().getName();
             User authUser = userRepo.findUserByUsername(principalName);
-            authUser.setFirstname(applicationDTO.getFirstname());
-            authUser.setSurname(applicationDTO.getLastname());
-            authUser.setPnr(applicationDTO.getPnr());
-            authUser.setStatus("Unhandled");
-
+            authUser.setFirstname(applicationDTO.getFirstName());
+            authUser.setSurname(applicationDTO.getLastName());
+            authUser.setPnr(applicationDTO.getPersonalNumber());
+            //authUser.setStatus("Unhandled");
             userRepo.save(authUser);
 
             applicationDTO.getDatesDTOList().forEach(date ->
@@ -84,9 +83,11 @@ public class ApplicationService {
 
             applicationDTO.getAreaOfExpertiseDTOList().forEach(expertise ->
                 competenceProfileRepo.save(new CompetenceProfile(
-                        authUser,
+                       authUser,
                         competenceRepo.findCompetenceById(expertise.getAreaOfExpertiseID()),
                         expertise.getYearsOfExperience())));
+
+             */
         }catch (Exception e){
             throw new ApplicationCouldNotSubmitException("The application could not be submitted");
         }

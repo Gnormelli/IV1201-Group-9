@@ -34,19 +34,19 @@ public class Availability {
             name = "from_date",
             columnDefinition = "DATE"
     )
-    Date fromDate;
+    String fromDate;
 
 //    @ValidateDate
     @Column(
             name = "to_date",
             columnDefinition = "DATE"
     )
-    Date toDate;
+    String toDate;
 
     public Availability() {
     }
 
-    public Availability(User user, Date fromDate, Date toDate) {
+    public Availability(User user, String fromDate, String toDate) {
         this.user = user;
         this.fromDate = fromDate;
         this.toDate = toDate;
@@ -64,19 +64,19 @@ public class Availability {
         this.user = user;
     }
 
-    public Date getFromDate() {
+    public String getFromDate() {
         return fromDate;
     }
 
-    public void setFromDate(Date fromDate) {
+    public void setFromDate(String fromDate) {
         this.fromDate = fromDate;
     }
 
-    public Date getToDate() {
+    public String getToDate() {
         return toDate;
     }
 
-    public void setToDate(Date toDate) {
+    public void setToDate(String toDate) {
         this.toDate = toDate;
     }
 

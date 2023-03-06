@@ -7,31 +7,31 @@ import java.util.Date;
 
 public class DatesDTO {
     @Pattern(regexp = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))")
-    String from_date;
+    String startDate;
     @Pattern(regexp = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))")
-    String to_date;
+    String endDate;
 
     public DatesDTO() {
     }
 
-    public DatesDTO(String from_date, String to_date) {
-        this.from_date = from_date;
-        this.to_date = to_date;
+    public DatesDTO(String startDate, String endDate) {
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
-    public String getFrom_date() {
-        return from_date;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public String getTo_date() {
-        return to_date;
+    public String getEndDate() {
+        return endDate;
     }
 
     @Override
     public String toString() {
         return "DatesDTO{" +
-                "from_date=" + from_date +
-                ", to_date=" + to_date +
+                "startDate=" + startDate +
+                ", endDate=" + endDate +
                 '}';
     }
 }

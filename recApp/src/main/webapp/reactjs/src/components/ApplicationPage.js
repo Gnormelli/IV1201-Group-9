@@ -12,8 +12,13 @@ function ApplicationPage() {
     const [lastName, setLastName] = useState('');
     const [personalNumber, setPersonalNumber] = useState('');
     const [email, setEmail] = useState('');
+
     const [items, setItems] = useState([]);
     const [options, setOptions] = useState([]);
+    const [index, setIndex] = useState('');
+    let experience = null;
+    let years = null;
+
     const [availability, setAvailability] = useState([]);
     const [dateRanges, setDateRanges] = useState([]);
     const [startDate, setStartDate] = useState("");
@@ -36,15 +41,10 @@ function ApplicationPage() {
         const competenceData = {
             competence,
         };
+        experience = competence;
+        console.log(experience);
 
-        ApiPost.setOptions(competenceData)
-            .then(response => {
-                console.log(response);
-                setItems([...options, response.competenceName]);
-            })
-            .catch(error => {
-                console.error(error);
-            });
+
     };
 
 
@@ -67,9 +67,8 @@ function ApplicationPage() {
     }
 
     const addItem = () => {
-        const newOption = document.getElementById("select-option").value;
         const newYears = document.getElementById("years-of-experience").value;
-        const newItem = { option: newOption, years: newYears };
+        const newItem = { option: experience, years: newYears };
         setItems([...items, newItem]);
     };
 
@@ -92,6 +91,33 @@ function ApplicationPage() {
             setEndDate("");
         }
     };
+
+    const handleSubmit = () => {
+        console.log(firstName);
+        console.log(lastName);
+        console.log(personalNumber);
+        console.log(dateRanges);
+        console.log(items);
+
+        const applicationData = {
+            firstName,
+            lastName,
+            personalNumber,
+            items,
+            dateRanges
+        };
+
+        ApiPost.setSubmit(applicationData)
+            .then(response => {
+                console.log(response);
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+
+    }
 
     const sections = [
         <Box>
@@ -137,9 +163,9 @@ function ApplicationPage() {
             <Stack spacing="4">
                 <FormControl id="Area of expertise">
                     <FormLabel>Area of expertise</FormLabel>
-                    <Select  placeholder="Select an option" onChange={(e) => handleChange(e.target.value)}>
+                    <Select  placeholder="Select experience" onChange={(e) => handleChange(e.target.value)}>
                         {options.map((competence, index) => (
-                            <option key={competence.id || index} value={competence.competenceName}>
+                            <option key={index} value={competence.competenceName}>
                                 {competence.competenceName}
                             </option>
                         ))}
@@ -239,7 +265,7 @@ function ApplicationPage() {
                         </Box>
                     )}
                     {availability.length > 0 && (
-                        <Box>
+                        <Box fontWeight="bold">
                             <Text fontWeight="bold">Availability:</Text>
                             {availability.map((option, index) => (
                                 <Text key={index}>{option}</Text>
@@ -247,8 +273,8 @@ function ApplicationPage() {
                         </Box>
                     )}
                     <Box>
-                        <FormControl>
-                            Availability:
+                        <FormControl >
+                          <Text fontWeight="bold"> Availability:</Text>
                             {dateRanges.map((item, index) => (
                                 <HStack key={index}>
                                     <Text>{item.startDate}</Text>
@@ -263,7 +289,7 @@ function ApplicationPage() {
                     <Button colorScheme="red" onClick={cancel}>
                         Cancel
                     </Button>
-                    <Button colorScheme="green" >
+                    <Button colorScheme="green" onClick={() => handleSubmit()}>
                         Submit
                     </Button>
                 </HStack>

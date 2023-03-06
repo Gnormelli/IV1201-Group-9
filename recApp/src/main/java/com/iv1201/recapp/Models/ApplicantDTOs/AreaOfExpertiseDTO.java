@@ -8,34 +8,34 @@ public class AreaOfExpertiseDTO {
 
     @Min(1)
     @Max(3)
-    Long areaOfExpertiseID;
+    Long option;
 
     @NotNull
     @DecimalMin(value = "0.0", inclusive = false)
     @Digits(integer=2, fraction=2)
-    BigDecimal yearsOfExperience;
+    BigDecimal year;
 
     public AreaOfExpertiseDTO() {
     }
 
-    public AreaOfExpertiseDTO(Long areaOfExpertiseID, BigDecimal yearsOfExperience) {
-        this.areaOfExpertiseID = areaOfExpertiseID;
-        this.yearsOfExperience = yearsOfExperience;
+    public AreaOfExpertiseDTO(Long option, BigDecimal years) {
+        this.option = option;
+        this.years = years;
     }
 
-    public Long getAreaOfExpertiseID() {
-        return areaOfExpertiseID;
+    public Long getOption() {
+        return option;
     }
 
-    public BigDecimal getYearsOfExperience() {
-        return yearsOfExperience;
+    public BigDecimal getYears() {
+        return years;
     }
 
     @Override
     public String toString() {
         return "AreaOfExpertiseDTO{" +
-                "areaOfExpertiseID=" + areaOfExpertiseID +
-                ", yearsOfExperience='" + yearsOfExperience + '\'' +
+                "option=" + option +
+                ", years='" + years + '\'' +
                 '}';
     }
 }
