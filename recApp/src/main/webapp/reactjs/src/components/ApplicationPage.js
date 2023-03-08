@@ -15,9 +15,10 @@ function ApplicationPage() {
 
     const [items, setItems] = useState([]);
     const [options, setOptions] = useState([]);
-    const [index, setIndex] = useState('');
+    //const [selectedIndexArray, setSelectedIndexArray] = useState([]);
+
     let experience = null;
-    let years = null;
+    let selectedIndexArray = null;
 
     const [availability, setAvailability] = useState([]);
     const [dateRanges, setDateRanges] = useState([]);
@@ -36,14 +37,16 @@ function ApplicationPage() {
     }, []);
 
 
-
-    const handleChange = (competence) => {
+    const handleChange = (competence, selectedIndex) => {
         const competenceData = {
             competence,
         };
+
         experience = competence;
         console.log(experience);
+        console.log(selectedIndex);
 
+        selectedIndexArray=selectedIndex;
 
     };
 
@@ -68,8 +71,10 @@ function ApplicationPage() {
 
     const addItem = () => {
         const newYears = document.getElementById("years-of-experience").value;
-        const newItem = { option: experience, years: newYears };
+
+        const newItem = { option: experience, years: newYears, id: selectedIndexArray };
         setItems([...items, newItem]);
+
     };
 
     const removeItem = (index) => {
@@ -98,6 +103,9 @@ function ApplicationPage() {
         console.log(personalNumber);
         console.log(dateRanges);
         console.log(items);
+        console.log(selectedIndexArray);
+
+
 
         const applicationData = {
             firstName,
@@ -115,7 +123,6 @@ function ApplicationPage() {
             .catch(error => {
                 console.error(error);
             });
-
 
     }
 
@@ -163,7 +170,7 @@ function ApplicationPage() {
             <Stack spacing="4">
                 <FormControl id="Area of expertise">
                     <FormLabel>Area of expertise</FormLabel>
-                    <Select  placeholder="Select experience" onChange={(e) => handleChange(e.target.value)}>
+                    <Select  placeholder="Select experience" onChange={(e) => handleChange(e.target.value, e.target.selectedIndex)}>
                         {options.map((competence, index) => (
                             <option key={index} value={competence.competenceName}>
                                 {competence.competenceName}

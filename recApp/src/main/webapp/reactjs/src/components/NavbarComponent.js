@@ -16,9 +16,9 @@ const logout = () => {
 
 /**
 
- A component that represents the navbar with a company logo and buttons for testing API and logging out.
- @function NavbarComponent
- @returns {JSX.Element} JSX element that represents the navbar component.
+ * A component that represents the navbar with a company logo and buttons for testing API and logging out.
+ * @function NavbarComponent
+ * @returns {JSX.Element} JSX element that represents the navbar component.
  */
 export function NavbarComponent() {
 

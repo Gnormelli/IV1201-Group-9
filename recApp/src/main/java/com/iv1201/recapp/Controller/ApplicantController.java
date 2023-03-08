@@ -35,10 +35,11 @@ public class ApplicantController {
         System.out.println("LASTNAME: "+ applicationDTO.getLastName());
         System.out.println("PNR: "+ applicationDTO.getPersonalNumber());
         System.out.println("COMPETENCES: "+ applicationDTO.getItems());
+
         System.out.println("DATES: "+ applicationDTO.getDateRanges());
 
 
-        applicationService.submitApplication(applicationDTO);
+        //applicationService.submitApplication(applicationDTO);
         return ResponseEntity.ok("Application was submitted successfully");
     }
 

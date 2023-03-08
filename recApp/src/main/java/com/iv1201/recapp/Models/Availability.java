@@ -29,14 +29,14 @@ public class Availability {
     User user;
 
     @Column(
-            name = "from_date",
-            columnDefinition = "DATE"
+            name = "startDate",
+            columnDefinition = "TEXT"
     )
     String fromDate;
 
     @Column(
-            name = "to_date",
-            columnDefinition = "DATE"
+            name = "endDate",
+            columnDefinition = "TEXT"
     )
     String toDate;
 
