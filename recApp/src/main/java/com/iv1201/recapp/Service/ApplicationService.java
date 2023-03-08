@@ -65,7 +65,7 @@ public class ApplicationService {
             authUser.setFirstname(applicationDTO.getFirstName());
             authUser.setSurname(applicationDTO.getLastName());
             authUser.setPnr(applicationDTO.getPersonalNumber());
-            //authUser.setStatus("Unhandled");
+            authUser.setStatus("Unhandled");
             userRepo.save(authUser);
 
             applicationDTO.getDatesDTOList().forEach(date ->
@@ -74,8 +74,8 @@ public class ApplicationService {
                     availabilityRepo.save(
                             new Availability(
                                     authUser,
-                                    convertStringDate(date.getFrom_date()),
-                                    convertStringDate(date.getTo_date())));
+                                    convertStringDate(date.getStartDate()),
+                                    convertStringDate(date.getEndDate())));
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
@@ -85,9 +85,9 @@ public class ApplicationService {
                 competenceProfileRepo.save(new CompetenceProfile(
                        authUser,
                         competenceRepo.findCompetenceById(expertise.getAreaOfExpertiseID()),
-                        expertise.getYearsOfExperience())));
+                        expertise.getYearsOfExpertise())));
 
-             */
+
         }catch (Exception e){
             throw new ApplicationCouldNotSubmitException("The application could not be submitted");
         }

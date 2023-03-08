@@ -7,17 +7,17 @@ import ApiCall from "../ApiInterface/ApiCall";
 
 // The form allows the user to input personal information, experience, and availability.
 function ApplicationPage() {
+
     const [currentSection, setCurrentSection] = useState(0);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [personalNumber, setPersonalNumber] = useState('');
-    const [email, setEmail] = useState('');
 
     const [items, setItems] = useState([]);
     const [options, setOptions] = useState([]);
-    const [index, setIndex] = useState('');
+
     let experience = null;
-    let years = null;
+    let selectedIndexArray = null;
 
     const [availability, setAvailability] = useState([]);
     const [dateRanges, setDateRanges] = useState([]);
@@ -36,39 +36,28 @@ function ApplicationPage() {
     }, []);
 
 
+    const handleChange = (competence, selectedIndex) => {
 
-    const handleChange = (competence) => {
-        const competenceData = {
-            competence,
-        };
         experience = competence;
-        console.log(experience);
+        selectedIndexArray=selectedIndex;
 
+        console.log(experience);
+        console.log(selectedIndex);
 
     };
 
-
-    const chooseOptions = (e) => {
-        const option = e.target.value;
-        if (availability.includes(option)) {
-            setAvailability(availability.filter(o => o !== option));
-        } else {
-            setAvailability([...availability, option]);
-        }
-    }
 
     const cancel = () => {
         setFirstName('')
         setLastName('')
         setPersonalNumber('')
-        setEmail('')
         setItems([])
         setAvailability([])
     }
 
     const addItem = () => {
         const newYears = document.getElementById("years-of-experience").value;
-        const newItem = { option: experience, years: newYears };
+        const newItem = { expertise: experience, yearsOfExpertise: newYears, areaOfExpertiseID: selectedIndexArray };
         setItems([...items, newItem]);
     };
 
@@ -92,6 +81,8 @@ function ApplicationPage() {
         }
     };
 
+
+
     const handleSubmit = () => {
         console.log(firstName);
         console.log(lastName);
@@ -103,8 +94,8 @@ function ApplicationPage() {
             firstName,
             lastName,
             personalNumber,
-            items,
-            dateRanges
+            areaOfExpertiseDTOList : items,
+            datesDTOList : dateRanges
         };
 
         ApiPost.setSubmit(applicationData)
@@ -163,9 +154,10 @@ function ApplicationPage() {
             <Stack spacing="4">
                 <FormControl id="Area of expertise">
                     <FormLabel>Area of expertise</FormLabel>
-                    <Select  placeholder="Select experience" onChange={(e) => handleChange(e.target.value)}>
+                    {/*<Select  placeholder="Select experience" onChange={(e) => handleChange(e.target.value, e.target.selectedIndex)}>*/}
+                    <Select  placeholder="Select experience" onChange={(e) => handleChange(e.target.value, e.target.selectedIndex)}>
                         {options.map((competence, index) => (
-                            <option key={index} value={competence.competenceName}>
+                            <option key={index}  value={competence.competenceName}>
                                 {competence.competenceName}
                             </option>
                         ))}
@@ -186,7 +178,7 @@ function ApplicationPage() {
                             <Box key={index} p="4" shadow="md" borderWidth="1px">
                                 <Stack direction="row" justify="space-between">
                                     <Text>
-                                        {item.option} ({item.years} years)
+                                        {item.expertise} ({item.yearsOfExpertise} years)
                                     </Text>
                                     <CloseButton onClick={() => removeItem(index)} />
                                 </Stack>
@@ -259,7 +251,7 @@ function ApplicationPage() {
                             <Text fontWeight="bold">Experience:</Text>
                             {items.map((item, index) => (
                                 <Text key={index}>
-                                    {item.option} ({item.years} years)
+                                    {item.expertise} ({item.yearsOfExpertise} years)
                                 </Text>
                             ))}
                         </Box>

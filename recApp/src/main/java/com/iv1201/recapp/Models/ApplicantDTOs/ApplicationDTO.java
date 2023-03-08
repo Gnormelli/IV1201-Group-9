@@ -20,13 +20,10 @@ public class ApplicationDTO {
     String personalNumber;
 
     @Valid
-    List<AreaOfExpertiseDTO> items;
+    List<AreaOfExpertiseDTO> areaOfExpertiseDTOList;
     
     @Valid
-    List<AreaOfExpertiseDTO> years;
-    
-    @Valid
-    List<DatesDTO> dateRanges;
+    List<DatesDTO> datesDTOList;
 
     public ApplicationDTO() {
     }
@@ -34,15 +31,13 @@ public class ApplicationDTO {
     public ApplicationDTO(String firstName,
                           String lastName,
                           String personalNumber,
-                          List<AreaOfExpertiseDTO> items,
-                          List<AreaOfExpertiseDTO> years,
-                          List<DatesDTO> dateRanges) {
+                          List<AreaOfExpertiseDTO> areaOfExpertiseDTOList,
+                          List<DatesDTO> datesDTOList) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.personalNumber = personalNumber;
-        this.items = items;
-        this.dateRanges = dateRanges;
-        this.years = years;
+        this.areaOfExpertiseDTOList = areaOfExpertiseDTOList;
+        this.datesDTOList = datesDTOList;
     }
 
     public String getFirstName() {
@@ -58,16 +53,12 @@ public class ApplicationDTO {
     }
 
 
-    public List<AreaOfExpertiseDTO> getItems() {
-        return items;
+    public List<AreaOfExpertiseDTO> getAreaOfExpertiseDTOList() {
+        return areaOfExpertiseDTOList;
     }
 
-    public List<AreaOfExpertiseDTO> getYears() {
-        return years;
-    }
-
-    public List<DatesDTO> getDateRanges() {
-        return dateRanges;
+    public List<DatesDTO> getDatesDTOList() {
+        return datesDTOList;
     }
 
 
@@ -77,8 +68,8 @@ public class ApplicationDTO {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", personalNumber='" + personalNumber + '\'' +
-                ", items=" + items +
-                ", dateRanges=" + dateRanges +
+                ", items=" + areaOfExpertiseDTOList +
+                ", dateRanges=" + datesDTOList +
                 '}';
     }
 }

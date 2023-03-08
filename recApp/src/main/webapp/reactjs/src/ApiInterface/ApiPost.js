@@ -56,7 +56,8 @@ const ApiPost = {
         },
         setSubmit(object) {
         const statusEndpoint = "/api/v1/applicants/submit";
-        console.log(object.firstName);
+        console.log("This is the object on row 59 in APIPOST")
+        console.log(object);
         const token = "Bearer "+ localStorage.getItem("token");
         return ApiPost.apiCall(statusEndpoint, object, token).then((data) => data);
     }

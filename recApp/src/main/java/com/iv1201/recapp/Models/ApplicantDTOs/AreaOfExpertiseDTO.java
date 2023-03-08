@@ -1,5 +1,6 @@
 package com.iv1201.recapp.Models.ApplicantDTOs;
 
+import com.iv1201.recapp.Config.Validation.ValidateExpertise;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
@@ -8,34 +9,42 @@ public class AreaOfExpertiseDTO {
 
     @Min(1)
     @Max(3)
-    Long option;
+    Long areaOfExpertiseID;
+    @ValidateExpertise
+    String expertise;
 
     @NotNull
     @DecimalMin(value = "0.0", inclusive = false)
     @Digits(integer=2, fraction=2)
-    BigDecimal year;
+    BigDecimal yearsOfExpertise;
 
     public AreaOfExpertiseDTO() {
     }
 
-    public AreaOfExpertiseDTO(Long option, BigDecimal years) {
-        this.option = option;
-        this.years = years;
+    public AreaOfExpertiseDTO(Long areaOfExpertiseID, String expertise, BigDecimal yearsOfExpertise) {
+        this.areaOfExpertiseID= areaOfExpertiseID;
+        this.expertise = expertise;
+        this.yearsOfExpertise = yearsOfExpertise;
     }
 
-    public Long getOption() {
-        return option;
+    public Long getAreaOfExpertiseID() {
+        return areaOfExpertiseID;
     }
 
-    public BigDecimal getYears() {
-        return years;
+    public String getExpertise() {
+        return expertise;
+    }
+
+    public BigDecimal getYearsOfExpertise() {
+        return yearsOfExpertise;
     }
 
     @Override
     public String toString() {
         return "AreaOfExpertiseDTO{" +
-                "option=" + option +
-                ", years='" + years + '\'' +
+                "areaOfExpertiseID=" + areaOfExpertiseID +
+                ", expertise='" + expertise + '\'' +
+                ", yearsOfExpertise=" + yearsOfExpertise +
                 '}';
     }
 }
