@@ -1,5 +1,6 @@
 package com.iv1201.recapp.Config.Exceptions;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -23,6 +24,16 @@ public class AppExceptionHandler {
         });
         return expMap;
     }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ConstraintViolationException.class)
+    public Map<String, String> handleInvalidArgument(ConstraintViolationException e){
+        Map<String, String> expMap = new HashMap<>();
+        e.getConstraintViolations().forEach(error -> {
+            expMap.put(error.getPropertyPath().toString(), error.getMessageTemplate());
+        });
+        return expMap;
+    }
+
 
     @ExceptionHandler(NoSuchFieldError.class)
     public Map<String, String> handleInvalidArgument(NoSuchFieldError e){
@@ -31,6 +42,15 @@ public class AppExceptionHandler {
         expMap.put("ErrorMessage", e.getMessage());
 
         return ResponseEntity.status(403).body(expMap).getBody();
+    }
+
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<String> handleBusinessException(TokenExpiredException e){
+        Map<String, String> expMap = new HashMap<>();
+        System.out.println(e.getMessage());
+        expMap.put("ErrorMessage", e.getMessage());
+
+        return ResponseEntity.status(403).body(expMap.toString());
     }
 
     @ExceptionHandler(EmailNotFoundException.class)
@@ -70,16 +90,17 @@ public class AppExceptionHandler {
     }
 
     @ExceptionHandler(StatusDTOException.class)
-    public ResponseEntity<String> handleBusinessException(StatusDTOException e){
+    public ResponseEntity<ExceptionsDTO> handleBusinessException(StatusDTOException e){
         int statusCode = 400;
         Map<String, String> expMap = new HashMap<>();
         System.out.println(e.getMessage());
         expMap.put("ErrorMessage", e.getMessage());
         if(e.getMessage().contains("updated")){
             statusCode = 500;
-        }else if(e.getMessage().contains("Could not find getAllApplicants")){
+        }else if(e.getMessage().contains("Could not find get All Applicants")){
             statusCode = 500;
         }
-        return ResponseEntity.status(statusCode).body(expMap.toString());
+//        return ResponseEntity.status(statusCode).body(expMap.toString());
+        return ResponseEntity.status(200).body(new ExceptionsDTO(expMap.toString()));
     }
 }
