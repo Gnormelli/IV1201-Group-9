@@ -11,9 +11,14 @@ import java.util.List;
 
 @Repository
 @Transactional(propagation = Propagation.MANDATORY)
-public interface CompetenceRepo extends JpaRepository <Competence, Long> {
+public interface CompetenceRepo extends JpaRepository <Competence, String> {
 
     Competence findCompetenceById(Long id);
+
+//    @Query("SELECT c FROM Competence WHERE CompetenceName = comp")
+//    Competence getCompetenceByCompetenceName(String comp);
+//    Competence findCompetenceByCompetenceName(String comp);
+//    Competence findCompetenceByCompetenceName(String comp);
 
     @Query("SELECT c FROM Competence c ORDER BY c.id ASC")
     List<Competence> findAllCompetences();

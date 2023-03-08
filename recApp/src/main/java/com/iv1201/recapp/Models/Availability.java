@@ -1,5 +1,6 @@
 package com.iv1201.recapp.Models;
 
+import com.iv1201.recapp.Config.Validation.ValidateDate;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -12,7 +13,7 @@ public class Availability {
             name = "availability_sequence",
             sequenceName = "availability_sequence",
             allocationSize = 1,
-            initialValue=20000
+            initialValue=21000
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
@@ -28,12 +29,14 @@ public class Availability {
     @JoinColumn(name = "fk_id_person")
     User user;
 
+//    @ValidateDate
     @Column(
             name = "from_date",
             columnDefinition = "DATE"
     )
     Date fromDate;
 
+//    @ValidateDate
     @Column(
             name = "to_date",
             columnDefinition = "DATE"

@@ -2,6 +2,8 @@ package com.iv1201.recapp.Models;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table()
 public class CompetenceProfile {
@@ -34,15 +36,14 @@ public class CompetenceProfile {
             name = "years_of_experience",
             columnDefinition = "NUMERIC"
     )
-    private Float yearsOfExperience;
-
+    private BigDecimal yearsOfExperience;
 
     public CompetenceProfile() {
     }
 
     public CompetenceProfile(User user,
                              Competence competence,
-                             Float yearsOfExperience) {
+                             BigDecimal yearsOfExperience) {
         this.user = user;
         this.competence = competence;
         this.yearsOfExperience = yearsOfExperience;
@@ -64,11 +65,11 @@ public class CompetenceProfile {
         this.competence = competence;
     }
 
-    public float getYearsOfExperience() {
+    public BigDecimal getYearsOfExperience() {
         return yearsOfExperience;
     }
 
-    public void setYearsOfExperience(Float yearsOfExperience) {
+    public void setYearsOfExperience(BigDecimal yearsOfExperience) {
         this.yearsOfExperience = yearsOfExperience;
     }
 

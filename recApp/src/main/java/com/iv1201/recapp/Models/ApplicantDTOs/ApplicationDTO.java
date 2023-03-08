@@ -1,5 +1,6 @@
 package com.iv1201.recapp.Models.ApplicantDTOs;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 
@@ -8,44 +9,47 @@ import java.util.List;
 public class ApplicationDTO {
 
     @NotEmpty(message = "Please, provide fist name")
-    String firstname;
+    String firstName;
 
     @NotEmpty(message = "Please, provide surname")
-    String lastname;
+    String lastName;
     
     @Pattern(regexp = "^(\\d{10}|\\d{12}|\\d{6}-\\d{4}|\\d{8}-\\d{4}|\\d{8} \\d{4}|\\d{6} \\d{4})"
             , message = "Please, Check your personal number"
     )
-    String pnr;
+    String personalNumber;
 
+    @Valid
     List<AreaOfExpertiseDTO> areaOfExpertiseDTOList;
+    
+    @Valid
     List<DatesDTO> datesDTOList;
 
     public ApplicationDTO() {
     }
 
-    public ApplicationDTO(String firstname,
-                          String lastname,
-                          String pnr,
+    public ApplicationDTO(String firstName,
+                          String lastName,
+                          String personalNumber,
                           List<AreaOfExpertiseDTO> areaOfExpertiseDTOList,
                           List<DatesDTO> datesDTOList) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.pnr = pnr;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.personalNumber = personalNumber;
         this.areaOfExpertiseDTOList = areaOfExpertiseDTOList;
         this.datesDTOList = datesDTOList;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public String getPnr() {
-        return pnr;
+    public String getPersonalNumber() {
+        return personalNumber;
     }
 
 
@@ -57,14 +61,15 @@ public class ApplicationDTO {
         return datesDTOList;
     }
 
+
     @Override
     public String toString() {
         return "ApplicationDTO{" +
-                "firstName='" + firstname + '\'' +
-                ", lastName='" + lastname + '\'' +
-                ", pnr='" + pnr + '\'' +
-                ", areaOfExpertiseDTOList=" + areaOfExpertiseDTOList +
-                ", datesDTOList=" + datesDTOList +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", personalNumber='" + personalNumber + '\'' +
+                ", items=" + areaOfExpertiseDTOList +
+                ", dateRanges=" + datesDTOList +
                 '}';
     }
 }

@@ -5,15 +5,12 @@ import jakarta.validation.Payload;
 
 import java.lang.annotation.*;
 
-/**
- * Annotation for validation ValidateStatus
- */
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = ApplicationDTOValidator.class)
-public @interface ValidateApplicationDTOStatus {
-    public String message() default "Status Value Invalid";
+@Constraint(validatedBy = DateValidator.class)
+public @interface ValidateDate {
+    public String message() default "Date value invalid, dates must later than today's date";
 
     Class<?> [] groups() default {};
     Class<? extends Payload> [] payload() default {};

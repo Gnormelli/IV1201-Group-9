@@ -7,13 +7,18 @@ import ApiCall from "../ApiInterface/ApiCall";
 
 // The form allows the user to input personal information, experience, and availability.
 function ApplicationPage() {
+
     const [currentSection, setCurrentSection] = useState(0);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [personalNumber, setPersonalNumber] = useState('');
-    const [email, setEmail] = useState('');
+
     const [items, setItems] = useState([]);
     const [options, setOptions] = useState([]);
+
+    let experience = null;
+    let selectedIndexArray = null;
+
     const [availability, setAvailability] = useState([]);
     const [dateRanges, setDateRanges] = useState([]);
     const [startDate, setStartDate] = useState("");
@@ -31,45 +36,28 @@ function ApplicationPage() {
     }, []);
 
 
+    const handleChange = (competence, selectedIndex) => {
 
-    const handleChange = (competence) => {
-        const competenceData = {
-            competence,
-        };
+        experience = competence;
+        selectedIndexArray=selectedIndex;
 
-        ApiPost.setOptions(competenceData)
-            .then(response => {
-                console.log(response);
-                setItems([...options, response.competenceName]);
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        console.log(experience);
+        console.log(selectedIndex);
+
     };
 
-
-    const chooseOptions = (e) => {
-        const option = e.target.value;
-        if (availability.includes(option)) {
-            setAvailability(availability.filter(o => o !== option));
-        } else {
-            setAvailability([...availability, option]);
-        }
-    }
 
     const cancel = () => {
         setFirstName('')
         setLastName('')
         setPersonalNumber('')
-        setEmail('')
         setItems([])
         setAvailability([])
     }
 
     const addItem = () => {
-        const newOption = document.getElementById("select-option").value;
         const newYears = document.getElementById("years-of-experience").value;
-        const newItem = { option: newOption, years: newYears };
+        const newItem = { expertise: experience, yearsOfExpertise: newYears, areaOfExpertiseID: selectedIndexArray };
         setItems([...items, newItem]);
     };
 
@@ -92,6 +80,35 @@ function ApplicationPage() {
             setEndDate("");
         }
     };
+
+
+
+    const handleSubmit = () => {
+        console.log(firstName);
+        console.log(lastName);
+        console.log(personalNumber);
+        console.log(dateRanges);
+        console.log(items);
+
+        const applicationData = {
+            firstName,
+            lastName,
+            personalNumber,
+            areaOfExpertiseDTOList : items,
+            datesDTOList : dateRanges
+        };
+
+        ApiPost.setSubmit(applicationData)
+            .then(response => {
+                console.log(response);
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+
+    }
 
     const sections = [
         <Box>
@@ -137,9 +154,10 @@ function ApplicationPage() {
             <Stack spacing="4">
                 <FormControl id="Area of expertise">
                     <FormLabel>Area of expertise</FormLabel>
-                    <Select  placeholder="Select an option" onChange={(e) => handleChange(e.target.value)}>
+                    {/*<Select  placeholder="Select experience" onChange={(e) => handleChange(e.target.value, e.target.selectedIndex)}>*/}
+                    <Select  placeholder="Select experience" onChange={(e) => handleChange(e.target.value, e.target.selectedIndex)}>
                         {options.map((competence, index) => (
-                            <option key={competence.id || index} value={competence.competenceName}>
+                            <option key={index}  value={competence.competenceName}>
                                 {competence.competenceName}
                             </option>
                         ))}
@@ -160,7 +178,7 @@ function ApplicationPage() {
                             <Box key={index} p="4" shadow="md" borderWidth="1px">
                                 <Stack direction="row" justify="space-between">
                                     <Text>
-                                        {item.option} ({item.years} years)
+                                        {item.expertise} ({item.yearsOfExpertise} years)
                                     </Text>
                                     <CloseButton onClick={() => removeItem(index)} />
                                 </Stack>
@@ -233,13 +251,13 @@ function ApplicationPage() {
                             <Text fontWeight="bold">Experience:</Text>
                             {items.map((item, index) => (
                                 <Text key={index}>
-                                    {item.option} ({item.years} years)
+                                    {item.expertise} ({item.yearsOfExpertise} years)
                                 </Text>
                             ))}
                         </Box>
                     )}
                     {availability.length > 0 && (
-                        <Box>
+                        <Box fontWeight="bold">
                             <Text fontWeight="bold">Availability:</Text>
                             {availability.map((option, index) => (
                                 <Text key={index}>{option}</Text>
@@ -247,8 +265,8 @@ function ApplicationPage() {
                         </Box>
                     )}
                     <Box>
-                        <FormControl>
-                            Availability:
+                        <FormControl >
+                          <Text fontWeight="bold"> Availability:</Text>
                             {dateRanges.map((item, index) => (
                                 <HStack key={index}>
                                     <Text>{item.startDate}</Text>
@@ -263,7 +281,7 @@ function ApplicationPage() {
                     <Button colorScheme="red" onClick={cancel}>
                         Cancel
                     </Button>
-                    <Button colorScheme="green" >
+                    <Button colorScheme="green" onClick={() => handleSubmit()}>
                         Submit
                     </Button>
                 </HStack>

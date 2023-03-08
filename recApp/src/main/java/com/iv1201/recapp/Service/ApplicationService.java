@@ -20,8 +20,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
@@ -53,32 +58,45 @@ public class ApplicationService {
         return competences;
     }
 
-    public void submitApplication(ApplicationDTO applicationDTO) throws ApplicationCouldNotSubmitException {
+  public void submitApplication(ApplicationDTO applicationDTO) throws ApplicationCouldNotSubmitException {
         try {
             String principalName = SecurityContextHolder.getContext().getAuthentication().getName();
             User authUser = userRepo.findUserByUsername(principalName);
-            authUser.setFirstname(applicationDTO.getFirstname());
-            authUser.setSurname(applicationDTO.getLastname());
-            authUser.setPnr(applicationDTO.getPnr());
+            authUser.setFirstname(applicationDTO.getFirstName());
+            authUser.setSurname(applicationDTO.getLastName());
+            authUser.setPnr(applicationDTO.getPersonalNumber());
             authUser.setStatus("Unhandled");
-
             userRepo.save(authUser);
 
             applicationDTO.getDatesDTOList().forEach(date ->
-                availabilityRepo.save(
-                        new Availability(
-                                authUser,
-                                date.getFrom_date(),
-                                date.getTo_date())));
+            {
+                try {
+                    availabilityRepo.save(
+                            new Availability(
+                                    authUser,
+                                    convertStringDate(date.getStartDate()),
+                                    convertStringDate(date.getEndDate())));
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+            });
 
             applicationDTO.getAreaOfExpertiseDTOList().forEach(expertise ->
                 competenceProfileRepo.save(new CompetenceProfile(
-                        authUser,
+                       authUser,
                         competenceRepo.findCompetenceById(expertise.getAreaOfExpertiseID()),
-                        expertise.getYearsOfExperience())));
+                        expertise.getYearsOfExpertise())));
+
+
         }catch (Exception e){
             throw new ApplicationCouldNotSubmitException("The application could not be submitted");
         }
+    }
+
+    private Date convertStringDate(String str) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date date = formatter.parse(str);
+        return date;
     }
 
 //    todo deleteApplication if there is time
