@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Text, Flex, Stack, FormHelperText, Alert, AlertIcon} from '@chakra-ui/react';
-import {Select, CircularProgress} from "@chakra-ui/react";
+import {Box, Text, Flex, Stack, Spinner} from '@chakra-ui/react';
+import {Select} from "@chakra-ui/react";
 import {NavbarComponent} from './NavbarComponent';
 import ApiCall from "../ApiInterface/ApiCall";
 import ApiPost from "../ApiInterface/ApiPost";
 import {wait} from "@testing-library/user-event/dist/utils";
-import {AlertDescription, AlertTitle, Spinner} from "@chakra-ui/core";
 
 /**
  * Renders the Admin Page component.
