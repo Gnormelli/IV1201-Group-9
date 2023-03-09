@@ -1,5 +1,8 @@
 package com.iv1201.recapp.Models.RecruiterDTOs;
 
+/**
+ * Outgoing DTO for Updated Status.
+ */
 public class UpdatedStatusDTO {
 
     String updatedStatus;

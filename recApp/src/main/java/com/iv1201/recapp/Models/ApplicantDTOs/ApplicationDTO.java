@@ -6,6 +6,11 @@ import jakarta.validation.constraints.Pattern;
 
 import java.util.List;
 
+
+/**
+ *  Incoming DTO for Application information. Contains <code>AreaOfExpertise</code>
+ *  and <code>DateDTO</code> for use and validation.
+ */
 public class ApplicationDTO {
 
     @NotEmpty(message = "Please, provide fist name")

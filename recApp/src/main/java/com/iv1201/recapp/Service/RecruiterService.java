@@ -1,6 +1,6 @@
 package com.iv1201.recapp.Service;
 
-import com.iv1201.recapp.Config.Exceptions.StatusDTOException;
+import com.iv1201.recapp.Config.Exceptions.RecruiterException;
 import com.iv1201.recapp.Integration.UserRepo;
 import com.iv1201.recapp.Models.RecruiterDTOs.SingleUserApplicationDTO;
 import com.iv1201.recapp.Models.RecruiterDTOs.StatusDTO;
@@ -21,12 +21,24 @@ import java.util.List;
 
 import static java.lang.Long.parseLong;
 
+/**
+ * Provides recruiter service for end-point use in <code>RecruiterController</code>.
+ * When called from Controller layer methods in this class starts transaction.
+ * Transactions are completed when method returns no matter if the transaction
+ * was fully committed or had to be rollback.
+ */
 @Service
 @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
 public class RecruiterService {
     @Autowired
     private UserRepo applicantRepo;
-    public List<SingleUserApplicationDTO> getAllApplicants() throws StatusDTOException {
+
+    /**
+     * Gets all applications from database for recruiter.
+     * @return <code>singleUserApplicationDTOs</code> Complete list of all applications.
+     * @throws RecruiterException
+     */
+    public List<SingleUserApplicationDTO> getAllApplicants() throws RecruiterException {
         List<User> applicants = null;
         List<SingleUserApplicationDTO> singleUserApplicationDTOs = new ArrayList<>();
         try {
@@ -42,7 +54,6 @@ public class RecruiterService {
                             application.getFirstname(),
                             application.getSurname(),
                             getAgeFromPnr(application.getPnr()),
-//                            Integer.parseInt(application.getPnr()),
                             application.getStatus()
                     ));
                 } catch (ParseException e) {
@@ -53,12 +64,11 @@ public class RecruiterService {
                 throw new IllegalArgumentException();
             }
         }catch (Exception e ){
-            throw new StatusDTOException("Could not get All Applicants " + e);
+            throw new RecruiterException("Could not get All Applicants " + e);
         }
         return singleUserApplicationDTOs;
     }
 
-    // TODO Should we have age from personal number?
     private int getAgeFromPnr(String pnr) throws ParseException {
 
         String[] split = pnr.split("-");
@@ -71,20 +81,18 @@ public class RecruiterService {
                     .toLocalDate(), dateNow).getYears();
     }
 
-    public void updateStatus(StatusDTO statusDTO) throws StatusDTOException {
-
-        if (statusDTO == null) {
-            throw new StatusDTOException("StatusDTO: " +
-                    "Status value cannot be null");
-        }
-
+    /**
+     * Update status of application in database.
+     * @param statusDTO with information of status and id of user.
+     * @throws RecruiterException if status fails to update.
+     */
+    public void updateStatus(StatusDTO statusDTO) throws RecruiterException {
         try {
             User user = applicantRepo.findUserById(statusDTO.getId());
             user.setStatus(statusDTO.getStatus());
             applicantRepo.save(user);
         }catch (Exception e){
-            throw new StatusDTOException("ApplicationDTO " +
-                    "Status value could not be updated");
+            throw new RecruiterException("Status value could not be updated");
         }
     }
 }
