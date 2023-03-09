@@ -24,9 +24,16 @@ function LoginPage() {
     const handleSubmit = (e) => {
         e.preventDefault() // prevent default form submission behavior
 
-        if (!email || !password) {
+        // check if email and password are empty, update error message state if either is empty
+        if (!email && !password) {
             setError('Please enter email and password')
             return
+        } else if (!email) {
+            setError('Please enter email')
+            return;
+        } else if (!password) {
+            setError('Please enter password')
+            return;
         }
         setError('') // clear error message state
 
