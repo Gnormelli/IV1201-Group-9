@@ -7,6 +7,9 @@ import jakarta.validation.ConstraintValidatorContext;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Class for rcustom validation of expertises in  <code>AreaOfExpertiseDTO</code>
+ */
 public class ExpertiseValidator implements ConstraintValidator<ValidateExpertise, String> {
 
     @Override

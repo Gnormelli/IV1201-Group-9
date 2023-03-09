@@ -918,7 +918,9 @@ COPY person (person_id, firstname, surname, pnr, email, password, fk_id_role, us
 897	Nero	Faulkner	20060318-6395	nero-faulkner1855@finnsinte.se	\N	2	\N
 898	Robert	Gutierrez	20040318-5722	r_gutierrez@finnsinte.se	\N	2	\N
 899	Odysseus	Decker	20030715-5825	o.decker@finnsinte.se	\N	2	\N
-900	Simon	Gallagher	20040911-1699	sgallagher8213@finnsinte.se	\N	2	\N
+900	Simon   Gallagher	20040911-1699	sgallagher8213@finnsinte.se	\N	2	\N
+901	Han Solo	\N	\N	$2a$10$s7E2urkk7FeqigFj5GqjPO0ZKEgEYAn9QJaiYYfbv54EuIFwnKYym	1	HanSolo
+
 \.
 
 COPY competence_profile (competence_profile_id, fk_id_person, fk_id_competence, years_of_experience) FROM stdin;

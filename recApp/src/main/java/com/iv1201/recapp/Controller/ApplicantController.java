@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Applicant Controller for the applicants page in client.
+ */
 @RestController
 @RequestMapping("/api/v1/applicants")
 public class ApplicantController {
@@ -19,24 +22,27 @@ public class ApplicantController {
     @Autowired
     private ApplicationService applicationService;
 
+    /**
+     * End-point to get the competences from the database.
+     * @return list of competences.
+     * @throws CouldNotFindCompetencesException
+     */
     @GetMapping("/competences")
     public ResponseEntity<List<Competence>> getAllApplicants()
             throws CouldNotFindCompetencesException {
         return ResponseEntity.ok(applicationService.getAllCompetence());
     }
 
-    //might need HttpServletRequest request to get token
+    /**
+     * End-point for submittion of application.
+     * @param applicationDTO application information to be handled.
+     * @return String of application being submitted successfully.
+     * @throws ApplicationCouldNotSubmitException if service malfunction.
+     */
     @PostMapping("/submit")
     public ResponseEntity<String> submitApplication(
             @RequestBody @Valid ApplicationDTO applicationDTO)
             throws ApplicationCouldNotSubmitException {
-
-        System.out.println("FIRSTNAME: "+ applicationDTO.getFirstName());
-        System.out.println("LASTNAME: "+ applicationDTO.getLastName());
-        System.out.println("PNR: "+ applicationDTO.getPersonalNumber());
-        System.out.println("COMPETENCES: "+ applicationDTO.getAreaOfExpertiseDTOList());
-        System.out.println("DATES: "+ applicationDTO.getDatesDTOList());
-
 
         applicationService.submitApplication(applicationDTO);
         return ResponseEntity.ok("Application was submitted successfully");

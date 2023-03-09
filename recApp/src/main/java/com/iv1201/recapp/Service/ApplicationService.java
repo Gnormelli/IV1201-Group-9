@@ -28,6 +28,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Provides application service for end-point use in <code>ApplicantController</code>.
+ * When called from Controller layer methods in this class starts transaction.
+ * Transactions are completed when method returns no matter if the transaction
+ * was fully committed or had to be rollback.
+ */
 @Service
 @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
 public class ApplicationService {
@@ -44,6 +50,11 @@ public class ApplicationService {
     @Autowired
     private CompetenceProfileRepo competenceProfileRepo;
 
+    /**
+     * Get all the types of competences that an applicant can have.
+     * @return list of competences that an applicant can have.
+     * @throws CouldNotFindCompetencesException when failing to get the competences.
+     */
     public List<Competence> getAllCompetence() throws CouldNotFindCompetencesException {
         List<Competence> competences = null;
 
@@ -58,6 +69,13 @@ public class ApplicationService {
         return competences;
     }
 
+    /**
+     * Submit the application with all the information in the <code>ApplicationDTO</code>
+     * that the applicant has filled in using the client. All information to be saved in
+     * database.
+     * @param applicationDTO information in the application to be added to datebase.
+     * @throws ApplicationCouldNotSubmitException
+     */
   public void submitApplication(ApplicationDTO applicationDTO) throws ApplicationCouldNotSubmitException {
         try {
             String principalName = SecurityContextHolder.getContext().getAuthentication().getName();

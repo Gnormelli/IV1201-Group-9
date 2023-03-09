@@ -1,10 +1,10 @@
 package com.iv1201.recapp.Models.ApplicantDTOs;
 
-import com.iv1201.recapp.Config.Validation.ValidateDate;
 import jakarta.validation.constraints.Pattern;
 
-import java.util.Date;
-
+/**
+ *  Incoming DTO for Dates in <code>ApplicationDTO</code>
+ */
 public class DatesDTO {
     @Pattern(regexp = "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))")
     String startDate;

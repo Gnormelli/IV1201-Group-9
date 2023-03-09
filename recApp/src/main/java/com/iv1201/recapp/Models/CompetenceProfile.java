@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
+/**
+ * POJO for Competence Profile.
+ */
 @Entity
 @Table()
 public class CompetenceProfile {

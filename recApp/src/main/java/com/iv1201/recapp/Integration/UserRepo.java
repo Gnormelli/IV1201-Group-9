@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Repository for User.
+ */
 @Repository
 @Transactional(propagation = Propagation.MANDATORY)
 public interface UserRepo extends JpaRepository<User, Long> {
@@ -19,12 +22,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     User findUserByUsername(String principalName);
 
-    List<User> findAllByUserRole(Long userRole);
-
-    List<User> findAllByApplicationStatusNotNull();
-
     List<User> findAllByApplicationStatusNotNullAndFirstnameNotNullOrderById();
-    List<User> findAllByApplicationStatusNotNullAndFirstnameNotNull();
 
     User findUserById(Long userId);
 }

@@ -1,5 +1,8 @@
 package com.iv1201.recapp.Models.RecruiterDTOs;
 
+/**
+ * Outging DTO of each of the applications information to be handled by recruiters.
+ */
 public class SingleUserApplicationDTO {
     Long id;
     String firstname;

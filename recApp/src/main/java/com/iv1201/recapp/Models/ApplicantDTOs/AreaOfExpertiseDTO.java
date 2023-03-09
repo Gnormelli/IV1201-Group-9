@@ -5,6 +5,9 @@ import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
+/**
+ *  Incoming DTO for area of expertise in <code>ApplicationDTO</code>.
+ */
 public class AreaOfExpertiseDTO {
 
     @Min(1)

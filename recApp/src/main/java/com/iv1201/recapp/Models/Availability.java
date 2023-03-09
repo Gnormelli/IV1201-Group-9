@@ -1,10 +1,12 @@
 package com.iv1201.recapp.Models;
 
-import com.iv1201.recapp.Config.Validation.ValidateDate;
 import jakarta.persistence.*;
 
 import java.util.Date;
 
+/**
+ * POJO for Availability.
+ */
 @Entity
 @Table()
 public class Availability {
