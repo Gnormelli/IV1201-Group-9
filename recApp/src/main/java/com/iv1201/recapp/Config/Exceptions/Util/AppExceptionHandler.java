@@ -1,5 +1,6 @@
-package com.iv1201.recapp.Config.Exceptions;
+package com.iv1201.recapp.Config.Exceptions.Util;
 
+import com.iv1201.recapp.Config.Exceptions.*;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

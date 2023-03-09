@@ -36,7 +36,7 @@ public class RecruiterController {
      * End-point for updating status on application.
      * @param statusDTO with id and status to be updated.
      * @return <code>UpdatedStatusDTO</code> to inform client of update.
-     * @throws RecruiterException mailfunction.
+     * @throws RecruiterException malfunction.
      */
     @PostMapping("/status")
     public ResponseEntity<UpdatedStatusDTO> setStatus(@RequestBody @Valid StatusDTO statusDTO)

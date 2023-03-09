@@ -1,5 +1,8 @@
-package com.iv1201.recapp.Config.Exceptions;
+package com.iv1201.recapp.Config.Exceptions.Util;
 
+/**
+ * Outgoing DTo exceptions sent to client.
+ */
 public class ExceptionsDTO {
     String errorForClient;
 
