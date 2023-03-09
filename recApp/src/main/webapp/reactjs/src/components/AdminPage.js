@@ -1,10 +1,11 @@
-import React, {useEffect} from 'react';
-import {Box, Text, Flex, Stack, FormHelperText,} from '@chakra-ui/react';
-import {Select} from "@chakra-ui/react";
+import React, {useEffect, useState} from 'react';
+import {Box, Text, Flex, Stack, FormHelperText, Alert, AlertIcon} from '@chakra-ui/react';
+import {Select, CircularProgress} from "@chakra-ui/react";
 import {NavbarComponent} from './NavbarComponent';
 import ApiCall from "../ApiInterface/ApiCall";
 import ApiPost from "../ApiInterface/ApiPost";
 import {wait} from "@testing-library/user-event/dist/utils";
+import {AlertDescription, AlertTitle, Spinner} from "@chakra-ui/core";
 
 /**
  * Renders the Admin Page component.
@@ -16,7 +17,7 @@ function AdminPage() {
 
     const [users, setUsers] = React.useState([]);
     const [errorMessage, setErrorMessage] = React.useState([]);
-
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         ApiCall.getApplications()
@@ -30,18 +31,19 @@ function AdminPage() {
                 }
                 console.log(response);
                 setUsers(response);
+                setIsLoading(false);
             })
             .catch(errorCatch => {
                 if (errorCatch === 403){
                     localStorage.removeItem("token");
-                    setErrorMessage("Token has expired, redirecting to login page")
+                    setErrorMessage("ERROR: Could not get application list, redirecting to login page");
                     // Redirect the user to the login page
-                    wait(2).then(r => window.location.replace("/") )
+                    wait(3000).then(r => window.location.replace("/") )
                 } else{
                     setErrorMessage(errorCatch);
                     console.log(errorCatch)
                 }
-
+                setIsLoading(false);
             });
     }, []);
 
@@ -68,6 +70,7 @@ function AdminPage() {
             })
             .catch(error => {
                 console.error(error);
+
             });
     }
 
@@ -85,7 +88,17 @@ function AdminPage() {
                         </Text>
                     </Flex>
                 </Box>
-
+                {isLoading ? (
+                <Box align="center">
+                        <Spinner thickness='3px'
+                                 speed='0.65s'
+                                 color="grey.200"
+                                 size='xl'
+                                 borderRadius="50%"
+                                 spinnerGrow="3.8"
+                                 />
+                </Box>
+                ) : (
                 <Box p={4} >
                     {users.map((name, id) => (
                         <Flex
@@ -111,10 +124,12 @@ function AdminPage() {
                             </Stack>
                         </Flex>
                     ))}
+
                     {errorMessage && (
-                        <Text color="red.500">{errorMessage}</Text>
+                        <Text fontWeight="bold" color="red.500">{errorMessage}</Text>
                     )}
                 </Box>
+                )}
             </Box>
         </>
     );

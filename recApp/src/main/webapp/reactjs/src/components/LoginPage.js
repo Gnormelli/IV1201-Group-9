@@ -45,13 +45,15 @@ function LoginPage() {
 
         ApiPost.logIn(logInData)
             .then(response => {
+                console.log(response.status)
                 console.log(response)
                 localStorage.setItem('token', response.jwtToken);
                console.log("ROLE ID:" + response.role.id);
 
+
                if(response.status === 403){
-                   console.log(response.ErrorMessage)
-                   let error = response.ErrorMessage
+                   console.log(response.ErrorMessage);
+                   let error = response.ErrorMessage;
                    setError(error)
                }
 
@@ -69,6 +71,11 @@ function LoginPage() {
             })
             .catch(error => {
                 console.log(error);
+                if (error.response && error.response.data && error.response.data.ErrorMessage) {
+                    setError(error.response.data.ErrorMessage);
+                } else {
+                    setError("Email or Password is wrong. Try again.");
+                }
             });
 
     }
