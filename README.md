@@ -1,5 +1,5 @@
 # IV1201-Group-9
-Project for group in course IV1201 VT23 Arkitektur och design av globala applikationer. It is a web application made with Java and ReactJs.
+Project for group in course IV1201 VT23 Arkitektur och design av globala applikationer. It is a web application made with Java and ReactJs. For working application using the front-end client, see https://frontend-iv1201-group9.herokuapp.com/
 
 ## Project Description 
 
@@ -38,12 +38,15 @@ The PostgreSQL database management system is used as the backend to store and ma
 - Install postgres if you don't already have it. You can check installed version by running the command: psql --version. Log in with your postgres credentials and create the database.
 
 ## Running the application in development mode
-- Start your database. 
+- Start your database.
+- Some CORES configuration has to be made on the back-end in src/main/java/com/iv1201/recapp/Config/SecConfig.java and src/main/java/com/iv1201/recapp/RecAppApplication.java for making it possible to interact with front-end application on for example http://localhost:3000.
+- For the front-end to be able to make api-calls to the back-end IV1201-Group-9\recApp\src\main\webapp\reactjs\src\ApiInterface\ApiCall.js and IV1201-Group-9\recApp\src\main\webapp\reactjs\src\ApiInterface\ApiPost.js has to have cosnt url set to http://localhost:8080. 
 - Start the server type mvn spring-boot:run in terminal from root directory of the project or alternatively simply find the main class that has the @SpringBootApplication annotation in this case /recApp/src/main/java/com/iv1201/recapp/RecAppApplication.java Right-click on the class and select "Run as" > "Java Application".
 - After starting server you may start the client by running the command `npm start` in the `frontend` directory, that being /recApp/src/main/webapp/reactjs/
 - The app will open automatically on a broswer but if not then just go to any browser and hit http://localhost:3000.
 
 ## Deployment
+The deployed backend application can be viewed at https://backend-iv1201-group9.herokuapp.com/api/v1/testEndpoint/anotherTestEndpoint which is a test end-point. For deploying new versions of this application the main branch of this repository has to be manually deployed using HEROKU.
 
 ## Developers
 - Parosh Shaways
