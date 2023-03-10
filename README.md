@@ -1,7 +1,7 @@
 # IV1201-Group-9   
 Project for group in course IV1201 VT23 Arkitektur och design av globala applikationer. It is a web application made with Java and ReactJs. For working application using the front-end client, see https://frontend-iv1201-group9.herokuapp.com/
 
-This repository include both the front-end application and the back-end application. The reason is because it makes for a simpler development process than jumping between repositories for front-end and back-end. The deployed repositories can be found two separate repositories due to how Heroku handles deployment. See https://github.com/IV1201-Group-9/IV1201-Group-9-frontend for front-end repository and https://github.com/IV1201-Group-9/IV1201-Group-9-backend for back-end repository.
+This repository include both the front-end application and the back-end application. The reason is because it makes for a simpler development process than jumping between repositories for front-end and back-end. The deployed repositories can be found two separate repositories due to how Heroku handles deployment. See https://github.com/IV1201-Group-9/IV1201-Group-9-frontend for front-end repository and https://github.com/IV1201-Group-9/IV1201-Group-9-backend for back-end repository. The code in this repo is identical to the code on the two deployed repositories. 
 
 ## Project Description 
 
